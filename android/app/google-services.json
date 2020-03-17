@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "582837916304",
+    "firebase_url": "https://zostawpoddrzwiami.firebaseio.com",
+    "project_id": "zostawpoddrzwiami",
+    "storage_bucket": "zostawpoddrzwiami.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582837916304:android:1e03c38057dd12261d7e15",
+        "android_client_info": {
+          "package_name": "com.ten.team.quarantino.zostawpoddrzwiami"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582837916304-28npqhp7alepj2bforq82cvurg4p4pbb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Sp8b9wZSO82x1iwWB69vCMkl_2tvFiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582837916304-28npqhp7alepj2bforq82cvurg4p4pbb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
