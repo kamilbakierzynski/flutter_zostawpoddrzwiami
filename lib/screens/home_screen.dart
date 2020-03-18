@@ -8,10 +8,14 @@ import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
+  String distance = '1.4 km';
   Widget build(BuildContext context) {
+
     final User user = Provider.of<User>(context);
     final List<UserRequest> userRequest =
         Provider.of<List<UserRequest>>(context);
@@ -72,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                               Icon(Icons.location_on,
                                   size: 20.0, color: Color(0xFFB1B1B1)),
                               Text(
-                                '1.3 km',
+                                distance,
                                 style: TextStyle(
                                     color: Color(0xFFB1B1B1), fontSize: 16.0),
                               )
@@ -266,5 +270,13 @@ class HomeScreen extends StatelessWidget {
         ),
       );
     }
+  }
+  Future<List<double>>_getCurrentPosition() async
+  {
+    List<double> coordinates = [];
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    coordinates.add(position.latitude);
+    coordinates.add(position.longitude);
+    return coordinates;
   }
 }
