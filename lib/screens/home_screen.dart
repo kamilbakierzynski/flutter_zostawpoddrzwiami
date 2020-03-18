@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zostawpoddrzwiami/screens/request_making_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
+  RequestMakingScreen RequestScreen = new RequestMakingScreen();
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
