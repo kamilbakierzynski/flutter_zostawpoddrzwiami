@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
@@ -33,18 +34,34 @@ class DatabaseService {
     return requestDataCollection.snapshots().map(_requestFromSnapshot);
   }
 
-  Stream<List<UserRequest>> get userRequests {
-    final CollectionReference userOrdersCollection = Firestore.instance
+  Stream<List<CurrentUserRequest>> get userRequests {
+    final CollectionReference currentUserRequestCollection = Firestore.instance
         .collection('users')
         .document(uid)
         .collection('request');
-    return userOrdersCollection.snapshots().map(_requestFromSnapshot);
+    return currentUserRequestCollection.snapshots().map(_currentUserRequestFromSnapshot);
   }
 
   List<UserRequest> _requestFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       if (doc != null) {
         return UserRequest(
+          name: doc.data["name"] ?? '',
+          address: doc.data["name"] ?? '',
+          request: doc.data["request"] ?? [],
+          requestId: doc.data["requestId"] ?? '',
+          price: doc.data["price"] ?? '',
+          status: doc.data["status"] ?? false,
+        );
+      } else {
+        return null;
+      }
+    }).toList();
+  }
+  List<CurrentUserRequest> _currentUserRequestFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      if (doc != null) {
+        return CurrentUserRequest(
           name: doc.data["name"] ?? '',
           address: doc.data["name"] ?? '',
           request: doc.data["request"] ?? [],
