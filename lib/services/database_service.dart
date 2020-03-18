@@ -52,6 +52,8 @@ class DatabaseService {
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
+          longitude: doc.data["longitude"] ?? '',
+          latitude:  doc.data["latitude"] ?? '',
         );
       } else {
         return null;
@@ -68,6 +70,8 @@ class DatabaseService {
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
+          longitude: doc.data["longitude"] ?? '',
+          latitude:  doc.data["latitude"] ?? '',
         );
       } else {
         return null;
@@ -97,6 +101,8 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
+      'longitude': request.longitude,
+      'latitude': request.latitude,
     });
     await userDataCollection
         .document(uid)
@@ -110,6 +116,8 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
+      'longitude': request.longitude,
+      'latitude': request.latitude,
     });
 
     return true;

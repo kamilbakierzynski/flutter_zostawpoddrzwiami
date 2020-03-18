@@ -7,5 +7,7 @@ class CurrentUserRequest
   final List <Item> request;
   final String address;
   final bool status;
-  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status});
+  final double longitude;
+  final double latitude;
+  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude});
 }
