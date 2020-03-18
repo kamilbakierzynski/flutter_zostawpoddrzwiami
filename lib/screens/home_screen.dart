@@ -12,7 +12,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
-    final List<UserRequest> userRequest = Provider.of<List<UserRequest>>(context);
+    final List<UserRequest> userRequest =
+        Provider.of<List<UserRequest>>(context);
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
@@ -47,8 +48,11 @@ class HomeScreen extends StatelessWidget {
             delegate: SliverChildBuilderDelegate((context, index) {
               final UserRequest request = userRequest[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 20.0),
+                padding: index != userRequest.length - 1
+                    ? const EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 20.0)
+                    : EdgeInsets.only(
+                        top: 20.0, left: 40.0, right: 40.0, bottom: 100.0),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -142,7 +146,8 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                 ),
                                 GestureDetector(
-                                  onTap: () => Navigator.pushNamed(context, '/details'),
+                                  onTap: () =>
+                                      Navigator.pushNamed(context, '/details'),
                                   child: Container(
                                     width: 130,
                                     height: 40,
@@ -151,14 +156,17 @@ class HomeScreen extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(30.0)),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
                                           'Pomagam',
-                                          style:
-                                              TextStyle(color: Color(0xFF707070)),
+                                          style: TextStyle(
+                                              color: Color(0xFF707070)),
                                         ),
-                                        SizedBox(width: 5.0,),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         Icon(Icons.arrow_forward,
                                             color: Color(0xFF707070))
                                       ],
@@ -235,8 +243,12 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          UserRequest test_request = UserRequest(name: 'Kamil',
-          address: 'Sosnowa', price: '13', request: [Item('Mleko', 1)], status: false);
+          UserRequest test_request = UserRequest(
+              name: 'Kamil',
+              address: 'Sosnowa',
+              price: '13',
+              request: [Item('Mleko', 1)],
+              status: false);
           await DatabaseService(uid: user.uid).createNewRequest(test_request);
         },
         child: Icon(Icons.add),
