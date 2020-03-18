@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zostawpoddrzwiami/services/auth_service.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -17,9 +18,9 @@ class HomeScreen extends StatelessWidget {
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.settings),
-                onPressed: () {},
+                onPressed: () => AuthService().signOut(),
                 color: Colors.black,
-              )
+              ),
             ],
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.only(left: 20.0, bottom: 16.0),
