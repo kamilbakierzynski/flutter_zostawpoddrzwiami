@@ -38,114 +38,126 @@ class HomeScreen extends StatelessWidget {
             delegate: SliverChildBuilderDelegate((context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 30.0, vertical: 10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          colors: [Color(0xFF0187F8), Color(0xFF0169F0)],
-                          stops: [0.0, 1.0]),
-                      borderRadius: BorderRadius.circular(20.0)),
-                  width: 100,
-                  height: 350,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
+                    horizontal: 40.0, vertical: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+                        Text(
+                          '12:34',
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              color: Color(0xFFB1B1B1),
+                              fontSize: 16.0),
+                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              'Janina',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30.0),
-                            ),
+                            Icon(Icons.location_on,
+                                size: 20.0, color: Color(0xFFB1B1B1)),
                             Text(
                               '1.3 km',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0),
-                            )
-                          ],
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.only(top: 10, bottom: 20.0),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    'Mleko',
-                                    'Frytki',
-                                    'Pomidor',
-                                    'Ser'
-                                  ].map<Widget>((item) {
-                                    return Text(
-                                      item,
-                                      style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 18.0),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              '~15 zł',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30.0),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  children: <Widget>[
-//                                      Text(
-//                                        'Pomagam!',
-//                                        style: TextStyle(
-//                                            fontWeight: FontWeight.w500,
-//                                            fontSize: 16),
-//                                      ),
-                                    SizedBox(
-                                      width: 3.0,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 30.0,
-                                      color: Colors.blueGrey,
-                                    )
-                                  ],
-                                ),
-                              ),
+                                  color: Color(0xFFB1B1B1), fontSize: 16.0),
                             )
                           ],
                         )
                       ],
                     ),
-                  ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [Color(0xFFECECEC), Colors.white],
+                                  stops: [0.3, 0.9]),
+                              borderRadius: BorderRadius.circular(20.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 10))
+                              ]),
+                          width: double.infinity,
+                          height: 300,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0))),
+                          width: double.infinity,
+                          height: 80,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Janina',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30.0),
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.shopping_cart,
+                                          color: Color(0xFFB1B1B1),
+                                        ),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Text(
+                                          '~15zł',
+                                          style: TextStyle(
+                                              fontSize: 21.0,
+                                              color: Color(0xFFB1B1B1)),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  width: 130,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFEDEDED),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        'Pomagam',
+                                        style:
+                                            TextStyle(color: Color(0xFF707070)),
+                                      ),
+                                      Icon(Icons.arrow_forward,
+                                          color: Color(0xFF707070))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               );
             }, childCount: 100),
@@ -154,8 +166,7 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Padding(
-          padding:
-          const EdgeInsets.symmetric(horizontal: 0.0, vertical: 3.0),
+          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 3.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
