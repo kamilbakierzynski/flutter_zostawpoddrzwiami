@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
+import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
@@ -11,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
+    final List<UserRequest> userRequest = Provider.of<List<UserRequest>>(context);
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
@@ -43,6 +45,7 @@ class HomeScreen extends StatelessWidget {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
+              final UserRequest request = userRequest[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40.0, vertical: 20.0),
@@ -114,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'Janina',
+                                      request.name,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 30.0),
@@ -129,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                                           width: 5.0,
                                         ),
                                         Text(
-                                          '~15zł',
+                                          '~' + request.price + 'zł',
                                           style: TextStyle(
                                               fontSize: 21.0,
                                               color: Color(0xFFB1B1B1)),
@@ -171,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               );
-            }, childCount: 100),
+            }, childCount: userRequest.length),
           )
         ],
       ),

@@ -73,6 +73,7 @@ class DatabaseService {
       output.add("${item.quantity.toString()} x ${item.name}");
     });
     await requestDataCollection.document(id).setData({
+      'name': request.name,
       'customer': uid,
       'requestId': id,
       'order': output,
@@ -85,6 +86,7 @@ class DatabaseService {
         .collection('requests')
         .document(id)
         .setData({
+      'name': request.name,
       'customer': uid,
       'requestId': id,
       'order': output,

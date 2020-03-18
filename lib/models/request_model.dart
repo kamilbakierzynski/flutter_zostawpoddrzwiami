@@ -1,6 +1,7 @@
 // uniwersalny request zakupowy
 
 import 'item_model.dart';
+
 class UserRequest{
   final String name;
   final String price;

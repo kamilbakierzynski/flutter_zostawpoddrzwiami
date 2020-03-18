@@ -46,8 +46,6 @@ class MaterialAppLoggedUser extends StatelessWidget {
               value: DatabaseService().requestData),
           StreamProvider<UserData>.value(
               value: DatabaseService(uid: user.uid).userData),
-          StreamProvider<List<UserRequest>>.value(
-              value: DatabaseService(uid: user.uid).userRequests)
         ],
         child: MaterialApp(
             title: 'Zostaw Pod Drzwiami',
