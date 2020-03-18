@@ -86,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text('Zaloguj'),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
+                        FocusScope.of(context).unfocus();
                         setState(() {
                           _loadingInProgress = true;
                         });

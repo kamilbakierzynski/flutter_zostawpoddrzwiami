@@ -5,6 +5,7 @@ import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:shortid/shortid.dart';
+import 'package:intl/intl.dart';
 
 class DatabaseService {
   final String uid;
@@ -52,8 +53,9 @@ class DatabaseService {
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
-          longitude: doc.data["longitude"] ?? '',
-          latitude:  doc.data["latitude"] ?? '',
+          time: doc.data["time"] != null ? doc.data['time'].toDate().toString() : '',
+          longitude: doc.data["longitude"] ?? 0.0,
+          latitude:  doc.data["latitude"] ?? 0.0,
         );
       } else {
         return null;
@@ -70,8 +72,6 @@ class DatabaseService {
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
-          longitude: doc.data["longitude"] ?? '',
-          latitude:  doc.data["latitude"] ?? '',
         );
       } else {
         return null;
@@ -101,8 +101,6 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
-      'longitude': request.longitude,
-      'latitude': request.latitude,
     });
     await userDataCollection
         .document(uid)
@@ -116,10 +114,36 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
-      'longitude': request.longitude,
-      'latitude': request.latitude,
     });
-
     return true;
   }
+
+  String readTimestamp(int timestamp) {
+    var now = DateTime.now();
+    var format = DateFormat('HH:mm a');
+    var date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    var diff = now.difference(date);
+    var time = '';
+
+    if (diff.inSeconds <= 0 || diff.inSeconds > 0 && diff.inMinutes == 0 || diff.inMinutes > 0 && diff.inHours == 0 || diff.inHours > 0 && diff.inDays == 0) {
+      time = format.format(date);
+    } else if (diff.inDays > 0 && diff.inDays < 7) {
+      if (diff.inDays == 1) {
+        time = diff.inDays.toString() + ' dzień temu';
+      } else {
+        time = diff.inDays.toString() + ' dni temu';
+      }
+    } else {
+      if (diff.inDays == 7) {
+        time = (diff.inDays / 7).floor().toString() + ' tydzień temu';
+      } else {
+
+        time = (diff.inDays / 7).floor().toString() + ' tygodni temu';
+      }
+    }
+
+    print(time);
+    return time;
+  }
+
 }

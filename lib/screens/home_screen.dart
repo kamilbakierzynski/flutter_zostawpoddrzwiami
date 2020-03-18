@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            '12:34',
+                            request.time,
                             style: TextStyle(
                                 fontStyle: FontStyle.italic,
                                 color: Color(0xFFB1B1B1),

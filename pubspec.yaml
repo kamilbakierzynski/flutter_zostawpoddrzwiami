@@ -27,6 +27,7 @@ dependencies:
   shortid: ^0.1.1
   flutter_spinkit: "^4.1.1"
   url_launcher: ^3.0.0
+  intl: ^0.16.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
