@@ -9,5 +9,6 @@ class CurrentUserRequest
   final bool status;
   final double longitude;
   final double latitude;
-  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude});
+  final String time;
+  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.time, this.longitude, this.latitude});
 }

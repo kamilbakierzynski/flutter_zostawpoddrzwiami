@@ -9,7 +9,8 @@ class UserRequest{
   final List <Item> request;
   final String address;
   final bool status;
+  final String time;
   final double longitude;
   final double latitude;
-  UserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude});
+  UserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude, this.time});
 }

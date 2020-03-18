@@ -16,7 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       StreamProvider<User>.value(value: AuthService().user),
-    ], child: MaterialAppLoggedUser());
+    ], child: GestureDetector(child: MaterialAppLoggedUser(), onTap: () {
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      if (!currentFocus.hasPrimaryFocus) {
+        currentFocus.unfocus();
+      }
+    },));
   }
 }
 
@@ -36,7 +41,6 @@ class MaterialAppLoggedUser extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => AuthWrapper(),
-            '/details': (context) => DetailsScreen()
           });
     } else {
       print('Logged in');
