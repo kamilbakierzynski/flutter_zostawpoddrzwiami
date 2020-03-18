@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   bool _loadingInProgress;
-  final GlobalKey _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   String email = '';
   String password = '';
@@ -45,49 +46,60 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Zostaw Pod Drzwiami',
                     style: TextStyle(color: Colors.blue, fontSize: 22.0),
                   ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        TextFormField(
-                            validator: (val) =>
-                                val.isEmpty ? 'Wpisz email' : null,
-                            onChanged: (val) {
-                              setState(() {
-                                email = val;
-                              });
-                            },
-                            decoration: textInputDecoration.copyWith(
-                                labelText: 'email')),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        TextFormField(
-                            validator: (val) =>
-                                val.isEmpty ? 'Wpisz hasło' : null,
-                            onChanged: (val) {
-                              setState(() {
-                                password = val;
-                              });
-                            },
-                            obscureText: true,
-                            decoration: textInputDecoration.copyWith(
-                                labelText: 'hasło')),
-                        RaisedButton(
-                          child: Text('Zaloguj'),
-                          onPressed: () async {
-                            setState(() {
-                              _loadingInProgress = true;
-                            });
-                            User result = await AuthService().signInAnon();
-                            setState(() {
-                              _loadingInProgress = false;
-                            });
-                          },
-                        ),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 40.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          TextFormField(
+                              validator: (val) =>
+                                  val.isEmpty ? 'Wpisz email' : null,
+                              onChanged: (val) {
+                                setState(() {
+                                  email = val;
+                                });
+                              },
+                              decoration: textInputDecoration.copyWith(
+                                  labelText: 'email')),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          TextFormField(
+                              validator: (val) =>
+                                  val.isEmpty ? 'Wpisz hasło' : null,
+                              onChanged: (val) {
+                                setState(() {
+                                  password = val;
+                                });
+                              },
+                              obscureText: true,
+                              decoration: textInputDecoration.copyWith(
+                                  labelText: 'hasło')),
+                        ],
+                      ),
                     ),
+                  ),
+                  RaisedButton(
+                    child: Text('Zaloguj'),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        setState(() {
+                          _loadingInProgress = true;
+                        });
+                        User result = await AuthService().signInAnon();
+                        setState(() {
+                          _loadingInProgress = false;
+                        });
+                        if (result == null) {
+                          Toast.show('Wystąpił błąd przy logowaniu', context,
+                              duration: Toast.LENGTH_LONG,
+                              gravity: Toast.CENTER);
+                        }
+                      }
+                    },
                   ),
                 ]),
           ),
