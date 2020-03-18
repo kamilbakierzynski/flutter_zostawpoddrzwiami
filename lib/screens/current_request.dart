@@ -37,18 +37,18 @@ class CurrentRequest extends StatelessWidget {
                   fontSize: 30,
                 ),
               ),
-            RaisedButton(
-              onPressed: () {
-                _launchMapsUrl(38.8951, -77.0364);
-              },
-            ),
+              RaisedButton(
+                onPressed: () {
+                  _launchMapsUrl(38.8951, -77.0364);
+                },
+              ),
             ],
           ),
           Expanded(
             child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return  CheckboxListTile(
+                  return CheckboxListTile(
                     value: false,
                     title: Column(
                       children: <Widget>[
@@ -68,7 +68,8 @@ class CurrentRequest extends StatelessWidget {
       ),
     ));
   }
-  void checkbox(bool b){
+
+  void checkbox(bool b) {
     return;
   }
 
