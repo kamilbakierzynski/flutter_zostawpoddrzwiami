@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.only(left: 20.0, bottom: 16.0),
               title: Text(
-                'Ogłoszenia blisko Ciebie',
+                'Prośby blisko Ciebie',
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     color: Colors.black,
@@ -131,24 +131,28 @@ class HomeScreen extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                Container(
-                                  width: 130,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFFEDEDED),
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        'Pomagam',
-                                        style:
-                                            TextStyle(color: Color(0xFF707070)),
-                                      ),
-                                      Icon(Icons.arrow_forward,
-                                          color: Color(0xFF707070))
-                                    ],
+                                GestureDetector(
+                                  onTap: () => Navigator.pushNamed(context, '/details'),
+                                  child: Container(
+                                    width: 130,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xFFEDEDED),
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          'Pomagam',
+                                          style:
+                                              TextStyle(color: Color(0xFF707070)),
+                                        ),
+                                        SizedBox(width: 5.0,),
+                                        Icon(Icons.arrow_forward,
+                                            color: Color(0xFF707070))
+                                      ],
+                                    ),
                                   ),
                                 )
                               ],

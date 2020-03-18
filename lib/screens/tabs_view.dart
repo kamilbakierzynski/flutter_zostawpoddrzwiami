@@ -16,6 +16,6 @@ class _TabsViewState extends State<TabsView> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold;
+    return Scaffold();
   }
 }

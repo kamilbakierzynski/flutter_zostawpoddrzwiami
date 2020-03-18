@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zostawpoddrzwiami/screens/details_screen.dart';
 import 'package:zostawpoddrzwiami/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => HomeScreen(),
+          '/details': (context) => DetailsScreen()
         });
   }
 }
