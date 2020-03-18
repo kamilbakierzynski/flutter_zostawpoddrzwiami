@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
               expandedHeight: 200,
               backgroundColor: Colors.white,
               title: Text(
-                'Cześć, Kamil',
+                'Zostaw Pod Drzwiami 🚪',
                 style: TextStyle(color: Colors.black),
               ),
               actions: <Widget>[
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 20.0),
+                            horizontal: 15.0, vertical: 20.0),
                         child: Text(
                           'Ogłoszenia obok Ciebie',
                           style: TextStyle(
@@ -59,10 +59,13 @@ class MyApp extends StatelessWidget {
                       horizontal: 30.0, vertical: 10.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.blueGrey,
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                            colors: [Color(0xFF0187F8), Color(0xFF0169F0)],
+                            stops: [0.0, 1.0]),
                         borderRadius: BorderRadius.circular(20.0)),
                     width: 100,
-                    height: 300,
+                    height: 350,
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -99,30 +102,47 @@ class MyApp extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text('Mleko'),
-                                      Text('Frytki')
-                                    ],
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children:
+                                      ['Mleko', 'Frytki', 'Pomidor', 'Ser'].map<Widget>((item) {
+                                        return Text(item, style: TextStyle(fontStyle: FontStyle.italic, fontSize: 18.0),);
+                                      }).toList(),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                              Text(
+                                '~15 zł',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30.0),
+                              ),
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Pomagam!',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    children: <Widget>[
+//                                      Text(
+//                                        'Pomagam!',
+//                                        style: TextStyle(
+//                                            fontWeight: FontWeight.w500,
+//                                            fontSize: 16),
+//                                      ),
+                                      SizedBox(
+                                        width: 3.0,
+                                      ),
+                                      Icon(Icons.arrow_forward_ios, size: 30.0,)
+                                    ],
                                   ),
                                 ),
                               )
@@ -149,7 +169,7 @@ class MyApp extends StatelessWidget {
                   icon: Icon(
                     Icons.home,
                     size: 30.0,
-                    color: Colors.blue,
+                    color: Color(0xFF583CDF),
                   ),
                   onPressed: () {},
                 ),
@@ -157,7 +177,7 @@ class MyApp extends StatelessWidget {
                   icon: Icon(
                     Icons.settings,
                     size: 30.0,
-                    color: Colors.blueGrey,
+                    color: Colors.grey
                   ),
                   onPressed: () {},
                 ),
@@ -169,7 +189,7 @@ class MyApp extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: Icon(Icons.add),
-          backgroundColor: Colors.blue,
+          backgroundColor: Color(0xFF583CDF),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
