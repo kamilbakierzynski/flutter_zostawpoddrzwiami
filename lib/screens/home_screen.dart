@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zostawpoddrzwiami/models/item_model.dart';
+import 'package:zostawpoddrzwiami/models/request_model.dart';
+import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
+import 'package:zostawpoddrzwiami/services/database_service.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<User>(context);
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
@@ -225,7 +231,11 @@ class HomeScreen extends StatelessWidget {
         shape: CircularNotchedRectangle(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          UserRequest test_request = UserRequest(name: 'Kamil',
+          address: 'Sosnowa', price: '13', request: [Item('Mleko', 1)], status: false);
+          await DatabaseService(uid: user.uid).createNewRequest(test_request);
+        },
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
