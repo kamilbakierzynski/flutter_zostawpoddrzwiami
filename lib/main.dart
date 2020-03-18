@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zostawpoddrzwiami/screens/current_request.dart';
 import 'package:zostawpoddrzwiami/screens/details_screen.dart';
 import 'package:zostawpoddrzwiami/screens/home_screen.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
-          '/': (context) => HomeScreen(),
+          '/': (context) => CurrentRequest(),
           '/details': (context) => DetailsScreen()
         });
   }
