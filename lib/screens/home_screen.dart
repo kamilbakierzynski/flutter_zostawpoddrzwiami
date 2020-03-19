@@ -5,6 +5,7 @@ import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
+import 'package:zostawpoddrzwiami/screens/details_screen.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
@@ -114,6 +115,60 @@ class HomeScreen extends StatelessWidget {
                                 ]),
                             width: double.infinity,
                             height: 300,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.0),
+                                  topLeft: Radius.circular(20.0)),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    height: 300.0 - 80,
+                                    child: ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: request.request.length,
+                                        itemBuilder: (builder, index) {
+                                          if (index == 6) {
+                                            return Center(
+                                                child: Text(
+                                              '...',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w900),
+                                            ));
+                                          } else if (index < 6) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5.0,
+                                                      horizontal: 20.0),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Text(request
+                                                          .request[index].name),
+                                                      Text(
+                                                          '${request.request[index].quantity.toStringAsFixed(0)} x'),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    height: 1.0,
+                                                    width: double.infinity,
+                                                    color: Colors.grey[300],
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          } else {
+                                            return SizedBox.shrink();
+                                          }
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -161,8 +216,11 @@ class HomeScreen extends StatelessWidget {
                                     ],
                                   ),
                                   GestureDetector(
-                                    onTap: () => Navigator.pushNamed(
-                                        context, '/details'),
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailsScreen(request))),
                                     child: Container(
                                       width: 130,
                                       height: 40,
@@ -265,7 +323,17 @@ class HomeScreen extends StatelessWidget {
               name: 'Kamil',
               address: 'Sosnowa',
               price: '13',
-              request: [Item('Mleko', 1)],
+              request: [
+                Item('Mleko', 1),
+                Item('Jajka', 1),
+                Item('Pomidory', 1),
+                Item('Pieczarki', 1),
+                Item('Kuskus', 1),
+                Item('Papier toaletowy', 1),
+                Item('Jagody', 1),
+                Item('Truskawki', 1),
+                Item('epet lq', 1)
+              ],
               status: false,
               latitude: 54.3248,
               longitude: 18.6768,

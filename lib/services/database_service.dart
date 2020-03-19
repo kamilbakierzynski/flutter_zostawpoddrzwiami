@@ -48,10 +48,16 @@ class DatabaseService {
   List<UserRequest> _requestFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       if (doc != null) {
+        List<dynamic> items = doc.data['order'];
+        List<Item> itemsFormated = [];
+        items.forEach((item) {
+          itemsFormated.add(Item(item.toString().split('x')[1], 1.0));
+        });
+        print(itemsFormated[0].name);
         return UserRequest(
           name: doc.data["name"] ?? '',
           address: doc.data["name"] ?? '',
-          request: doc.data["request"] ?? [],
+          request: itemsFormated ?? [Item('', 0)],
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
@@ -74,7 +80,7 @@ class DatabaseService {
         return CurrentUserRequest(
           name: doc.data["name"] ?? '',
           address: doc.data["name"] ?? '',
-          request: doc.data["request"] ?? [],
+          request: doc.data["order"] ?? [],
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
@@ -97,7 +103,7 @@ class DatabaseService {
     final id = shortid.generate();
     List<String> output = [];
     request.request.forEach((item) {
-      output.add("${item.quantity.toString()} x ${item.name}");
+      output.add("${item.quantity.toString()}x${item.name}");
     });
     await requestDataCollection.document(id).setData({
       'name': request.name,
