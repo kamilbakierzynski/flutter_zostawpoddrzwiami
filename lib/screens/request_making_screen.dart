@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 
 class RequestMakingScreen  extends StatefulWidget {
@@ -16,18 +17,20 @@ _State createState() {
 class _State extends State<RequestMakingScreen>{
   @override
 
-  static Item first = Item('mleko',3);
-  Item second = Item('maslanka',4);
+  static Item first = Item('mleko',10,'l','ja nie olkoholik');
+  Item second = Item('maslanka',4,'kg','bezlaktozy');
 
   List<Item>  requestedCart = [first];
 
-  String tempProduct = '';
+//  String tempProduct = '';
   String address = '';
-  String name = '';
-  String surname = '';
-  String description = '';
-  int itemCount = 0;
-  bool isListClicked = false;
+  String phoneNumber = '';
+  String optionalInfo = '';
+//  String name = '';
+//  String surname = '';
+//  String description = '';
+//  int itemCount = 0;
+//  bool isListClicked = false;
   int value = 1;
 
 
@@ -43,9 +46,71 @@ class _State extends State<RequestMakingScreen>{
   Widget build(BuildContext context) {
 
     return new Scaffold(
-      body: ListView.builder(
-          itemCount: this.value,
-          itemBuilder: (context, index) => this._buildRow(index)),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  icon: Icon(Icons.location_city),
+                  hintText: "Wpisz swoj adres",
+                  labelText: "Adres",
+                    ),
+                maxLines: 2,
+                minLines: 1,
+                onChanged: (String text){
+                  this.address = text;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: TextFormField(
+                  decoration: InputDecoration(
+                      icon: Icon(Icons.phone_android),
+                      hintText: "Wpisz swoj numer telefonu",
+                      labelText: "Numer telefonu",
+                  ),
+                onChanged: (String text){
+                  this.phoneNumber = text;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  WhitelistingTextInputFormatter.digitsOnly
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: TextFormField(
+                  decoration: InputDecoration(
+                      icon: Icon(Icons.description),
+                      hintText: "Opcjonalnie",
+                      labelText: "Uwagi do zamowienia",
+                  ),
+                onChanged: (String text){
+                  this.optionalInfo = text;
+                },
+                maxLines: 6,
+                autofocus: true,
+                minLines: 1,
+
+              ),
+            ),
+            Expanded(
+              child: Container(
+                child: ListView.builder(
+                    itemCount: this.value,
+                    itemBuilder: (context, index) => this._buildRow(index)),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.only(top: 15.0)
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addItem,
         child: Icon(Icons.add),
@@ -82,6 +147,9 @@ class _State extends State<RequestMakingScreen>{
                 hintText: 'Wpisz Produkt',
                 labelText: 'Produkt',
             ),
+            onChanged: (String text){
+              this.requestedCart[value-1].name = text;
+            },
           ),
           TextFormField(
             decoration: const InputDecoration(
@@ -89,13 +157,37 @@ class _State extends State<RequestMakingScreen>{
             hintText: 'Wpisz ilosc',
             labelText: 'ilosc',
             ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              WhitelistingTextInputFormatter.digitsOnly
+            ],
+            onChanged: (String text){
+              this.requestedCart[value-1].quantity = double.parse(text);
+            },
           ),
           TextFormField(
             decoration: const InputDecoration(
-            icon: Icon(Icons.person_add),
+              icon: Icon(Icons.info),
+              hintText: 'Wpisz jednostke',
+              labelText: 'jednostka',
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              WhitelistingTextInputFormatter.digitsOnly
+            ],
+            onChanged: (String text){
+              this.requestedCart[value-1].unit = text;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+            icon: Icon(Icons.warning),
             hintText: 'Wpisz uwagi',
             labelText: 'Uwagi',
             ),
+            onChanged: (String text){
+              this.requestedCart[value-1].description = text;
+            },
           ),
         ],
       ),
