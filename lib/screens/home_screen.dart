@@ -256,7 +256,9 @@ class HomeScreen extends StatelessWidget {
                 address: 'Sosnowa',
                 price: '13',
                 request: [Item('Mleko', 1)],
-                status: false);
+                status: false,
+                latitude: 54.504689,
+                longitude: 18.489889,);
             await DatabaseService(uid: user.uid).createNewRequest(test_request);
           },
           child: Icon(Icons.add),

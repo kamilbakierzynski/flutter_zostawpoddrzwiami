@@ -3,7 +3,7 @@ class Location
 {
   double latitude;
   double longitude;
-  Location(this.latitude, this.longitude );
+  Location({this.latitude, this.longitude});
 
   Future <String> calculateDistance (List<double> userCoord) async
   {
