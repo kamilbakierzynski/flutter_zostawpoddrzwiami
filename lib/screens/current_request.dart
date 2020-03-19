@@ -46,6 +46,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
     else {
       return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Twoja obecna lista',
+            style: TextStyle(color: Colors.black),
+          ),
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+        ),
         body: Center(
             child: Text(
               "Nie masz obecnych zamowien :(",
@@ -60,6 +68,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
     if (currentRequest == null){
       print("current request null");
       return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Twoja obecna lista',
+            style: TextStyle(color: Colors.black),
+          ),
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+        ),
         body: Center(
             child: Text(
               "Nie masz obecnych zamowien :(",
@@ -73,12 +89,21 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
     if (isCarrier) {
       print("in is carrier");
+
       return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Twoja obecna lista',
+              style: TextStyle(color: Colors.black),
+            ),
+            iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+          ),
           body: Container(
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(left: 30, top: 40, right: 30),
+                  padding: EdgeInsets.only(left: 30, top: 20, right: 30),
                   child: Column(
                     children: <Widget>[
                       Column(
@@ -204,6 +229,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
     else {
       return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Twoja obecna lista',
+              style: TextStyle(color: Colors.black),
+            ),
+            iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+          ),
           body: Container(
             child: Column(
               children: <Widget>[
