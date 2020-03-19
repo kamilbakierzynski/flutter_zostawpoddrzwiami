@@ -14,8 +14,8 @@ import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
 class HomeScreen extends StatelessWidget {
   @override
   String distance = '1.4 km';
-  Widget build(BuildContext context) {
 
+  Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
     final List<UserRequest> userRequest =
         Provider.of<List<UserRequest>>(context);
@@ -75,11 +75,18 @@ class HomeScreen extends StatelessWidget {
                             children: <Widget>[
                               Icon(Icons.location_on,
                                   size: 20.0, color: Color(0xFFB1B1B1)),
-                              Text(
-                                distance,
-                                style: TextStyle(
-                                    color: Color(0xFFB1B1B1), fontSize: 16.0),
-                              )
+                              FutureBuilder<String>(
+                                  future: _getCurrentPosition(
+                                      [request.latitude, request.longitude]),
+                                  initialData: 'Loading',
+                                  builder: (context, snapshot) {
+                                    return Text(
+                                      snapshot.data,
+                                      style: TextStyle(
+                                          color: Color(0xFFB1B1B1),
+                                          fontSize: 16.0),
+                                    );
+                                  })
                             ],
                           )
                         ],
@@ -252,13 +259,14 @@ class HomeScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             UserRequest test_request = UserRequest(
-                name: 'Kamil',
-                address: 'Sosnowa',
-                price: '13',
-                request: [Item('Mleko', 1)],
-                status: false,
-                latitude: 54.504689,
-                longitude: 18.489889,);
+              name: 'Kamil',
+              address: 'Sosnowa',
+              price: '13',
+              request: [Item('Mleko', 1)],
+              status: false,
+              latitude: 54.3248,
+              longitude: 18.6768,
+            );
             await DatabaseService(uid: user.uid).createNewRequest(test_request);
           },
           child: Icon(Icons.add),
@@ -273,12 +281,11 @@ class HomeScreen extends StatelessWidget {
       );
     }
   }
-  Future<List<double>>_getCurrentPosition() async
-  {
-    List<double> coordinates = [];
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    coordinates.add(position.latitude);
-    coordinates.add(position.longitude);
-    return coordinates;
+
+  Future<String> _getCurrentPosition(List<double> data) async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return Location(latitude: position.latitude, longitude: position.longitude)
+        .calculateDistance(data);
   }
 }

@@ -7,7 +7,7 @@ class Location
 
   Future <String> calculateDistance (List<double> userCoord) async
   {
-    double distanceInMeters =  await Geolocator().distanceBetween(userCoord[0],userCoord[1],this.latitude,this.longitude);
-    return (distanceInMeters/1000).toStringAsFixed(1);
+    double distanceInMeters =  await Geolocator().distanceBetween(userCoord[0], userCoord[1], this.latitude,this.longitude);
+    return (distanceInMeters/1000).toStringAsFixed(0) + ' km';
   }
 }
