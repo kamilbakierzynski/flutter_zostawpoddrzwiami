@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CurrentRequest extends StatelessWidget {
-  String name = "Pani Janinka"; // name of request author or request handler
-  String phoneNumber = "555 444 333"; // -||- phone number
-  // address visible only to person shopping
+class CurrentRequest extends StatefulWidget {
+  @override
+  _CurrentRequestState createState() => _CurrentRequestState();
+}
+
+class _CurrentRequestState extends State<CurrentRequest> {
+  String name = "Pani Janinka";
+  String phoneNumber = "555 444 333";
   String street = "Osiedle Mazurskie";
+
   String strNumber = "16";
+
   String city = "Mrągowo";
+
   String flat = "15";
+
   int rows = 10;
+  bool checkbox_value = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +71,7 @@ class CurrentRequest extends StatelessWidget {
                 itemCount: rows,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
-                    value: false,
+                    value: checkbox_value,
                     title: Column(
                       children: <Widget>[
                         Text("Mleko"),
@@ -69,7 +79,11 @@ class CurrentRequest extends StatelessWidget {
                       ],
                       crossAxisAlignment: CrossAxisAlignment.start,
                     ),
-                    onChanged: checkbox,
+                    onChanged: (value) {
+                      setState(() {
+                        checkbox_value = value;
+                      });
+                    },
                     secondary: const Icon(Icons.shopping_basket),
                     //trailing: Icon(Icons.more_vert),
                   );
@@ -97,5 +111,4 @@ class CurrentRequest extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-
 }

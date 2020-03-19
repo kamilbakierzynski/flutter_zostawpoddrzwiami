@@ -237,19 +237,22 @@ class HomeScreen extends StatelessWidget {
                         )),
                   ],
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Icon(
-                      Icons.shopping_basket,
-                      size: 30.0,
-                      color: Colors.grey[300],
-                    ),
-                    Text(
-                      'Lista',
-                      style: TextStyle(color: Colors.grey[300]),
-                    )
-                  ],
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/current_request'),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(
+                        Icons.shopping_basket,
+                        size: 30.0,
+                        color: Colors.grey[300],
+                      ),
+                      Text(
+                        'Lista',
+                        style: TextStyle(color: Colors.grey[300]),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
