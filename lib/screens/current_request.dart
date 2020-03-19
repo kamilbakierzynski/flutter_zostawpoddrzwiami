@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,68 +25,85 @@ class _CurrentRequestState extends State<CurrentRequest> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: const EdgeInsets.all(30),
       child: Column(
         children: <Widget>[
-          Text(
-            name,
-            style: TextStyle(
-              color: Colors.grey[500],
-              fontSize: 40,
-            ),
-          ),
-          Text(
-            phoneNumber,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            ),
-          ),
-          Column(children: <Widget>[
-            FittedBox(
-              child: Text(
-                street,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                ),
-              ),
-            ),
-            Row(
+          Container(
+            padding: EdgeInsets.only(left: 30, top: 30, right: 30),
+            child: Column(
               children: <Widget>[
-                Text(
-                  "$strNumber/$flat",
-                  style: TextStyle(color: Colors.black, fontSize: 25),
+                Column(
+                  children: <Widget>[
+                    Text(
+                      name,
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 40,
+                      ),
+                    ),
+                    Text(
+                      phoneNumber,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
-                FlatButton(
-                  onPressed: () {
-                    _launchMapsUrl();
-                  },
-                  child: const Icon(Icons.map),
+                Container(
+                  child: Column(children: <Widget>[
+                    FittedBox(
+                      child: Text(
+                        street,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "$strNumber/$flat",
+                          style: TextStyle(color: Colors.black, fontSize: 25),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            _launchMapsUrl();
+                          },
+                          child: const Icon(Icons.map),
+                        ),
+                      ],
+                    ),
+                  ], crossAxisAlignment: CrossAxisAlignment.start),
                 ),
               ],
+              crossAxisAlignment: CrossAxisAlignment.start,
             ),
-          ], crossAxisAlignment: CrossAxisAlignment.start),
+          ),
           Expanded(
             child: ListView.builder(
                 itemCount: rows,
                 itemBuilder: (context, index) {
-                  return CheckboxListTile(
-                    value: checkbox_value,
-                    title: Column(
-                      children: <Widget>[
-                        Text("Mleko"),
-                        Text("10l"),
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  return Container(
+                    padding: const EdgeInsets.all(15),
+                    child: CheckboxListTile(
+                      value: checkbox_value,
+                      title: Column(
+                        children: <Widget>[
+                          Text("Mleko"),
+                          Text("10l"),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          checkbox_value = value;
+                        });
+                      },
+                      secondary: const Icon(Icons.shopping_basket),
+                      //trailing: Icon(Icons.more_vert),
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        checkbox_value = value;
-                      });
-                    },
-                    secondary: const Icon(Icons.shopping_basket),
-                    //trailing: Icon(Icons.more_vert),
                   );
                 }),
           ),
