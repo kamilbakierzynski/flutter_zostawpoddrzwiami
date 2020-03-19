@@ -1,31 +1,34 @@
+import 'dart:async';
+
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 
-class RequestMakingScreen  extends StatefulWidget {
-@override
-_State createState() {
-  _State firstState = _State();
- // firstState.requestedCart.add(firstState.first);
-  firstState.requestedCart.add(firstState.second);
-  return firstState;
+class RequestMakingScreen extends StatefulWidget {
+  @override
+  _State createState() {
+    _State firstState = _State();
+    // firstState.requestedCart.add(firstState.first);
+    firstState.requestedCart.add(firstState.second);
+    return firstState;
   }
 }
 
-class _State extends State<RequestMakingScreen>{
+class _State extends State<RequestMakingScreen> {
   @override
+  static Item first = Item('mleko', 10, 'l', 'ja nie olkoholik');
+  Item second = Item('maslanka', 4, 'kg', 'bezlaktozy');
 
-  static Item first = Item('mleko',10,'l','ja nie olkoholik');
-  Item second = Item('maslanka',4,'kg','bezlaktozy');
-
-  List<Item>  requestedCart = [first];
+  List<Item> requestedCart = [first];
 
 //  String tempProduct = '';
   String address = '';
   String phoneNumber = '';
   String optionalInfo = '';
+
 //  String name = '';
 //  String surname = '';
 //  String description = '';
@@ -33,8 +36,7 @@ class _State extends State<RequestMakingScreen>{
 //  bool isListClicked = false;
   int value = 1;
 
-
-
+  ScrollController _controller = ScrollController();
 
   _addItem() {
     setState(() {
@@ -44,100 +46,152 @@ class _State extends State<RequestMakingScreen>{
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0,right: 30.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  icon: Icon(Icons.location_city),
-                  hintText: "Wpisz swoj adres",
-                  labelText: "Adres",
-                    ),
-                maxLines: 2,
-                minLines: 1,
-                onChanged: (String text){
-                  this.address = text;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0,right: 30.0),
-              child: TextFormField(
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.phone_android),
-                      hintText: "Wpisz swoj numer telefonu",
-                      labelText: "Numer telefonu",
-                  ),
-                onChanged: (String text){
-                  this.phoneNumber = text;
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 30.0),
-              child: TextFormField(
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.description),
-                      hintText: "Opcjonalnie",
-                      labelText: "Uwagi do zamowienia",
-                  ),
-                onChanged: (String text){
-                  this.optionalInfo = text;
-                },
-                maxLines: 6,
-                autofocus: true,
-                minLines: 1,
-
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: ListView.builder(
-                    itemCount: this.value,
-                    itemBuilder: (context, index) => this._buildRow(index)),
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        title: Text(
+          'Stwórz nową prośbę',
+          style: TextStyle(color: Colors.black),
         ),
-        padding: EdgeInsets.only(top: 30.0)
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
       ),
-      floatingActionButton: FloatingActionButton(
+      body: Container(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.location_city),
+                        hintText: "Wpisz swoj adres",
+                        labelText: "Adres",
+                      ),
+                      maxLines: 2,
+                      minLines: 1,
+                      onChanged: (String text) {
+                        this.address = text;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.phone_android),
+                        hintText: "Wpisz swoj numer telefonu",
+                        labelText: "Numer telefonu",
+                      ),
+                      onChanged: (String text) {
+                        this.phoneNumber = text;
+                      },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.description),
+                        hintText: "Opcjonalnie",
+                        labelText: "Uwagi do zamowienia",
+                      ),
+                      onChanged: (String text) {
+                        this.optionalInfo = text;
+                      },
+                      maxLines: 6,
+                      minLines: 1,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Expanded(
+                child: Container(
+                  child: ListView.builder(
+                      controller: _controller,
+                      itemCount: value + 1,
+                      itemBuilder: (context, index) {
+                        if (index == value) {
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 60.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _addItem();
+                                  Timer(
+                                      Duration(milliseconds: 10),
+                                      () => _controller.animateTo(
+                                          _controller.position.maxScrollExtent,
+                                          curve: Curves.easeInOut,
+                                          duration:
+                                              Duration(milliseconds: 500)));
+                                },
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  child: Center(
+                                      child: Text(
+                                    '+',
+                                    style: TextStyle(
+                                        color: Colors.grey[400],
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return _buildRow(index);
+                      }),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
+            ],
+          ),
+          padding: EdgeInsets.only(top: 30.0)),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.amber,
         onPressed: _addItem,
-        child: Icon(Icons.add),
+        label: Text('Wyślij'),
+        icon: Icon(Icons.arrow_forward),
       ),
     );
   }
 
   _buildRow(int index) {
+    const InputDecoration textFormFieldStyle = InputDecoration(
+      icon: Icon(
+        Icons.add_shopping_cart,
+        color: Colors.white70,
+      ),
+      hintText: 'Wpisz Produkt',
+      labelText: 'Produkt',
+      labelStyle: TextStyle(color: Colors.white70),
+      hintStyle: TextStyle(color: Colors.white70),
+    );
     return Container(
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Color(0xFF583CDF).withOpacity(1),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 10.0, // has the effect of softening the shadow
-              spreadRadius: 0.5, // has the effect of extending the shadow
-              offset: Offset(
-                0.0, // horizontal, move right 10
-                10.0, // vertical, move down 10
-              ),
-            )
-          ],
-
+        shape: BoxShape.rectangle,
+        color: Color(0xFF583CDF).withOpacity(1),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 10.0, // has the effect of softening the shadow
+            spreadRadius: 0.5, // has the effect of extending the shadow
+            offset: Offset(
+              0.0, // horizontal, move right 10
+              10.0, // vertical, move down 10
+            ),
+          )
+        ],
       ),
       child: Column(
         children: <Widget>[
@@ -310,7 +364,6 @@ class _State extends State<RequestMakingScreen>{
 //    );
 //  }
 
-
 //  Widget listwidget(BuildContext context)
 //  {
 //    return Scaffold(
@@ -355,8 +408,4 @@ class _State extends State<RequestMakingScreen>{
 //    description = text;
 //  }
 
-
-
-
 }
-
