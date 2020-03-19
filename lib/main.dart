@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/screens/current_request.dart';
@@ -17,14 +18,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      StreamProvider<User>.value(value: AuthService().user),
-    ], child: GestureDetector(child: MaterialAppLoggedUser(), onTap: () {
-      FocusScopeNode currentFocus = FocusScope.of(context);
-      if (!currentFocus.hasPrimaryFocus) {
-        currentFocus.unfocus();
-      }
-    },));
+    return MultiProvider(
+        providers: [
+          StreamProvider<User>.value(value: AuthService().user),
+        ],
+        child: GestureDetector(
+          child: MaterialAppLoggedUser(),
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+        ));
   }
 }
 
@@ -53,6 +59,8 @@ class MaterialAppLoggedUser extends StatelessWidget {
               value: DatabaseService().requestData),
           StreamProvider<UserData>.value(
               value: DatabaseService(uid: user.uid).userData),
+          StreamProvider<List<CurrentUserRequest>>.value(
+              value: DatabaseService(uid: user.uid).userRequests)
         ],
         child: MaterialApp(
             title: 'Zostaw Pod Drzwiami',
