@@ -40,7 +40,9 @@ class DatabaseService {
         .collection('users')
         .document(uid)
         .collection('request');
-    return currentUserRequestCollection.snapshots().map(_currentUserRequestFromSnapshot);
+    return currentUserRequestCollection
+        .snapshots()
+        .map(_currentUserRequestFromSnapshot);
   }
 
   List<UserRequest> _requestFromSnapshot(QuerySnapshot snapshot) {
@@ -53,16 +55,20 @@ class DatabaseService {
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
-          time: doc.data["time"] != null ? doc.data['time'].toDate().toString() : '',
+          time: doc.data["time"] != null
+              ? formatTime(doc.data['time'].toDate().toString())
+              : '',
           longitude: doc.data["longitude"] ?? 0.0,
-          latitude:  doc.data["latitude"] ?? 0.0,
+          latitude: doc.data["latitude"] ?? 0.0,
         );
       } else {
         return null;
       }
     }).toList();
   }
-  List<CurrentUserRequest> _currentUserRequestFromSnapshot(QuerySnapshot snapshot) {
+
+  List<CurrentUserRequest> _currentUserRequestFromSnapshot(
+      QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       if (doc != null) {
         return CurrentUserRequest(
@@ -101,6 +107,7 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
+      'time': Timestamp.now()
     });
     await userDataCollection
         .document(uid)
@@ -114,36 +121,18 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
+      'time': Timestamp.now()
     });
     return true;
   }
 
-  String readTimestamp(int timestamp) {
-    var now = DateTime.now();
-    var format = DateFormat('HH:mm a');
-    var date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-    var diff = now.difference(date);
-    var time = '';
-
-    if (diff.inSeconds <= 0 || diff.inSeconds > 0 && diff.inMinutes == 0 || diff.inMinutes > 0 && diff.inHours == 0 || diff.inHours > 0 && diff.inDays == 0) {
-      time = format.format(date);
-    } else if (diff.inDays > 0 && diff.inDays < 7) {
-      if (diff.inDays == 1) {
-        time = diff.inDays.toString() + ' dzień temu';
-      } else {
-        time = diff.inDays.toString() + ' dni temu';
-      }
+  String formatTime(String requestTime) {
+    String timeNow = DateTime.now().toString();
+    if (requestTime.split(" ")[0].split('-')[2] ==
+        timeNow.split(" ")[0].split('-')[2]) {
+      return requestTime.split(' ')[1].split('.')[0].substring(0, 5);
     } else {
-      if (diff.inDays == 7) {
-        time = (diff.inDays / 7).floor().toString() + ' tydzień temu';
-      } else {
-
-        time = (diff.inDays / 7).floor().toString() + ' tygodni temu';
-      }
+      return requestTime.split(' ')[0];
     }
-
-    print(time);
-    return time;
   }
-
 }
