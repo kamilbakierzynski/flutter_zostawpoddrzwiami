@@ -10,7 +10,8 @@ class UserData
 {
   final String uid;
   final String name;
-  UserData( {this.uid, this.name});
+  final String surname;
+  UserData( {this.uid, this.name, this.surname});
 
   // aktualny request kupowany/zamawiany
   UserRequest currentRequest;

@@ -1,6 +1,8 @@
 class Item
 {
-  final String name;
-  final int quantity;
+  String name;
+  String description;
+  double quantity;
+  String unit;
   Item(this.name, this.quantity);
 }
