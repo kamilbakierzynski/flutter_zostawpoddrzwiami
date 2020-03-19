@@ -4,5 +4,5 @@ class Item
   String description;
   double quantity;
   String unit;
-  Item(this.name, this.quantity);
+  Item(this.name, this.quantity, this.unit, this.description);
 }
