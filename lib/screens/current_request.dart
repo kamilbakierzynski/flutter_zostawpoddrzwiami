@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zostawpoddrzwiami/models/user_model.dart';
 
 class CurrentRequest extends StatefulWidget {
   @override
@@ -26,6 +27,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
 
   @override
   Widget build(BuildContext context) {
+    final User currentUser = Provider.of<User>(context);
     final List<CurrentRequest> allRequests = Provider.of<List<CurrentRequest>>(context);
     if (isCarrier) {
       return Scaffold(
