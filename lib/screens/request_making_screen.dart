@@ -37,8 +37,9 @@ class _State extends State<RequestMakingScreen> {
   int value = 1;
 
   ScrollController _controller = ScrollController();
-
+  List<Widget> itemList = [Container()];
   _addItem() {
+    itemList.add(Container());
     setState(() {
       value = value + 1;
     });
@@ -103,7 +104,9 @@ class _State extends State<RequestMakingScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: Container(
                   child: ListView.builder(
@@ -118,7 +121,7 @@ class _State extends State<RequestMakingScreen> {
                                 onTap: () {
                                   _addItem();
                                   Timer(
-                                      Duration(milliseconds: 10),
+                                      Duration(milliseconds: 50),
                                       () => _controller.animateTo(
                                           _controller.position.maxScrollExtent,
                                           curve: Curves.easeInOut,
@@ -145,7 +148,17 @@ class _State extends State<RequestMakingScreen> {
                             ),
                           );
                         }
-                        return _buildRow(index);
+                        return Dismissible(
+                          direction: index == 0 ? null : DismissDirection.horizontal,
+                          onDismissed: (_) {
+                            itemList.removeLast();
+                            setState(() {
+                              value -= 1;
+                            });
+                          },
+                          child: _buildRow(index),
+                          key: Key(itemList[index].toString()),
+                        );
                       }),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -163,7 +176,7 @@ class _State extends State<RequestMakingScreen> {
     );
   }
 
-  _buildRow(int index) {
+  Widget _buildRow(int index) {
     const InputDecoration textFormFieldStyle = InputDecoration(
       icon: Icon(
         Icons.add_shopping_cart,
@@ -196,27 +209,27 @@ class _State extends State<RequestMakingScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
-              decoration: const InputDecoration(
+            decoration: const InputDecoration(
               icon: Icon(Icons.add_shopping_cart),
-                hintText: 'Wpisz Produkt',
-                labelText: 'Produkt',
+              hintText: 'Wpisz Produkt',
+              labelText: 'Produkt',
             ),
-            onChanged: (String text){
-              this.requestedCart[value-1].name = text;
+            onChanged: (String text) {
+              this.requestedCart[value - 1].name = text;
             },
           ),
           TextFormField(
             decoration: const InputDecoration(
-            icon: Icon(Icons.confirmation_number),
-            hintText: 'Wpisz ilosc',
-            labelText: 'ilosc',
+              icon: Icon(Icons.confirmation_number),
+              hintText: 'Wpisz ilosc',
+              labelText: 'ilosc',
             ),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               WhitelistingTextInputFormatter.digitsOnly
             ],
-            onChanged: (String text){
-              this.requestedCart[value-1].quantity = double.parse(text);
+            onChanged: (String text) {
+              this.requestedCart[value - 1].quantity = double.parse(text);
             },
           ),
           TextFormField(
@@ -229,26 +242,24 @@ class _State extends State<RequestMakingScreen> {
             inputFormatters: <TextInputFormatter>[
               WhitelistingTextInputFormatter.digitsOnly
             ],
-            onChanged: (String text){
-              this.requestedCart[value-1].unit = text;
+            onChanged: (String text) {
+              this.requestedCart[value - 1].unit = text;
             },
           ),
           TextFormField(
             decoration: const InputDecoration(
-            icon: Icon(Icons.warning),
-            hintText: 'Wpisz uwagi',
-            labelText: 'Uwagi',
+              icon: Icon(Icons.warning),
+              hintText: 'Wpisz uwagi',
+              labelText: 'Uwagi',
             ),
-            onChanged: (String text){
-              this.requestedCart[value-1].description = text;
+            onChanged: (String text) {
+              this.requestedCart[value - 1].description = text;
             },
           ),
         ],
       ),
     );
   }
-
-
 
 
 //  Widget build(BuildContext context){
