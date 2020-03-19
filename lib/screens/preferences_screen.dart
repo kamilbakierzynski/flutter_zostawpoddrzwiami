@@ -23,7 +23,7 @@ class _PreferencesState extends State<Preferences>
       body: Stack(
         children: <Widget>[
           RaisedButton(
-            onPressed: ()=> AuthService().signOut(),
+            onPressed: ()=> Navigator.pushNamed(context, '/preferences_screen'),
             child: Row(
               children: <Widget>[
                 Icon(Icons.directions_run, color: Colors.black,),
