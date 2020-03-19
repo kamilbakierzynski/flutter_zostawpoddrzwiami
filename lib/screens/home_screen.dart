@@ -78,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                               FutureBuilder<String>(
                                   future: _getCurrentPosition(
                                       [request.latitude, request.longitude]),
-                                  initialData: 'Loading',
+                                  initialData: 'Ładowanie',
                                   builder: (context, snapshot) {
                                     return Text(
                                       snapshot.data,
