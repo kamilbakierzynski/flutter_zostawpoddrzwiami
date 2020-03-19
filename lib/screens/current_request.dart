@@ -40,12 +40,22 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         fontSize: 40,
                       ),
                     ),
-                    Text(
-                      phoneNumber,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          phoneNumber,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: (){
+                            launch("tel://$phoneNumber");
+                          },
+                          child: Icon(Icons.phone),
+                        )
+                      ],
                     ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,27 +96,55 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 itemCount: rows,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-                    child: CheckboxListTile(
-                      value: checkbox_value,
-                      title: Column(
-                        children: <Widget>[
-                          Text("Mleko"),
-                          Text("10l"),
-                        ],
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
+                    child: Card(
+                      child: CheckboxListTile(
+                        value: checkbox_value,
+                        title: Column(
+                          children: <Widget>[
+                            Text("Mleko"),
+                            Text("10l"),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            checkbox_value = value;
+                          });
+                        },
+                        secondary: const Icon(Icons.shopping_basket),
+                        //trailing: Icon(Icons.more_vert),
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          checkbox_value = value;
-                        });
-                      },
-                      secondary: const Icon(Icons.shopping_basket),
-                      //trailing: Icon(Icons.more_vert),
                     ),
                   );
                 }),
           ),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 6, right: 3),
+                width: 195,
+                child: RaisedButton(
+                  color: Colors.red,
+                  onPressed: (){
+                    print("pressed decline");
+                  },
+                  child: const Icon(Icons.cancel),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 3, right: 6),
+                width: 195,
+                child: RaisedButton(
+                  color: Colors.lightGreen,
+                  onPressed: () {
+                    print("pressed finnished");
+                  },
+                  child: const Icon(Icons.check_circle),
+                ),
+              )
+            ],
+          )
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
       ),

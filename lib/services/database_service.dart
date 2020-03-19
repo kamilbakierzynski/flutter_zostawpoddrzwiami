@@ -113,6 +113,8 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
+      'latitude': request.latitude,
+      'longitude': request.longitude,
       'time': Timestamp.now()
     });
     await userDataCollection
