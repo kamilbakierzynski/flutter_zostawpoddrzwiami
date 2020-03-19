@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +20,9 @@ class HomeScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
-    final List<UserRequest> userRequest =
+    final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
-    if (userRequest != null) {
+    if (userRequests != null) {
       return Scaffold(
         extendBody: true,
         backgroundColor: Colors.white,
@@ -53,9 +55,9 @@ class HomeScreen extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                final UserRequest request = userRequest[index];
+                final UserRequest request = userRequests[index];
                 return Padding(
-                  padding: index != userRequest.length - 1
+                  padding: index != userRequests.length - 1
                       ? const EdgeInsets.symmetric(
                           horizontal: 40.0, vertical: 20.0)
                       : EdgeInsets.only(
@@ -77,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                               Icon(Icons.location_on,
                                   size: 20.0, color: Color(0xFFB1B1B1)),
                               FutureBuilder<String>(
-                                  future: _getCurrentPosition(
+                                  future: _getDistanceTo(
                                       [request.latitude, request.longitude]),
                                   initialData: 'Ładowanie',
                                   builder: (context, snapshot) {
@@ -255,7 +257,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 );
-              }, childCount: userRequest.length),
+              }, childCount: userRequests.length),
             )
           ],
         ),
@@ -354,7 +356,7 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-  Future<String> _getCurrentPosition(List<double> data) async {
+  Future<String> _getDistanceTo(List<double> data) async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     return Location(latitude: position.latitude, longitude: position.longitude)
