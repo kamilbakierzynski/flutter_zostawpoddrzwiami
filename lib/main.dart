@@ -64,7 +64,7 @@ class MaterialAppLoggedUser extends StatelessWidget {
             routes: {
               '/': (context) => AuthWrapper(),
               '/details': (context) => DetailsScreen(),
-              '/request': (context) => RequestMakingScreen()
+              '/request': (context) => RequestMakingScreen(),
               '/current_request': (context) => CurrentRequest()
             }),
       );
