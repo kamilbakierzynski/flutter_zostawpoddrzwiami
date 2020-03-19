@@ -22,6 +22,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
   String city = "Mrągowo";
 
   String flat = "15";
+  CurrentUserRequest currentRequest = null;
 
   int rows = 10;
   bool checkbox_value = false;
@@ -31,8 +32,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
     final User currentUser = Provider.of<User>(context);
     final List<CurrentUserRequest> allRequests = Provider.of<
         List<CurrentUserRequest>>(context);
-    CurrentUserRequest currentRequest = null;
     if (allRequests != null) {
+      print("requests are not null");
       allRequests.forEach((CurrentUserRequest req) {
         if (!req.status) {
           currentRequest = req;
@@ -40,9 +41,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
         }
       });
     }
-    else if (currentRequest == null){
+    else {
       return Scaffold(
-        body: Container(
+        body: Center(
             child: Text(
               "Nie masz obecnych zamowien :(",
               style: TextStyle(
@@ -53,20 +54,22 @@ class _CurrentRequestState extends State<CurrentRequest> {
         ),
       );
     }
-    else {
+    if (currentRequest == null){
+      print("current request null");
       return Scaffold(
-        body: Container(
+        body: Center(
             child: Text(
               "Nie masz obecnych zamowien :(",
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 50,
+                color: Colors.blueGrey,
+                fontSize: 50,
               ),
-            )
+            ),
         ),
       );
     }
     if (isCarrier) {
+      print("in is carrier");
       return Scaffold(
           body: Container(
             child: Column(
@@ -108,7 +111,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         child: Column(children: <Widget>[
                           FittedBox(
                             child: Text(
-                              street,
+                              currentRequest.address,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
