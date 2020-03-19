@@ -79,4 +79,5 @@ class MaterialAppLoggedUser extends StatelessWidget {
       );
     }
   }
+
 }

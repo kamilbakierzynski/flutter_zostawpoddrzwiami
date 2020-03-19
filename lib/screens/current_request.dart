@@ -205,6 +205,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         color: Colors.red,
                         onPressed: () {
                           print("pressed decline");
+                          _showResignDialog();
                         },
                         child: const Icon(Icons.cancel),
                       ),
@@ -216,6 +217,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         color: Colors.lightGreen,
                         onPressed: () {
                           print("pressed finnished");
+                          _showRequestFinishedDialog();
                         },
                         child: const Icon(Icons.check_circle),
                       ),
@@ -328,5 +330,60 @@ class _CurrentRequestState extends State<CurrentRequest> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  void _showResignDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Uwaga!"),
+          content: new Text("Czy na pewno chcesz zrezygnowac z obecnego zamowienia?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Nie"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Tak"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void _showRequestFinishedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Uwaga!"),
+          content: new Text("Czy na pewno chcesz oznaczyc zamowienie jako wykonane?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Nie"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Tak"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
