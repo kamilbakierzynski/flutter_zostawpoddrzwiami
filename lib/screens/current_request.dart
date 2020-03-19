@@ -31,7 +31,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
     final User currentUser = Provider.of<User>(context);
     final List<CurrentUserRequest> allRequests = Provider.of<
         List<CurrentUserRequest>>(context);
-    CurrentUserRequest currentRequest = null;
+    print((allRequests));
+    print(allRequests);
+    CurrentUserRequest currentRequest;
     if (allRequests != null) {
       allRequests.forEach((CurrentUserRequest req) {
         if (!req.status) {

@@ -77,12 +77,12 @@ class DatabaseService {
       QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       if (doc != null) {
-        List<Item> itemsFormated;
+        List<Item> itemsFormated = [];
         if (doc.data['order'] != null) {
-//          List<dynamic> items = doc.data['order'];
-//        items.forEach((item) {
-//          itemsFormated.add(Item(item.toString().split('#@?')[0], double.parse(item.toString().split('#@?')[1]), item.toString().split('#@?')[2], item.toString().split('#@?')[3]));
-//        });
+          List<dynamic> items = doc.data['order'];
+        items.forEach((item) {
+          itemsFormated.add(Item(item.toString().split('#@?')[0], double.parse(item.toString().split('#@?')[1]), item.toString().split('#@?')[2], item.toString().split('#@?')[3]));
+        });
         }
         return CurrentUserRequest(
           name: doc.data["name"] ?? '',
