@@ -5,6 +5,7 @@ import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/screens/current_request.dart';
 import 'package:zostawpoddrzwiami/screens/details_screen.dart';
+import 'package:zostawpoddrzwiami/screens/preferences_screen.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/wrappers/auth_wrapper.dart';
@@ -64,7 +65,8 @@ class MaterialAppLoggedUser extends StatelessWidget {
             routes: {
               '/': (context) => AuthWrapper(),
               '/request': (context) => RequestMakingScreen(),
-              '/current_request': (context) => CurrentRequest()
+              '/current_request': (context) => CurrentRequest(),
+              '/preferences_screen': (context) => Preferences()
             }),
       );
     }

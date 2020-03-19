@@ -8,6 +8,6 @@ class _PreferencesState extends State<Preferences>
 {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Text('Pani Janinka preferences'),);
+    return Scaffold(body: Text('Pani Janinka preferences'),);
   }
 }

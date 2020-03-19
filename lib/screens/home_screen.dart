@@ -16,7 +16,6 @@ import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
-  String distance = '1.4 km';
 
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
@@ -42,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(Icons.settings),
-                        onPressed: () => AuthService().signOut(),
+                        onPressed: () => Navigator.pushNamed(context, '/preferences_screen'),
                         color: Colors.black,
                       ),
                     ],
