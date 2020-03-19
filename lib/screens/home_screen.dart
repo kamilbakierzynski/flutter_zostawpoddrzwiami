@@ -254,6 +254,7 @@ class HomeScreen extends StatelessWidget {
                 request: [Item('Mleko', 1)],
                 status: false);
             await DatabaseService(uid: user.uid).createNewRequest(test_request);
+            Navigator.pushNamed(context, '/request');
           },
           child: Icon(Icons.add),
         ),
