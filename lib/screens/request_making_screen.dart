@@ -11,18 +11,15 @@ class RequestMakingScreen extends StatefulWidget {
   @override
   _State createState() {
     _State firstState = _State();
-    // firstState.requestedCart.add(firstState.first);
-    firstState.requestedCart.add(firstState.second);
     return firstState;
   }
 }
 
 class _State extends State<RequestMakingScreen> {
   @override
-  static Item first = Item('mleko', 10, 'l', 'ja nie olkoholik');
-  Item second = Item('maslanka', 4, 'kg', 'bezlaktozy');
 
-  List<Item> requestedCart = [first];
+  List<Item> requestedCart = [Item("Blank",0.0,"Blank","Blank")];
+
 
 //  String tempProduct = '';
   String address = '';
@@ -35,13 +32,28 @@ class _State extends State<RequestMakingScreen> {
 //  int itemCount = 0;
 //  bool isListClicked = false;
   int value = 1;
+  int index = 0;
 
   ScrollController _controller = ScrollController();
   List<Widget> itemList = [Container()];
   _addItem() {
     itemList.add(Container());
     setState(() {
+      print(this.requestedCart[index].name);
+      print(this.requestedCart[index].quantity);
+      print(this.requestedCart[index].unit);
+      print(this.requestedCart[index].description);
+      print(this.address);
+      print(this.phoneNumber);
+      print(this.optionalInfo);
+      print("-------------------------");
+      for(int i = 0 ; i <= index ; i++)
+        {
+          print(requestedCart[i].name);
+        }
+      this.requestedCart.add(Item("Blank",0.0,"Blank","Blank"));
       value = value + 1;
+      index++;
     });
   }
 
