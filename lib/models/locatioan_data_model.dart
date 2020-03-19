@@ -1,13 +1,17 @@
 import 'package:geolocator/geolocator.dart';
-class Location
-{
+
+class Location {
   double latitude;
   double longitude;
+
   Location({this.latitude, this.longitude});
 
-  Future <String> calculateDistance (List<double> userCoord) async
-  {
-    double distanceInMeters =  await Geolocator().distanceBetween(userCoord[0], userCoord[1], this.latitude,this.longitude);
-    return (distanceInMeters/1000).toStringAsFixed(0) + ' km';
+  Future<String> calculateDistance(List<double> userCoord) async {
+    double distanceInMeters = await Geolocator().distanceBetween(
+        userCoord[0], userCoord[1], this.latitude, this.longitude);
+
+    return distanceInMeters / 1000 > 5
+        ? (distanceInMeters / 1000).toStringAsFixed(0) + ' km'
+        : (distanceInMeters / 1000).toStringAsFixed(1) + ' km';
   }
 }
