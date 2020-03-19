@@ -79,7 +79,7 @@ class DatabaseService {
       if (doc != null) {
         return CurrentUserRequest(
           name: doc.data["name"] ?? '',
-          address: doc.data["name"] ?? '',
+          address: doc.data["address"] ?? '',
           request: doc.data["order"] ?? [],
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',

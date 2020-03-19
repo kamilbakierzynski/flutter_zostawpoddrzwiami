@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
+import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 
 class CurrentRequest extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class CurrentRequest extends StatefulWidget {
 
 class _CurrentRequestState extends State<CurrentRequest> {
 
-  bool isCarrier = false;
+  bool isCarrier = true;
   String name = "Pani Janinka";
   String phoneNumber = "555 444 333";
   String street = "Osiedle Mazurskie";
@@ -28,7 +29,43 @@ class _CurrentRequestState extends State<CurrentRequest> {
   @override
   Widget build(BuildContext context) {
     final User currentUser = Provider.of<User>(context);
-    final List<CurrentRequest> allRequests = Provider.of<List<CurrentRequest>>(context);
+    final List<CurrentUserRequest> allRequests = Provider.of<
+        List<CurrentUserRequest>>(context);
+    CurrentUserRequest currentRequest = null;
+    if (allRequests != null) {
+      allRequests.forEach((CurrentUserRequest req) {
+        if (!req.status) {
+          currentRequest = req;
+          print("assigned request");
+        }
+      });
+    }
+    else if (currentRequest == null){
+      return Scaffold(
+        body: Container(
+            child: Text(
+              "Nie masz obecnych zamowien :(",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 50,
+              ),
+            )
+        ),
+      );
+    }
+    else {
+      return Scaffold(
+        body: Container(
+            child: Text(
+              "Nie masz obecnych zamowien :(",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 50,
+              ),
+            )
+        ),
+      );
+    }
     if (isCarrier) {
       return Scaffold(
           body: Container(
@@ -41,7 +78,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                       Column(
                         children: <Widget>[
                           Text(
-                            name,
+                            currentRequest.name,
                             style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: 40,
@@ -159,7 +196,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             ),
           ));
     }
-    else{
+    else {
       return Scaffold(
           body: Container(
             child: Column(
