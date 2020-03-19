@@ -7,7 +7,13 @@ import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 
 class CurrentRequest extends StatefulWidget {
   @override
-  _CurrentRequestState createState() => _CurrentRequestState();
+  _CurrentRequestState createState() {
+    _CurrentRequestState state = _CurrentRequestState();
+    for (var i = 0;i<100;i++ ) {
+      state.checkbox_values.add(false);
+    }
+    return state;
+  }
 }
 
 class _CurrentRequestState extends State<CurrentRequest> {
@@ -16,25 +22,21 @@ class _CurrentRequestState extends State<CurrentRequest> {
   String name = "Pani Janinka";
   String phoneNumber = "555 444 333";
   String street = "Osiedle Mazurskie";
-
   String strNumber = "16";
-
   String city = "Mrągowo";
-
   String flat = "15";
-
+  CurrentUserRequest currentRequest = null;
   int rows = 10;
-  bool checkbox_value = false;
+  List<bool> checkbox_values = [];
 
   @override
   Widget build(BuildContext context) {
     final User currentUser = Provider.of<User>(context);
     final List<CurrentUserRequest> allRequests = Provider.of<
         List<CurrentUserRequest>>(context);
-    print((allRequests));
-    print(allRequests);
-    CurrentUserRequest currentRequest;
+
     if (allRequests != null) {
+      print("requests are not null");
       allRequests.forEach((CurrentUserRequest req) {
         if (!req.status) {
           currentRequest = req;
@@ -42,9 +44,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
         }
       });
     }
-    else if (currentRequest == null){
+    else {
       return Scaffold(
-        body: Container(
+        body: Center(
             child: Text(
               "Nie masz obecnych zamowien :(",
               style: TextStyle(
@@ -55,20 +57,22 @@ class _CurrentRequestState extends State<CurrentRequest> {
         ),
       );
     }
-    else {
+    if (currentRequest == null){
+      print("current request null");
       return Scaffold(
-        body: Container(
+        body: Center(
             child: Text(
               "Nie masz obecnych zamowien :(",
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 50,
+                color: Colors.blueGrey,
+                fontSize: 50,
               ),
-            )
+            ),
         ),
       );
     }
     if (isCarrier) {
+      print("in is carrier");
       return Scaffold(
           body: Container(
             child: Column(
@@ -110,7 +114,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         child: Column(children: <Widget>[
                           FittedBox(
                             child: Text(
-                              street,
+                              currentRequest.address,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
@@ -140,24 +144,24 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: rows,
+                      itemCount: currentRequest.request.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: const EdgeInsets.only(
                               left: 10, right: 10, top: 0, bottom: 0),
                           child: Card(
                             child: CheckboxListTile(
-                              value: checkbox_value,
+                              value: checkbox_values[index],
                               title: Column(
                                 children: <Widget>[
-                                  Text("Mleko"),
-                                  Text("10l"),
+                                  Text(currentRequest.request[index].name),
+                                  Text(currentRequest.request[index].quantity.toString() + currentRequest.request[index].unit),
                                 ],
                                 crossAxisAlignment: CrossAxisAlignment.start,
                               ),
                               onChanged: (value) {
                                 setState(() {
-                                  checkbox_value = value;
+                                  checkbox_values[index] = value;
                                 });
                               },
                               secondary: const Icon(Icons.shopping_basket),
@@ -249,17 +253,17 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               left: 10, right: 10, top: 0, bottom: 0),
                           child: Card(
                             child: CheckboxListTile(
-                              value: checkbox_value,
+                              value: checkbox_values[index],
                               title: Column(
                                 children: <Widget>[
-                                  Text("Mleko"),
-                                  Text("10l"),
+                                  Text(currentRequest.request[index].name),
+                                  Text(currentRequest.request[index].quantity.toString() + currentRequest.request[index].unit),
                                 ],
                                 crossAxisAlignment: CrossAxisAlignment.start,
                               ),
                               onChanged: (value) {
                                 setState(() {
-                                  checkbox_value = value;
+                                  checkbox_values[index] = value;
                                 });
                               },
                               secondary: const Icon(Icons.shopping_basket),
