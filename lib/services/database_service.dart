@@ -39,7 +39,7 @@ class DatabaseService {
     final CollectionReference currentUserRequestCollection = Firestore.instance
         .collection('users')
         .document(uid)
-        .collection('request');
+        .collection('requests');
     return currentUserRequestCollection
         .snapshots()
         .map(_currentUserRequestFromSnapshot);
@@ -77,10 +77,17 @@ class DatabaseService {
       QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       if (doc != null) {
+        List<Item> itemsFormated;
+        if (doc.data['order'] != null) {
+//          List<dynamic> items = doc.data['order'];
+//        items.forEach((item) {
+//          itemsFormated.add(Item(item.toString().split('#@?')[0], double.parse(item.toString().split('#@?')[1]), item.toString().split('#@?')[2], item.toString().split('#@?')[3]));
+//        });
+        }
         return CurrentUserRequest(
           name: doc.data["name"] ?? '',
           address: doc.data["address"] ?? '',
-          request: doc.data["order"] ?? [],
+          request: itemsFormated ?? [Item('',0,'', '')],
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
