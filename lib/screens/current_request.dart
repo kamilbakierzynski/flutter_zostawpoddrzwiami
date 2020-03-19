@@ -28,7 +28,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(left: 30, top: 30, right: 30),
+            padding: EdgeInsets.only(left: 30, top: 40, right: 30),
             child: Column(
               children: <Widget>[
                 Column(
@@ -71,7 +71,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                           onPressed: () {
                             _launchMapsUrl();
                           },
-                          child: const Icon(Icons.map),
+                          child: const Icon(Icons.location_on),
                         ),
                       ],
                     ),
@@ -86,7 +86,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 itemCount: rows,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
                     child: CheckboxListTile(
                       value: checkbox_value,
                       title: Column(

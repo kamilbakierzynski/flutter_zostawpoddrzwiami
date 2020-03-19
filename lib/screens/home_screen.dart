@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
             SliverAppBar(
               floating: false,
               pinned: true,
-              expandedHeight: 200,
+              expandedHeight: 100,
               backgroundColor: Colors.white,
               actions: <Widget>[
                 IconButton(
