@@ -8,6 +8,8 @@ class CurrentRequest extends StatefulWidget {
 }
 
 class _CurrentRequestState extends State<CurrentRequest> {
+
+  bool isCarrier = false;
   String name = "Pani Janinka";
   String phoneNumber = "555 444 333";
   String street = "Osiedle Mazurskie";
@@ -23,132 +25,212 @@ class _CurrentRequestState extends State<CurrentRequest> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: 30, top: 40, right: 30),
+    if (isCarrier) {
+      return Scaffold(
+          body: Container(
             child: Column(
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text(
-                      name,
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                        fontSize: 40,
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          phoneNumber,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
-                        ),
-                        FlatButton(
-                          onPressed: (){
-                            launch("tel://$phoneNumber");
-                          },
-                          child: Icon(Icons.phone),
-                        )
-                      ],
-                    ),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                ),
                 Container(
-                  child: Column(children: <Widget>[
-                    FittedBox(
-                      child: Text(
-                        street,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                        ),
+                  padding: EdgeInsets.only(left: 30, top: 40, right: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            name,
+                            style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 40,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                phoneNumber,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  launch("tel://$phoneNumber");
+                                },
+                                child: Icon(Icons.phone),
+                              )
+                            ],
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      Container(
+                        child: Column(children: <Widget>[
+                          FittedBox(
+                            child: Text(
+                              street,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                "$strNumber/$flat",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 25),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  _launchMapsUrl();
+                                },
+                                child: const Icon(Icons.location_on),
+                              ),
+                            ],
+                          ),
+                        ], crossAxisAlignment: CrossAxisAlignment.start),
+                      ),
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: rows,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 0, bottom: 0),
+                          child: Card(
+                            child: CheckboxListTile(
+                              value: checkbox_value,
+                              title: Column(
+                                children: <Widget>[
+                                  Text("Mleko"),
+                                  Text("10l"),
+                                ],
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  checkbox_value = value;
+                                });
+                              },
+                              secondary: const Icon(Icons.shopping_basket),
+                              //trailing: Icon(Icons.more_vert),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 6, right: 3),
+                      width: 195,
+                      child: RaisedButton(
+                        color: Colors.red,
+                        onPressed: () {
+                          print("pressed decline");
+                        },
+                        child: const Icon(Icons.cancel),
                       ),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "$strNumber/$flat",
-                          style: TextStyle(color: Colors.black, fontSize: 25),
-                        ),
-                        FlatButton(
-                          onPressed: () {
-                            _launchMapsUrl();
-                          },
-                          child: const Icon(Icons.location_on),
-                        ),
-                      ],
-                    ),
-                  ], crossAxisAlignment: CrossAxisAlignment.start),
+                    Container(
+                      padding: EdgeInsets.only(left: 3, right: 6),
+                      width: 195,
+                      child: RaisedButton(
+                        color: Colors.lightGreen,
+                        onPressed: () {
+                          print("pressed finnished");
+                        },
+                        child: const Icon(Icons.check_circle),
+                      ),
+                    )
+                  ],
+                )
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ));
+    }
+    else{
+      return Scaffold(
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 30, top: 40, right: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            name,
+                            style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 40,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                phoneNumber,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  launch("tel://$phoneNumber");
+                                },
+                                child: Icon(Icons.phone),
+                              )
+                            ],
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: rows,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 0, bottom: 0),
+                          child: Card(
+                            child: CheckboxListTile(
+                              value: checkbox_value,
+                              title: Column(
+                                children: <Widget>[
+                                  Text("Mleko"),
+                                  Text("10l"),
+                                ],
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  checkbox_value = value;
+                                });
+                              },
+                              secondary: const Icon(Icons.shopping_basket),
+                              //trailing: Icon(Icons.more_vert),
+                            ),
+                          ),
+                        );
+                      }),
                 ),
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: rows,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
-                    child: Card(
-                      child: CheckboxListTile(
-                        value: checkbox_value,
-                        title: Column(
-                          children: <Widget>[
-                            Text("Mleko"),
-                            Text("10l"),
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            checkbox_value = value;
-                          });
-                        },
-                        secondary: const Icon(Icons.shopping_basket),
-                        //trailing: Icon(Icons.more_vert),
-                      ),
-                    ),
-                  );
-                }),
-          ),
-          Row(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 6, right: 3),
-                width: 195,
-                child: RaisedButton(
-                  color: Colors.red,
-                  onPressed: (){
-                    print("pressed decline");
-                  },
-                  child: const Icon(Icons.cancel),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 3, right: 6),
-                width: 195,
-                child: RaisedButton(
-                  color: Colors.lightGreen,
-                  onPressed: () {
-                    print("pressed finnished");
-                  },
-                  child: const Icon(Icons.check_circle),
-                ),
-              )
-            ],
-          )
-        ],
-        crossAxisAlignment: CrossAxisAlignment.start,
-      ),
-    ));
+          ));
+    }
   }
 
   void checkbox(bool b) {
