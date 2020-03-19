@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           Center(
@@ -46,45 +47,77 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Zostaw Pod Drzwiami',
                     style: TextStyle(color: Colors.blue, fontSize: 22.0),
                   ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 40.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          TextFormField(
-                              validator: (val) =>
-                                  val.isEmpty ? 'Wpisz email' : null,
-                              onChanged: (val) {
-                                setState(() {
-                                  email = val;
-                                });
-                              },
-                              decoration: textInputDecoration.copyWith(
-                                  labelText: 'email')),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          TextFormField(
-                              validator: (val) =>
-                                  val.isEmpty ? 'Wpisz hasło' : null,
-                              onChanged: (val) {
-                                setState(() {
-                                  password = val;
-                                });
-                              },
-                              obscureText: true,
-                              decoration: textInputDecoration.copyWith(
-                                  labelText: 'hasło')),
-                        ],
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.white, Colors.grey[200]],
+                              stops: [0.7, 1.0],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter),
+                          borderRadius: BorderRadius.circular(30.0)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 40.0),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    TextFormField(
+                                        validator: (val) =>
+                                            val.isEmpty ? 'Wpisz email' : null,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            email = val;
+                                          });
+                                        },
+                                        decoration: textInputDecoration
+                                            .copyWith(labelText: 'email')),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    TextFormField(
+                                        validator: (val) =>
+                                            val.isEmpty ? 'Wpisz hasło' : null,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            password = val;
+                                          });
+                                        },
+                                        obscureText: true,
+                                        decoration: textInputDecoration
+                                            .copyWith(labelText: 'hasło')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  RaisedButton(
-                    child: Text('Zaloguj'),
-                    onPressed: () async {
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  Text(
+                    'Zapomniałeś hasła?',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
                       if (_formKey.currentState.validate()) {
                         FocusScope.of(context).unfocus();
                         setState(() {
@@ -101,6 +134,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       }
                     },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Color(0xFF583CDF), Colors.blue],
+                              stops: [0.6, 1.0],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          borderRadius: BorderRadius.circular(50.0)),
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 30.0),
+                          child: Text(
+                            'Zaloguj się',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 25.0),
+                          )),
+                    ),
                   ),
                 ]),
           ),
