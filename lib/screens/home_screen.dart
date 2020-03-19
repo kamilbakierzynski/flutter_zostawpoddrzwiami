@@ -16,7 +16,6 @@ import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
-
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
     final List<UserRequest> userRequests =
@@ -237,35 +236,40 @@ class HomeScreen extends StatelessWidget {
                                             )
                                           ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailsScreen(request))),
-                                          child: Container(
-                                            width: 130,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                                color: Color(0xFFEDEDED),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(
-                                                  'Pomagam',
-                                                  style: TextStyle(
-                                                      color: Color(0xFF707070)),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                          child: Material(
+                                            color: Color(0xFFEDEDED),
+                                            child: InkWell(
+                                              onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DetailsScreen(
+                                                              request))),
+                                              child: Container(
+                                                width: 130,
+                                                height: 40,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      'Pomagam',
+                                                      style: TextStyle(
+                                                          color: Color(
+                                                              0xFF707070)),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5.0,
+                                                    ),
+                                                    Icon(Icons.arrow_forward,
+                                                        color:
+                                                            Color(0xFF707070))
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Icon(Icons.arrow_forward,
-                                                    color: Color(0xFF707070))
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         )
@@ -344,27 +348,27 @@ class HomeScreen extends StatelessWidget {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  UserRequest test_request = UserRequest(
-                    name: 'Kamil',
-                    address: 'Sosnowa',
-                    price: '13',
-                    request: [
-                      Item('Mleko', 1, '', ''),
-                      Item('Jajka', 1, '', ''),
-                      Item('Pomidory', 1, '', ''),
-                      Item('Pieczarki', 1, '', ''),
-                      Item('Kuskus', 1, '', ''),
-                      Item('Papier toaletowy', 1, '', ''),
-                      Item('Jagody', 1, '', ''),
-                      Item('Truskawki', 1, '', ''),
-                      Item('epet lq', 1, '', '')
-                    ],
-                    status: false,
-                    latitude: 23.3248,
-                    longitude: 28.6768,
-                  );
-                  await DatabaseService(uid: user.uid)
-                      .createNewRequest(test_request);
+//                  UserRequest test_request = UserRequest(
+//                    name: 'Kamil',
+//                    address: 'Sosnowa',
+//                    price: '13',
+//                    request: [
+//                      Item('Mleko', 1, '', ''),
+//                      Item('Jajka', 1, '', ''),
+//                      Item('Pomidory', 1, '', ''),
+//                      Item('Pieczarki', 1, '', ''),
+//                      Item('Kuskus', 1, '', ''),
+//                      Item('Papier toaletowy', 1, '', ''),
+//                      Item('Jagody', 1, '', ''),
+//                      Item('Truskawki', 1, '', ''),
+//                      Item('epet lq', 1, '', '')
+//                    ],
+//                    status: false,
+//                    latitude: 23.3248,
+//                    longitude: 28.6768,
+//                  );
+//                  await DatabaseService(uid: user.uid)
+//                      .createNewRequest(test_request);
                   Navigator.pushNamed(context, '/request');
                 },
                 child: Icon(Icons.add),

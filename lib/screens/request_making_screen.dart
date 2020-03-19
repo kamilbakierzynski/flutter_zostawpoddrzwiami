@@ -129,32 +129,34 @@ class _State extends State<RequestMakingScreen> {
                           return Center(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 60.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  _addItem();
-                                  Timer(
-                                      Duration(milliseconds: 50),
-                                      () => _controller.animateTo(
-                                          _controller.position.maxScrollExtent,
-                                          curve: Curves.easeInOut,
-                                          duration:
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30.0),
+                                child: Material(
+                                  color: Colors.grey[300],
+                                  child: InkWell(
+                                    onTap: () {
+                                      _addItem();
+                                      Timer(
+                                          Duration(milliseconds: 50),
+                                              () => _controller.animateTo(
+                                              _controller.position.maxScrollExtent,
+                                              curve: Curves.easeInOut,
+                                              duration:
                                               Duration(milliseconds: 500)));
-                                },
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  child: Center(
-                                      child: Text(
-                                    '+',
-                                    style: TextStyle(
-                                        color: Colors.grey[400],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  )),
+                                    },
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      child: Center(
+                                          child: Text(
+                                        '+',
+                                        style: TextStyle(
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      )),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
