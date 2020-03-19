@@ -50,7 +50,7 @@ class _State extends State<RequestMakingScreen>{
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 8.0,right: 30.0),
               child: TextFormField(
                 decoration: InputDecoration(
                   icon: Icon(Icons.location_city),
@@ -65,7 +65,7 @@ class _State extends State<RequestMakingScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 8.0,right: 30.0),
               child: TextFormField(
                   decoration: InputDecoration(
                       icon: Icon(Icons.phone_android),
@@ -82,7 +82,7 @@ class _State extends State<RequestMakingScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 30.0),
               child: TextFormField(
                   decoration: InputDecoration(
                       icon: Icon(Icons.description),
@@ -109,7 +109,7 @@ class _State extends State<RequestMakingScreen>{
             ),
           ],
         ),
-        padding: EdgeInsets.only(top: 15.0)
+        padding: EdgeInsets.only(top: 30.0)
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addItem,
