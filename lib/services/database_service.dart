@@ -51,13 +51,13 @@ class DatabaseService {
         List<dynamic> items = doc.data['order'];
         List<Item> itemsFormated = [];
         items.forEach((item) {
-          itemsFormated.add(Item(item.toString().split('x')[1], 1.0));
+          itemsFormated.add(Item(item.toString().split('#@?')[0], double.parse(item.toString().split('#@?')[1]), item.toString().split('#@?')[2], item.toString().split('#@?')[3]));
         });
         print(itemsFormated[0].name);
         return UserRequest(
           name: doc.data["name"] ?? '',
           address: doc.data["name"] ?? '',
-          request: itemsFormated ?? [Item('', 0)],
+          request: itemsFormated ?? [Item('',0,'', '')],
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
@@ -103,7 +103,7 @@ class DatabaseService {
     final id = shortid.generate();
     List<String> output = [];
     request.request.forEach((item) {
-      output.add("${item.quantity.toString()}x${item.name}");
+      output.add("${item.name}#@?${item.quantity.toString()}#@?${item.unit}#@?${item.description}");
     });
     await requestDataCollection.document(id).setData({
       'name': request.name,
