@@ -237,35 +237,38 @@ class HomeScreen extends StatelessWidget {
                                             )
                                           ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailsScreen(request))),
-                                          child: Container(
-                                            width: 130,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                                color: Color(0xFFEDEDED),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(
-                                                  'Pomagam',
-                                                  style: TextStyle(
-                                                      color: Color(0xFF707070)),
+                                        ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(
+                                              30.0),
+                                          child: Material(
+                                            color: Color(0xFFEDEDED),
+                                            child: InkWell(
+                                              onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DetailsScreen(request))),
+                                              child: Container(
+                                                width: 130,
+                                                height: 40,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      'Pomagam',
+                                                      style: TextStyle(
+                                                          color: Color(0xFF707070)),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5.0,
+                                                    ),
+                                                    Icon(Icons.arrow_forward,
+                                                        color: Color(0xFF707070))
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Icon(Icons.arrow_forward,
-                                                    color: Color(0xFF707070))
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         )
@@ -328,11 +331,11 @@ class HomeScreen extends StatelessWidget {
                             Icon(
                               Icons.shopping_basket,
                               size: 30.0,
-                              color: Colors.grey[300],
+                              color: Colors.grey[400],
                             ),
                             Text(
                               'Lista',
-                              style: TextStyle(color: Colors.grey[300]),
+                              style: TextStyle(color: Colors.grey[400]),
                             )
                           ],
                         ),
