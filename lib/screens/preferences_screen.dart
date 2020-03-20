@@ -77,7 +77,7 @@ class _PreferencesState extends State<Preferences> {
               foregroundColor: Colors.white,
               radius: 40,
               child: Text(
-                userData.name[0] + userData.surname[0],
+                widget.originalName[0].toUpperCase() + widget.originalSurname[0].toUpperCase(),
                 style: TextStyle(fontSize: 40.0),
               ),
             ),
