@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import "package:zostawpoddrzwiami/models/request_model.dart";
+import "package:zostawpoddrzwiami/services/database_service.dart";
 
 import '../models/request_model.dart';
 
@@ -31,6 +32,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
   CurrentUserRequest currentRequest = null;
   int rows = 10;
   List<bool> checkbox_values = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -208,9 +210,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         color: Colors.red,
                         onPressed: () {
                           print("pressed decline");
-                          _showResignDialog();
+                          _showResignDialog(currentUser);
                         },
-                        child: const Icon(Icons.cancel),
+                        child: const Icon(Icons.cancel, color: Colors.white,),
                       ),
                     ),
                     Container(
@@ -222,7 +224,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                           print("pressed finnished");
                           _showRequestFinishedDialog();
                         },
-                        child: const Icon(Icons.check_circle),
+                        child: const Icon(Icons.check_circle, color: Colors.white,),
                       ),
                     )
                   ],
@@ -335,7 +337,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
   }
 
-  void _showResignDialog() {
+  void _showResignDialog(User user) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -354,6 +356,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
+                DatabaseService(uid: user.uid).returnRequest(currentRequest);
                 Navigator.of(context).pop();
               },
             ),
