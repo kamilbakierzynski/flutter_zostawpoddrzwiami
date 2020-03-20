@@ -7,7 +7,6 @@ import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:shortid/shortid.dart';
 import 'package:intl/intl.dart';
-
 import '../models/current_user_request_model.dart';
 import '../models/request_model.dart';
 import '../models/request_model.dart';
@@ -110,6 +109,8 @@ class DatabaseService {
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
           customer: doc.data['customer'] ?? '',
+          longitude: doc.data["longitude"] ?? 0.0,
+          latitude: doc.data["latitude"] ?? 0.0,
           description: doc.data['description'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '',
         );
