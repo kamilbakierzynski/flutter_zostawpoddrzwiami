@@ -140,141 +140,159 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
     if (currentUser.uid != currentRequest.customer) {
       print("in is carrier");
-
-      return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'Twoja obecna lista',
-              style: TextStyle(color: Colors.black),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.cancel),
-                onPressed: () {
-                  _showResignDialog(currentUser);
-                }
-              )
-            ],
-            iconTheme: IconThemeData(color: Colors.black),
-            backgroundColor: Colors.white,
-          ),
-          body: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: 30, top: 20, right: 30),
-                  child: Column(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            currentRequest.name,
-                            style: TextStyle(
-                              color: Colors.grey[500],
-                              fontSize: 40,
-                            ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                phoneNumber,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  launch("tel://$phoneNumber");
-                                },
-                                child: Icon(Icons.phone, color: Colors.green[600],),
-                              )
-                            ],
-                          ),
-                        ],
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      ),
-                      Container(
-                        child: Column(children: <Widget>[
-                          FittedBox(
-                            child: Text(
-                              currentRequest.address,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                "$strNumber/$flat",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 25),
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  _launchMapsUrl();
-                                },
-                                child: Icon(Icons.location_on, color: Colors.red[700],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ], crossAxisAlignment: CrossAxisAlignment.start),
-                      ),
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: currentRequest.request.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 0, bottom: 0),
-                          child: Card(
-                            child: CheckboxListTile(
-                              value: checkbox_values[index],
-                              title: Column(
-                                children: <Widget>[
-                                  Text(currentRequest.request[index].name),
-                                  Text(currentRequest.request[index].quantity
-                                          .toString() +
-                                      currentRequest.request[index].unit),
-                                ],
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  checkbox_values[index] = value;
-                                  syncWithCache();
-                                });
-                              },
-                              secondary: const Icon(Icons.shopping_basket),
-                              //trailing: Icon(Icons.more_vert),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Center(
-                    child: FloatingActionButton(onPressed: () {
-                      _showRequestFinishedDialog();
-                    },
-                      child: Icon(Icons.check, color: Colors.white,),
-                      backgroundColor: Colors.green,
-                    ),
-                  ),
+      List<String> addressList = currentRequest.address.split(",");
+      if (addressList.length == 4){
+        street = addressList[0];
+        strNumber = addressList[1];
+        flat = addressList[2];
+        city = addressList[3];
+      }
+      else if (addressList.length == 3){
+        street = addressList[0];
+        strNumber = addressList[1];
+        flat = "";
+        city = addressList[3];
+      }
+      else{
+        print("dlugosc listy ");
+        print(addressList.length);
+        print(currentRequest.address);
+      }
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'Twoja obecna lista',
+                style: TextStyle(color: Colors.black),
+              ),
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      _showResignDialog(currentUser);
+                    }
                 )
               ],
-              crossAxisAlignment: CrossAxisAlignment.start,
+              iconTheme: IconThemeData(color: Colors.black),
+              backgroundColor: Colors.white,
             ),
-          ));
-    } else {
+            body: Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(left: 30, top: 20, right: 30),
+                    child: Column(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              currentRequest.name,
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 40,
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  phoneNumber,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                FlatButton(
+                                  onPressed: () {
+                                    launch("tel://$phoneNumber");
+                                  },
+                                  child: Icon(Icons.phone, color: Colors.green[600],),
+                                )
+                              ],
+                            ),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        Container(
+                          child: Column(children: <Widget>[
+                            FittedBox(
+                              child: Text(
+                                street,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "$strNumber/$flat",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 25),
+                                ),
+                                FlatButton(
+                                  onPressed: () {
+                                    _launchMapsUrl();
+                                  },
+                                  child: Icon(Icons.location_on, color: Colors.red[700],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ], crossAxisAlignment: CrossAxisAlignment.start),
+                        ),
+                      ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: currentRequest.request.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 0, bottom: 0),
+                            child: Card(
+                              child: CheckboxListTile(
+                                value: checkbox_values[index],
+                                title: Column(
+                                  children: <Widget>[
+                                    Text(currentRequest.request[index].name),
+                                    Text(currentRequest.request[index].quantity
+                                        .toString() +
+                                        currentRequest.request[index].unit),
+                                  ],
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                ),
+                                onChanged: (value) {
+                                  setState(() {
+                                    checkbox_values[index] = value;
+                                    syncWithCache();
+                                  });
+                                },
+                                secondary: const Icon(Icons.shopping_basket),
+                                //trailing: Icon(Icons.more_vert),
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Center(
+                      child: FloatingActionButton(onPressed: () {
+                        _showRequestFinishedDialog();
+                      },
+                        child: Icon(Icons.check, color: Colors.white,),
+                        backgroundColor: Colors.green,
+                      ),
+                    ),
+                  )
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+            ));
+      }
+     else {
       return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -443,6 +461,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
+                DatabaseService(uid: user.uid).deleteOwnRequest(currentRequest);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
