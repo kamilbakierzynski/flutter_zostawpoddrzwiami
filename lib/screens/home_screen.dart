@@ -120,10 +120,35 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(
-                              Icons.shopping_basket,
-                              size: 30.0,
-                              color: Colors.grey[400],
+                            Stack(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.shopping_basket,
+                                  size: 30.0,
+                                  color: Colors.grey[400],
+                                ),
+                                currentUserRequestList.length > 0
+                                    ? Positioned(
+                                        top: 20,
+                                        left: 20,
+                                        child: Container(
+                                          width: 10,
+                                          height: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0)),
+                                          child: Center(
+                                              child: Text(
+                                            '1',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 7),
+                                          )),
+                                        ),
+                                      )
+                                    : SizedBox.shrink()
+                              ],
                             ),
                             Text(
                               'Lista',
