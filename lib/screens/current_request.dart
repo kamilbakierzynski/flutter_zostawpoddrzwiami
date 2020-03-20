@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/number_symbols_data.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
@@ -63,11 +64,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
         Provider.of<List<CurrentUserRequest>>(context);
 
     if (allRequests != null) {
-      print("requests are not null");
       allRequests.forEach((CurrentUserRequest req) {
         if (req.status) {
           currentRequest = req;
-          print("assigned request");
         }
       });
     } else {
@@ -132,7 +131,6 @@ class _CurrentRequestState extends State<CurrentRequest> {
       );
     }
     if (cachedID == currentRequest.requestId){
-      print("id matches");
       for (var i = 0; i < checkBoxString.length;i++){
         if (checkBoxString[i] == "1"){
           checkbox_values[i] = true;
@@ -141,11 +139,6 @@ class _CurrentRequestState extends State<CurrentRequest> {
           checkbox_values[i] = false;
         }
       }
-    }
-    else{
-      print("id not matching");
-      print(cachedID);
-      print(currentRequest.requestId);
     }
     if (currentUser.uid != currentRequest.requestId) {
       print("in is carrier");
@@ -259,39 +252,16 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         );
                       }),
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 6, right: 3),
-                      width: 195,
-                      child: RaisedButton(
-                        color: Colors.red,
-                        onPressed: () {
-                          print("pressed decline");
-                          _showResignDialog(currentUser);
-                        },
-                        child: const Icon(
-                          Icons.cancel,
-                          color: Colors.white,
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                    child: FloatingActionButton(onPressed: () {
+                      _showRequestFinishedDialog();
+                    },
+                      child: Icon(Icons.check, color: Colors.white,),
+                      backgroundColor: Colors.green,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(left: 3, right: 6),
-                      width: 195,
-                      child: RaisedButton(
-                        color: Colors.lightGreen,
-                        onPressed: () {
-                          print("pressed finnished");
-                          _showRequestFinishedDialog();
-                        },
-                        child: const Icon(
-                          Icons.check_circle,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 )
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +287,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                       Column(
                         children: <Widget>[
                           Text(
-                            name,
+                            currentRequest.name,
                             style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: 40,
@@ -379,6 +349,17 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         );
                       }),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                    child: FloatingActionButton(onPressed: () {
+                      _showCancelDialog(currentUser);
+                    },
+                      child: Icon(Icons.remove, color: Colors.white,),
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                )
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
@@ -412,6 +393,35 @@ class _CurrentRequestState extends State<CurrentRequest> {
           title: new Text("Uwaga!"),
           content: new Text(
               "Czy na pewno chcesz zrezygnowac z obecnie wykonywanej prośby?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Nie"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Tak"),
+              onPressed: () {
+                DatabaseService(uid: user.uid).returnRequest(currentRequest);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void _showCancelDialog(User user) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Uwaga!"),
+          content: new Text(
+              "Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
