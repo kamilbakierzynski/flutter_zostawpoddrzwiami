@@ -171,7 +171,7 @@ class DatabaseService {
   }
 
 // request operations
-  Future<bool> returnRequest(CurrentUserRequest request) async {
+  Future<bool> abandonRequest(CurrentUserRequest request) async {
     List<String> output = [];
     request.request.forEach((item) {
       output.add(
@@ -191,6 +191,10 @@ class DatabaseService {
       'phoneNumber': request.phoneNumber,
       'time': request.time,
     });
+    await userDataCollection.document(request.customer).collection('requests').document(request.requestId).updateData({
+      'status': false,
+    });
+    await userDataCollection.document(uid).collection('requests').document(request.requestId).delete();
     return true;
   }
 
