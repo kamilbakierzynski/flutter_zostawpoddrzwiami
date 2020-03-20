@@ -62,7 +62,7 @@ class DatabaseService {
         print(itemsFormated[0].name);
         return UserRequest(
           name: doc.data["name"] ?? '',
-          address: doc.data["name"] ?? '',
+          address: doc.data["address"] ?? '',
           request: itemsFormated ?? [Item('', 0, '', '')],
           creatorId: doc.data['customer'] ?? '',
           requestId: doc.data["requestId"] ?? '',
@@ -73,8 +73,8 @@ class DatabaseService {
               : '',
           longitude: doc.data["longitude"] ?? 0.0,
           latitude: doc.data["latitude"] ?? 0.0,
-          description: doc.data['customer'] ?? '',
-          phoneNumber: doc.data['customer'] ?? '',
+          description: doc.data['description'] ?? '',
+          phoneNumber: doc.data['phoneNumber'] ?? '',
         );
       } else {
         return null;
