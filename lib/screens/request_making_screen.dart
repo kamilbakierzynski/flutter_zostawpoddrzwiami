@@ -30,6 +30,7 @@ class _State extends State<RequestMakingScreen> {
   String address = '';
   String phoneNumber = '';
   String optionalInfo = '';
+  String price = '';
 
 //  String name = '';
 //  String surname = '';
@@ -115,6 +116,18 @@ class _State extends State<RequestMakingScreen> {
                         ],
                       ),
                       TextFormField(
+                        validator: (val) =>
+                        val.isEmpty ? 'Wpisz przewidywana cene zakupow' : null,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.attach_money),
+                          hintText: "Wpisz przyblizona cene zakupow",
+                          labelText: "Przyblizona cena zakupow",
+                        ),
+                        onChanged: (String text) {
+                          this.price = text;
+                        },
+                      ),
+                      TextFormField(
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.description),
                           hintText: "Opcjonalnie",
@@ -196,7 +209,7 @@ class _State extends State<RequestMakingScreen> {
               ),
             ],
           ),
-          padding: EdgeInsets.only(top: 30.0)),
+          padding: EdgeInsets.only(top: 5.0)),
       floatingActionButton: firstFilled
           ? FloatingActionButton.extended(
               backgroundColor: Colors.amber,
@@ -209,7 +222,7 @@ class _State extends State<RequestMakingScreen> {
                   List<double> coordinates = await getCurrentCoordinates();
                   UserRequest newRequest = UserRequest(
                     name: userData.name,
-                    price: '13',
+                    price: this.price,
                     address: address,
                     request: requestedCart,
                     status: false,

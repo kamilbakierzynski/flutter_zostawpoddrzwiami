@@ -413,7 +413,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
-                DatabaseService(uid: user.uid).returnRequest(currentRequest);
+                DatabaseService(uid: user.uid).abandonRequest(currentRequest);
                 Navigator.of(context).pop();
               },
             ),
@@ -442,7 +442,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
-                DatabaseService(uid: user.uid).returnRequest(currentRequest);
+                DatabaseService(uid: user.uid).abandonRequest(currentRequest);
                 Navigator.of(context).pop();
               },
             ),
