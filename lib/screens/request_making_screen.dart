@@ -16,10 +16,7 @@ class RequestMakingScreen extends StatefulWidget {
 }
 
 class _State extends State<RequestMakingScreen> {
-  @override
-
-  List<Item> requestedCart = [Item("Blank",0.0,"Blank","Blank")];
-
+  List<Item> requestedCart = [Item("Blank", 0.0, "Blank", "Blank")];
 
 //  String tempProduct = '';
   String address = '';
@@ -31,29 +28,12 @@ class _State extends State<RequestMakingScreen> {
 //  String description = '';
 //  int itemCount = 0;
 //  bool isListClicked = false;
-  int value = 1;
-  int index = 0;
 
   ScrollController _controller = ScrollController();
-  List<Widget> itemList = [Container()];
+
   _addItem() {
-    itemList.add(Container());
     setState(() {
-      print(this.requestedCart[index].name);
-      print(this.requestedCart[index].quantity);
-      print(this.requestedCart[index].unit);
-      print(this.requestedCart[index].description);
-      print(this.address);
-      print(this.phoneNumber);
-      print(this.optionalInfo);
-      print("-------------------------");
-      for(int i = 0 ; i <= index ; i++)
-        {
-          print(requestedCart[i].name);
-        }
-      this.requestedCart.add(Item("Blank",0.0,"Blank","Blank"));
-      value = value + 1;
-      index++;
+      requestedCart.add(Item("Blank", 0.0, "Blank", "Blank"));
     });
   }
 
@@ -123,12 +103,14 @@ class _State extends State<RequestMakingScreen> {
                 child: Container(
                   child: ListView.builder(
                       controller: _controller,
-                      itemCount: value + 1,
+                      itemCount: requestedCart.length + 1,
                       itemBuilder: (context, index) {
-                        if (index == value) {
+                        if (index == requestedCart.length) {
                           return Center(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 60.0),
+                              padding: EdgeInsets.only(
+                                  bottom: 60.0,
+                                  top: requestedCart.length == 0 ? 20.0 : 0.0),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: Material(
@@ -138,11 +120,12 @@ class _State extends State<RequestMakingScreen> {
                                       _addItem();
                                       Timer(
                                           Duration(milliseconds: 50),
-                                              () => _controller.animateTo(
-                                              _controller.position.maxScrollExtent,
+                                          () => _controller.animateTo(
+                                              _controller
+                                                  .position.maxScrollExtent,
                                               curve: Curves.easeInOut,
                                               duration:
-                                              Duration(milliseconds: 500)));
+                                                  Duration(milliseconds: 500)));
                                     },
                                     child: Container(
                                       width: 50,
@@ -163,15 +146,14 @@ class _State extends State<RequestMakingScreen> {
                           );
                         }
                         return Dismissible(
-                          direction: index == 0 ? null : DismissDirection.horizontal,
+                          direction: DismissDirection.horizontal,
                           onDismissed: (_) {
-                            itemList.removeLast();
                             setState(() {
-                              value -= 1;
+                              requestedCart.removeAt(index);
                             });
                           },
                           child: _buildRow(index),
-                          key: Key(itemList[index].toString()),
+                          key: Key(requestedCart[index].toString()),
                         );
                       }),
                   height: MediaQuery.of(context).size.height,
@@ -183,7 +165,7 @@ class _State extends State<RequestMakingScreen> {
           padding: EdgeInsets.only(top: 30.0)),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
-        onPressed: _addItem,
+        onPressed: () {},
         label: Text('Wyślij'),
         icon: Icon(Icons.arrow_forward),
       ),
@@ -229,7 +211,7 @@ class _State extends State<RequestMakingScreen> {
               labelText: 'Produkt',
             ),
             onChanged: (String text) {
-              this.requestedCart[value - 1].name = text;
+              this.requestedCart[index].name = text;
             },
           ),
           TextFormField(
@@ -243,7 +225,7 @@ class _State extends State<RequestMakingScreen> {
               WhitelistingTextInputFormatter.digitsOnly
             ],
             onChanged: (String text) {
-              this.requestedCart[value - 1].quantity = double.parse(text);
+              this.requestedCart[index].quantity = double.parse(text);
             },
           ),
           TextFormField(
@@ -257,7 +239,7 @@ class _State extends State<RequestMakingScreen> {
               WhitelistingTextInputFormatter.digitsOnly
             ],
             onChanged: (String text) {
-              this.requestedCart[value - 1].unit = text;
+              this.requestedCart[index].unit = text;
             },
           ),
           TextFormField(
@@ -267,14 +249,13 @@ class _State extends State<RequestMakingScreen> {
               labelText: 'Uwagi',
             ),
             onChanged: (String text) {
-              this.requestedCart[value - 1].description = text;
+              this.requestedCart[index].description = text;
             },
           ),
         ],
       ),
     );
   }
-
 
 //  Widget build(BuildContext context){
 //    return Scaffold(
