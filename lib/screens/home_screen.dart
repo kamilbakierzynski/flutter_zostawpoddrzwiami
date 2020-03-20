@@ -163,7 +163,12 @@ class HomeScreen extends StatelessWidget {
                 shape: CircularNotchedRectangle(),
               ),
               floatingActionButton: FloatingActionButton(
-                onPressed: () => Navigator.pushNamed(context, '/request'),
+                onPressed: () {
+                  if(currentUserRequestList.length >=1)
+                  {
+                  print('DIALOG ALERT');
+                  }
+                  else Navigator.pushNamed(context, '/request');},
                 child: Icon(Icons.add),
               ),
               floatingActionButtonLocation:
