@@ -24,9 +24,11 @@ class DatabaseService {
   final CollectionReference appDataCollection =
       Firestore.instance.collection('app-data');
 
-  Future createUserData(String name) async {
+  Future createUserData(String name, String surname) async {
     return await userDataCollection.document(uid).setData({
       'name': name,
+      'surname': surname,
+      'uid': uid
     });
   }
 

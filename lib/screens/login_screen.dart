@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
@@ -36,6 +38,31 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            FocusScope.of(context).unfocus();
+            setState(() {
+              _loadingInProgress = true;
+            });
+            if (_formKey.currentState.validate()) {
+              FirebaseUser result = await AuthService()
+                  .signInWithEmailAndPassword(email, password);
+              if (result == null) {
+                Toast.show(
+                    'Wystąpił błąd. Sprawdź ponownie dane logowania.', context);
+                setState(() {
+                  _loadingInProgress = false;
+                });
+              }
+            } else {
+              setState(() {
+                _loadingInProgress = false;
+              });
+            }
+          },
+          label: _loadingInProgress
+              ? SpinKitThreeBounce(color: Colors.white, size: 20,)
+              : Text('Zaloguj się')),
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
@@ -45,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   Text(
                     'Zostaw Pod Drzwiami',
-                    style: TextStyle(color: Colors.blue, fontSize: 22.0),
+                    style: TextStyle(color: Colors.amber, fontSize: 22.0),
                   ),
                   SizedBox(
                     height: 40.0,
@@ -53,13 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.grey[200]],
-                              stops: [0.7, 1.0],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter),
-                          borderRadius: BorderRadius.circular(30.0)),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                         child: Column(
@@ -75,7 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: <Widget>[
                                     TextFormField(
                                         validator: (val) =>
-                                            val.isEmpty ? 'Wpisz email' : null,
+                                            val.isEmpty || !val.contains('@')
+                                                ? 'Wpisz email'
+                                                : null,
                                         onChanged: (val) {
                                           setState(() {
                                             email = val;
@@ -109,65 +131,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  Text(
-                    'Zapomniałeś hasła?',
-                    style: TextStyle(color: Colors.blue),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        'Zarejestruj się',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      Text(
+                        'Zapomniałeś hasła?',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      if (_formKey.currentState.validate()) {
-                        FocusScope.of(context).unfocus();
-                        setState(() {
-                          _loadingInProgress = true;
-                        });
-                        User result = await AuthService().signInAnon();
-                        setState(() {
-                          _loadingInProgress = false;
-                        });
-                        if (result == null) {
-                          Toast.show('Wystąpił błąd przy logowaniu', context,
-                              duration: Toast.LENGTH_LONG,
-                              gravity: Toast.CENTER);
-                        }
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xFF583CDF), Colors.blue],
-                              stops: [0.6, 1.0],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight),
-                          borderRadius: BorderRadius.circular(50.0)),
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 30.0),
-                          child: Text(
-                            'Zaloguj się',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 25.0),
-                          )),
-                    ),
-                  ),
                 ]),
           ),
-          _loadingInProgress
-              ? Stack(
-                  children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.black87,
-                    ),
-                    Center(
-                      child: Loading(),
-                    )
-                  ],
-                )
-              : SizedBox.shrink()
         ],
       ),
     );
