@@ -73,7 +73,7 @@ class DatabaseService {
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
           time: doc.data["time"] != null
-              ? formatTime(doc.data['time'].toDate().toString())
+              ? doc.data['time'].toDate().toString()
               : '',
           longitude: doc.data["longitude"] ?? 0.0,
           latitude: doc.data["latitude"] ?? 0.0,
