@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:toast/toast.dart';
+import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final List<UserRequest> userRequests =
-    Provider.of<List<UserRequest>>(context);
+        Provider.of<List<UserRequest>>(context);
     User user = Provider.of<User>(context);
     return Scaffold(
       extendBody: true,
@@ -134,17 +135,74 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final List<UserRequest> userRequests = Provider.of<List<UserRequest>>(context);
+          final List<CurrentUserRequest> currentUserRequest =
+              Provider.of<List<CurrentUserRequest>>(context);
           setState(() {
             awaitResponse = true;
           });
-          if (userRequests.contains((UserRequest requestFromList) => requestFromList.requestId == widget.request.requestId)) {
-            await DatabaseService(uid: user.uid).acceptRequest(widget.request);
-            Navigator.of(context).pop();
-            awaitResponse = false;
+          if (currentUserRequest.length > 0) {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Już pomagasz jednej osobie.'),
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          Text('Aktualnie można wybrac tylko'),
+                          Text('jedną prośbę o pomoc.'),
+                          Text('Dokończ rozpoczętą prośbę.'),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          setState(() {
+                            awaitResponse = false;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                });
           } else {
-            awaitResponse = false;
-            Toast.show('Obiekt nie jest dostępny', context);
+            if (_checkIfStillAvaliable(userRequests, widget.request.requestId)) {
+              await DatabaseService(uid: user.uid)
+                  .acceptRequest(widget.request);
+              Navigator.of(context).pop();
+              awaitResponse = false;
+            } else {
+              awaitResponse = false;
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Ktoś był szybszy...'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Text('To świetnie, że chciałeś pomóc'),
+                            Text('ale wybrana prośba jest już niedostępna.'),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.popUntil(
+                                context, ModalRoute.withName('/'));
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            }
           }
         },
         icon: awaitResponse ? null : Icon(Icons.thumb_up),
@@ -157,6 +215,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
     );
   }
+
+  bool _checkIfStillAvaliable(List<UserRequest> userRequests, String orderId) {
+    for (var request in userRequests) {
+      if (request.requestId == orderId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
 }
 
 class Delegate extends SliverPersistentHeaderDelegate {

@@ -4,6 +4,7 @@ import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/screens/details_screen.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:provider/provider.dart';
+
 class HomeRequestsList extends StatelessWidget {
   // ignore: non_constant_identifier_names
   final List<UserRequest> sorted_userRequests;
@@ -13,7 +14,7 @@ class HomeRequestsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<CurrentUserRequest> currentUserRequestList =
-    Provider.of<List<CurrentUserRequest>>(context);
+        Provider.of<List<CurrentUserRequest>>(context);
     if (sorted_userRequests.length != 0) {
       return SliverList(
         delegate: SliverChildBuilderDelegate((context, index) {
@@ -179,13 +180,12 @@ class HomeRequestsList extends StatelessWidget {
                                 color: Color(0xFFEDEDED),
                                 child: InkWell(
                                   onTap: () {
-                                    if(currentUserRequestList.length >=1){print('DIALOG ALERT');}
-                                    else {
                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailsScreen(request)));}},
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailsScreen(request)));
+                                  },
                                   child: Container(
                                     width: 130,
                                     height: 40,
