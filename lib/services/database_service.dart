@@ -1,15 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:shortid/shortid.dart';
-import 'package:intl/intl.dart';
 import '../models/current_user_request_model.dart';
-import '../models/request_model.dart';
-import '../models/request_model.dart';
 import '../models/request_model.dart';
 import '../models/user_model.dart';
 
@@ -73,7 +68,7 @@ class DatabaseService {
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
           time: doc.data["time"] != null
-              ? doc.data['time'].toDate().toString()
+              ? formatTime(doc.data['time'].toDate().toString())
               : '',
           longitude: doc.data["longitude"] ?? 0.0,
           latitude: doc.data["latitude"] ?? 0.0,
