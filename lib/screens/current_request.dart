@@ -65,9 +65,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
 
     if (allRequests != null) {
       allRequests.forEach((CurrentUserRequest req) {
-        if (req.status) {
           currentRequest = req;
-        }
       });
     } else {
       return Scaffold(
@@ -140,7 +138,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
         }
       }
     }
-    if (currentUser.uid != currentRequest.requestId) {
+    if (currentUser.uid != currentRequest.customer) {
       print("in is carrier");
 
       return Scaffold(
@@ -417,6 +415,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 DatabaseService(uid: user.uid).abandonRequest(currentRequest);
                 print("abandoning request");
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -444,7 +443,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
-                DatabaseService(uid: user.uid).abandonRequest(currentRequest);
+                Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
             ),
