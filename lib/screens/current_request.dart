@@ -6,6 +6,7 @@ import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import "package:zostawpoddrzwiami/models/request_model.dart";
 import "package:zostawpoddrzwiami/services/database_service.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 import '../models/request_model.dart';
 
@@ -13,7 +14,7 @@ class CurrentRequest extends StatefulWidget {
   @override
   _CurrentRequestState createState() {
     _CurrentRequestState state = _CurrentRequestState();
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i <= 500; i++){
       state.checkbox_values.add(false);
     }
     return state;
@@ -31,9 +32,34 @@ class _CurrentRequestState extends State<CurrentRequest> {
   CurrentUserRequest currentRequest = null;
   int rows = 10;
   List<bool> checkbox_values = [];
+  String checkBoxString = "";
+  String cachedID = "";
+  SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i <=500; i++){
+      checkbox_values.add(false);
+    }
+    _loadCachedData();
+  }
+
+  _loadCachedData() async {
+    print("in loadcacheddata");
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      print("in set state");
+       cachedID = (prefs.getString('cachedID') ?? "");
+       print("got id from disc");
+       print(cachedID);
+       checkBoxString = (prefs.getString('checkBoxString') ?? "");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
     final User currentUser = Provider.of<User>(context);
     final List<CurrentUserRequest> allRequests =
         Provider.of<List<CurrentUserRequest>>(context);
@@ -106,6 +132,22 @@ class _CurrentRequestState extends State<CurrentRequest> {
           ),
         ),
       );
+    }
+    if (cachedID == currentRequest.requestId){
+      print("id matches");
+      for (var i = 0; i < checkBoxString.length;i++){
+        if (checkBoxString[i] == "1"){
+          checkbox_values[i] = true;
+        }
+        else{
+          checkbox_values[i] = false;
+        }
+      }
+    }
+    else{
+      print("id not matching");
+      print(cachedID);
+      print(currentRequest.requestId);
     }
     if (isCarrier) {
       print("in is carrier");
@@ -209,6 +251,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               onChanged: (value) {
                                 setState(() {
                                   checkbox_values[index] = value;
+                                  syncWithCache();
                                 });
                               },
                               secondary: const Icon(Icons.shopping_basket),
@@ -328,6 +371,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               onChanged: (value) {
                                 setState(() {
                                   checkbox_values[index] = value;
+                                  syncWithCache();
                                 });
                               },
                               secondary: const Icon(Icons.shopping_basket),
@@ -418,5 +462,20 @@ class _CurrentRequestState extends State<CurrentRequest> {
         );
       },
     );
+  }
+  void syncWithCache() async {
+    prefs = await SharedPreferences.getInstance();
+    String newCheckboxString = "";
+    for(var i = 0; i < currentRequest.request.length; i++){
+      if (checkbox_values[i] == false){
+        newCheckboxString += "0";
+      }
+      else{
+        newCheckboxString += "1";
+      }
+    }
+    prefs.setString("checkBoxString", newCheckboxString);
+    prefs.setString("cachedID", currentRequest.requestId);
+    cachedID = currentRequest.requestId;
   }
 }
