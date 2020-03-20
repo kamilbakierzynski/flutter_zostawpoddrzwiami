@@ -65,7 +65,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
     if (allRequests != null) {
       print("requests are not null");
       allRequests.forEach((CurrentUserRequest req) {
-        if (!req.status) {
+        if (req.status) {
           currentRequest = req;
           print("assigned request");
         }
@@ -147,7 +147,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
       print(cachedID);
       print(currentRequest.requestId);
     }
-    if (currentUser.uid == currentRequest.requestId) {
+    if (currentUser.uid != currentRequest.requestId) {
       print("in is carrier");
 
       return Scaffold(
@@ -301,7 +301,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
       return Scaffold(
           appBar: AppBar(
             title: Text(
-              'Twoja obecna lista',
+              'Twoja obecna prośba',
               style: TextStyle(color: Colors.black),
             ),
             iconTheme: IconThemeData(color: Colors.black),
@@ -411,7 +411,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
         return AlertDialog(
           title: new Text("Uwaga!"),
           content: new Text(
-              "Czy na pewno chcesz zrezygnowac z obecnego zamowienia?"),
+              "Czy na pewno chcesz zrezygnowac z obecnie wykonywanej prośby?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
