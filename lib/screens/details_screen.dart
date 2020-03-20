@@ -21,7 +21,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // providers
+    final List<UserRequest> userRequests =
+    Provider.of<List<UserRequest>>(context);
     User user = Provider.of<User>(context);
     return Scaffold(
       extendBody: true,
@@ -133,17 +134,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
+          final List<UserRequest> userRequests = Provider.of<List<UserRequest>>(context);
           setState(() {
             awaitResponse = true;
           });
-          bool result = await DatabaseService(uid: user.uid).acceptRequest(widget.request);
-          if (result) {
+          if (userRequests.contains((UserRequest requestFromList) => requestFromList.requestId == widget.request.requestId)) {
+            await DatabaseService(uid: user.uid).acceptRequest(widget.request);
             Navigator.of(context).pop();
+            awaitResponse = false;
           } else {
             awaitResponse = false;
-            Toast.show('Wystąpił błąd', context);
+            Toast.show('Obiekt nie jest dostępny', context);
           }
-
         },
         icon: awaitResponse ? null : Icon(Icons.thumb_up),
         label: awaitResponse
