@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:toast/toast.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:flutter/animation.dart';
@@ -55,6 +57,8 @@ class _State extends State<RequestMakingScreen> {
       }
     }
   }
+
+  bool awaitingConfirm = false;
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +202,9 @@ class _State extends State<RequestMakingScreen> {
               backgroundColor: Colors.amber,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
+                  setState(() {
+                    awaitingConfirm = true;
+                  });
                   _removeIfBlank();
                   List<double> coordinates = await getCurrentCoordinates();
                   UserRequest newRequest = UserRequest(
@@ -209,13 +216,23 @@ class _State extends State<RequestMakingScreen> {
                     latitude: coordinates[0],
                     longitude: coordinates[1],
                   );
-                  await DatabaseService(uid: user.uid)
+                  bool result = await DatabaseService(uid: user.uid)
                       .createNewRequest(newRequest);
-                  Navigator.of(context).pop();
+                  if (result) {
+                    Navigator.of(context).pop();
+                  } else {
+                    setState(() {
+                      awaitingConfirm = false;
+                      Toast.show('Wystąpił błąd', context);
+                    });
+                  }
                 }
               },
-              label: Text('Wyślij'),
-              icon: Icon(Icons.arrow_forward),
+              label: awaitingConfirm ? SpinKitThreeBounce(
+                color: Colors.white,
+                size: 20,
+              ) : Text('Wyślij'),
+              icon: awaitingConfirm ? null : Icon(Icons.arrow_forward),
             )
           : null,
     );
