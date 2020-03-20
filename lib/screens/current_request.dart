@@ -350,24 +350,16 @@ class _CurrentRequestState extends State<CurrentRequest> {
                           padding: const EdgeInsets.only(
                               left: 10, right: 10, top: 0, bottom: 0),
                           child: Card(
-                            child: CheckboxListTile(
-                              value: checkbox_values[index],
+                            child: ListTile(
                               title: Column(
                                 children: <Widget>[
-                                  Text(currentRequest.request[index].name),
+                                  Text(currentRequest.request[index].name, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                                   Text(currentRequest.request[index].quantity
                                           .toString() +
                                       currentRequest.request[index].unit),
                                 ],
                                 crossAxisAlignment: CrossAxisAlignment.start,
                               ),
-                              onChanged: (value) {
-                                setState(() {
-                                  checkbox_values[index] = value;
-                                  syncWithCache();
-                                });
-                              },
-                              secondary: const Icon(Icons.shopping_basket),
                               //trailing: Icon(Icons.more_vert),
                             ),
                           ),
@@ -442,34 +434,59 @@ class _CurrentRequestState extends State<CurrentRequest> {
     );
   }
   void _showCancelDialog(User user) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Uwaga!"),
-          content: new Text(
-              "Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Nie"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Tak"),
-              onPressed: () {
-                DatabaseService(uid: user.uid).deleteOwnRequest(currentRequest);
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    if (currentRequest.status != true) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Uwaga!"),
+            content: new Text(
+                "Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("Nie"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              new FlatButton(
+                child: new Text("Tak"),
+                onPressed: () {
+                  DatabaseService(uid: user.uid).deleteOwnRequest(
+                      currentRequest);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Uwaga!"),
+            content: new Text(
+                "Nie możesz zrezygnować z prośby którą ktoś zmienia"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("Rozumiem"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   void _showRequestFinishedDialog() {
