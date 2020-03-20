@@ -7,6 +7,9 @@ import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:shortid/shortid.dart';
 import 'package:intl/intl.dart';
 
+import '../models/current_user_request_model.dart';
+import '../models/request_model.dart';
+
 class DatabaseService {
   final String uid;
 
@@ -137,6 +140,25 @@ class DatabaseService {
       'price': request.price,
       'address': request.address,
       'time': Timestamp.now()
+    });
+    return true;
+  }
+  Future returnRequest(CurrentUserRequest request) async {
+    List<String> output = [];
+    request.request.forEach((item) {
+      output.add("${item.name}#@?${item.quantity.toString()}#@?${item.unit}#@?${item.description}");
+    });
+    await requestDataCollection.document(request.requestId).setData({
+      'name': request.name,
+      'customer': uid,
+      'requestId': request.requestId,
+      'order': output,
+      'status': false,
+      'price': request.price,
+      'address': request.address,
+      'latitude': request.latitude,
+      'longitude': request.longitude,
+      'time': request.time,
     });
     return true;
   }
