@@ -6,7 +6,10 @@ import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/screens/current_request.dart';
 import 'package:zostawpoddrzwiami/screens/details_screen.dart';
+import 'package:zostawpoddrzwiami/screens/home_screen.dart';
+import 'package:zostawpoddrzwiami/screens/login_screen.dart';
 import 'package:zostawpoddrzwiami/screens/preferences_screen.dart';
+import 'package:zostawpoddrzwiami/screens/register_screen.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/wrappers/auth_wrapper.dart';
@@ -49,7 +52,8 @@ class MaterialAppLoggedUser extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/': (context) => AuthWrapper(),
+            '/': (context) => LoginScreen(),
+            '/register': (context) => RegisterScreen()
           });
     } else {
       print('Logged in');
@@ -71,7 +75,7 @@ class MaterialAppLoggedUser extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             initialRoute: '/',
             routes: {
-              '/': (context) => AuthWrapper(),
+              '/': (context) => HomeScreen(),
               '/request': (context) => RequestMakingScreen(),
               '/current_request': (context) => CurrentRequest(),
               '/preferences_screen': (context) => Preferences()
@@ -79,5 +83,4 @@ class MaterialAppLoggedUser extends StatelessWidget {
       );
     }
   }
-
 }
