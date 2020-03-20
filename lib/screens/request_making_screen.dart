@@ -43,6 +43,17 @@ class _State extends State<RequestMakingScreen> {
     });
   }
 
+  _removeIfBlank()
+  {
+    for(int i = 0 ; i < requestedCart.length;i++)
+    {
+      if(requestedCart[i].name == "Blank")
+      {
+        requestedCart.removeAt(i);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // DB providers
@@ -183,6 +194,7 @@ class _State extends State<RequestMakingScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
         onPressed: () async {
+          _removeIfBlank();
           if (_formKey.currentState.validate()) {
             List<double> coordinates = await getCurrentCoordinates();
             UserRequest newRequest = UserRequest(
