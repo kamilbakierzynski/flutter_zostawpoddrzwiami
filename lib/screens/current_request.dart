@@ -149,6 +149,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
               'Twoja obecna lista',
               style: TextStyle(color: Colors.black),
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.cancel),
+                onPressed: () {
+                  _showResignDialog(currentUser);
+                }
+              )
+            ],
             iconTheme: IconThemeData(color: Colors.black),
             backgroundColor: Colors.white,
           ),
@@ -181,7 +189,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                                 onPressed: () {
                                   launch("tel://$phoneNumber");
                                 },
-                                child: Icon(Icons.phone),
+                                child: Icon(Icons.phone, color: Colors.green[600],),
                               )
                             ],
                           ),
@@ -210,7 +218,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
                                 onPressed: () {
                                   _launchMapsUrl();
                                 },
-                                child: const Icon(Icons.location_on),
+                                child: Icon(Icons.location_on, color: Colors.red[700],
+                                ),
                               ),
                             ],
                           ),
@@ -306,7 +315,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                                 onPressed: () {
                                   launch("tel://$phoneNumber");
                                 },
-                                child: Icon(Icons.phone),
+                                child: Icon(Icons.phone, color: Colors.green[600],),
                               )
                             ],
                           ),
@@ -451,7 +460,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
         return AlertDialog(
           title: new Text("Uwaga!"),
           content: new Text(
-              "Czy na pewno chcesz oznaczyc zamowienie jako wykonane?"),
+              "Czy na pewno chcesz oznaczyć zamowienie jako wykonane?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
