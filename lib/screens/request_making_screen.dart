@@ -187,7 +187,7 @@ class _State extends State<RequestMakingScreen> {
                             });
                           },
                           child: _buildRow(index),
-                          key: Key(index.toString()),
+                          key: UniqueKey(),
                         );
                       }),
                   height: MediaQuery.of(context).size.height,
