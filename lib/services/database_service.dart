@@ -69,6 +69,7 @@ class DatabaseService {
           name: doc.data["name"] ?? '',
           address: doc.data["name"] ?? '',
           request: itemsFormated ?? [Item('', 0, '', '')],
+          creatorId: doc.data['customer'] ?? '',
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
@@ -106,6 +107,7 @@ class DatabaseService {
           requestId: doc.data["requestId"] ?? '',
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
+          customer: doc.data['customer'] ?? '',
         );
       } else {
         return null;
