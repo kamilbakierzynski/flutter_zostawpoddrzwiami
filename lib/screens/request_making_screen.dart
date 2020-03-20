@@ -12,7 +12,6 @@ import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:geolocator/geolocator.dart';
 import '../models/request_model.dart';
 
-
 class RequestMakingScreen extends StatefulWidget {
   @override
   _State createState() {
@@ -23,6 +22,7 @@ class RequestMakingScreen extends StatefulWidget {
 
 class _State extends State<RequestMakingScreen> {
   List<Item> requestedCart = [Item("Blank", 0.0, "Blank", "Blank")];
+  final _formKey = GlobalKey<FormState>();
 
 //  String tempProduct = '';
   String address = '';
@@ -47,8 +47,9 @@ class _State extends State<RequestMakingScreen> {
   Widget build(BuildContext context) {
     // DB providers
     final User user = Provider.of<User>(context);
+    final UserData userData = Provider.of<UserData>(context);
     final List<UserRequest> userRequests =
-    Provider.of<List<UserRequest>>(context);
+        Provider.of<List<UserRequest>>(context);
     return new Scaffold(
       appBar: AppBar(
         title: Text(
@@ -63,47 +64,53 @@ class _State extends State<RequestMakingScreen> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.location_city),
-                        hintText: "Wpisz swoj adres",
-                        labelText: "Adres",
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        validator: (val) => val.isEmpty ? 'Wpisz adres' : null,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.location_city),
+                          hintText: "Wpisz swoj adres",
+                          labelText: "Adres",
+                        ),
+                        maxLines: 2,
+                        minLines: 1,
+                        onChanged: (String text) {
+                          this.address = text;
+                        },
                       ),
-                      maxLines: 2,
-                      minLines: 1,
-                      onChanged: (String text) {
-                        this.address = text;
-                      },
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.phone_android),
-                        hintText: "Wpisz swoj numer telefonu",
-                        labelText: "Numer telefonu",
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? 'Wpisz numer telefonu' : null,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.phone_android),
+                          hintText: "Wpisz swoj numer telefonu",
+                          labelText: "Numer telefonu",
+                        ),
+                        onChanged: (String text) {
+                          this.phoneNumber = text;
+                        },
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly
+                        ],
                       ),
-                      onChanged: (String text) {
-                        this.phoneNumber = text;
-                      },
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.description),
-                        hintText: "Opcjonalnie",
-                        labelText: "Uwagi do zamowienia",
+                      TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.description),
+                          hintText: "Opcjonalnie",
+                          labelText: "Uwagi do zamowienia",
+                        ),
+                        onChanged: (String text) {
+                          this.optionalInfo = text;
+                        },
+                        maxLines: 6,
+                        minLines: 1,
                       ),
-                      onChanged: (String text) {
-                        this.optionalInfo = text;
-                      },
-                      maxLines: 6,
-                      minLines: 1,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -176,31 +183,35 @@ class _State extends State<RequestMakingScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
         onPressed: () async {
-          List<double> coordinates = await getCurrentCoordinates();
-          UserRequest newRequest = UserRequest(
-            name: 'Hubert',
-            price: '13',
-            address: address,
-            request: requestedCart,
-            status: false,
-            latitude: coordinates[0],
-            longitude: coordinates[1],
-          );
-          await DatabaseService(uid: user.uid)
-            .createNewRequest(newRequest);},
+          if (_formKey.currentState.validate()) {
+            List<double> coordinates = await getCurrentCoordinates();
+            UserRequest newRequest = UserRequest(
+              name: userData.name,
+              price: '13',
+              address: address,
+              request: requestedCart,
+              status: false,
+              latitude: coordinates[0],
+              longitude: coordinates[1],
+            );
+            await DatabaseService(uid: user.uid).createNewRequest(newRequest);
+          }
+        },
         label: Text('Wyślij'),
         icon: Icon(Icons.arrow_forward),
       ),
     );
   }
+
   Future<List<double>> getCurrentCoordinates() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<double> coordinates;
+    List<double> coordinates = [];
     coordinates.add(position.latitude);
     coordinates.add(position.longitude);
     return coordinates;
   }
+
   Widget _buildRow(int index) {
     const InputDecoration textFormFieldStyle = InputDecoration(
       icon: Icon(
