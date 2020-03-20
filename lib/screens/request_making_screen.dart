@@ -44,7 +44,7 @@ class _State extends State<RequestMakingScreen> {
 
   _addItem() {
     setState(() {
-      requestedCart.add(Item("Blank", 0.0, "Blank", "Blank"));
+      requestedCart.add(Item("Blank", 0.0, "x", "Blank"));
     });
   }
 
@@ -87,7 +87,10 @@ class _State extends State<RequestMakingScreen> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (val) => val.isEmpty ? 'Wpisz adres' : null,
+                        validator: (val)  {
+                          if(val.split(',').length != 3){return 'Wpisz adres poprawnie';}
+                          else {return val.isEmpty ? 'Wpisz adres' : null;}
+                        },
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.location_city),
                           hintText: "Ulica, Numer Domu, Numer Mieszkania, Miasto",
