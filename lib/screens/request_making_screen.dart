@@ -201,7 +201,7 @@ class _State extends State<RequestMakingScreen> {
                   _removeIfBlank();
                   List<double> coordinates = await getCurrentCoordinates();
                   UserRequest newRequest = UserRequest(
-                    name: userData.name,
+                    name: 'userData.name',
                     price: '13',
                     address: address,
                     request: requestedCart,
@@ -211,6 +211,7 @@ class _State extends State<RequestMakingScreen> {
                   );
                   await DatabaseService(uid: user.uid)
                       .createNewRequest(newRequest);
+                  Navigator.of(context).pop();
                 }
               },
               label: Text('Wyślij'),

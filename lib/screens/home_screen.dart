@@ -13,6 +13,9 @@ import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
 
+import '../models/current_user_request_model.dart';
+import '../models/current_user_request_model.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
 
@@ -20,6 +23,7 @@ class HomeScreen extends StatelessWidget {
     final User user = Provider.of<User>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
+    final List<CurrentUserRequest> currentUserRequestList = Provider.of<List<CurrentUserRequest>>(context);
     if (userRequests != null) {
       return FutureBuilder(
         future: _getDistanceAndSort(userRequests),
