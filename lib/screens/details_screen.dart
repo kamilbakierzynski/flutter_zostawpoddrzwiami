@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:toast/toast.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,8 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  bool awaitResponse = false;
+
   @override
   Widget build(BuildContext context) {
     // providers
@@ -74,8 +78,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500)),
-                          Text(
-                              'Opis: ${widget.request.creatorId}',
+                          Text('Opis: ${widget.request.creatorId}',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500))
@@ -130,11 +133,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-         await DatabaseService(uid: user.uid).acceptRequest(widget.request);
-         Navigator.of(context).pop();
+          setState(() {
+            awaitResponse = true;
+          });
+          bool result = await DatabaseService(uid: user.uid).acceptRequest(widget.request);
+          if (result) {
+            Navigator.of(context).pop();
+          } else {
+            awaitResponse = false;
+            Toast.show('Wystąpił błąd', context);
+          }
+
         },
-        icon: Icon(Icons.thumb_up),
-        label: Text('Pomagam!'),
+        icon: awaitResponse ? null : Icon(Icons.thumb_up),
+        label: awaitResponse
+            ? SpinKitThreeBounce(
+                color: Colors.white,
+                size: 20,
+              )
+            : Text('Pomagam!'),
       ),
     );
   }
