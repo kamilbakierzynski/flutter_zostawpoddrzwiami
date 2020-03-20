@@ -10,6 +10,8 @@ import "package:shared_preferences/shared_preferences.dart";
 
 import '../models/request_model.dart';
 
+// to do: better details for when receiver
+
 class CurrentRequest extends StatefulWidget {
   @override
   _CurrentRequestState createState() {
@@ -46,13 +48,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
   }
 
   _loadCachedData() async {
-    print("in loadcacheddata");
     prefs = await SharedPreferences.getInstance();
     setState(() {
-      print("in set state");
        cachedID = (prefs.getString('cachedID') ?? "");
-       print("got id from disc");
-       print(cachedID);
        checkBoxString = (prefs.getString('checkBoxString') ?? "");
     });
   }
@@ -149,7 +147,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
       print(cachedID);
       print(currentRequest.requestId);
     }
-    if (isCarrier) {
+    if (currentUser.uid == currentRequest.requestId) {
       print("in is carrier");
 
       return Scaffold(
@@ -351,7 +349,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: rows,
+                      itemCount: currentRequest.request.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: const EdgeInsets.only(
@@ -477,5 +475,6 @@ class _CurrentRequestState extends State<CurrentRequest> {
     prefs.setString("checkBoxString", newCheckboxString);
     prefs.setString("cachedID", currentRequest.requestId);
     cachedID = currentRequest.requestId;
+    checkBoxString = newCheckboxString;
   }
 }
