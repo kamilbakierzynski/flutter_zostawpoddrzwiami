@@ -413,7 +413,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
+                print(user.uid);
                 DatabaseService(uid: user.uid).abandonRequest(currentRequest);
+                print("abandoning request");
                 Navigator.of(context).pop();
               },
             ),
