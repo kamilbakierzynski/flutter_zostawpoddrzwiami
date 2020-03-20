@@ -1,11 +1,17 @@
 import 'dart:async';
-
+import 'package:zostawpoddrzwiami/services/database_service.dart';
+import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
+import 'package:provider/provider.dart';
+import 'package:zostawpoddrzwiami/models/request_model.dart';
+import 'package:geolocator/geolocator.dart';
+import '../models/request_model.dart';
+
 
 class RequestMakingScreen extends StatefulWidget {
   @override
@@ -39,6 +45,10 @@ class _State extends State<RequestMakingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // DB providers
+    final User user = Provider.of<User>(context);
+    final List<UserRequest> userRequests =
+    Provider.of<List<UserRequest>>(context);
     return new Scaffold(
       appBar: AppBar(
         title: Text(
@@ -165,13 +175,32 @@ class _State extends State<RequestMakingScreen> {
           padding: EdgeInsets.only(top: 30.0)),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
-        onPressed: () {},
+        onPressed: () async {
+          List<double> coordinates = await getCurrentCoordinates();
+          UserRequest newRequest = UserRequest(
+            name: 'Hubert',
+            price: '13',
+            address: address,
+            request: requestedCart,
+            status: false,
+            latitude: coordinates[0],
+            longitude: coordinates[1],
+          );
+          await DatabaseService(uid: user.uid)
+            .createNewRequest(newRequest);},
         label: Text('Wyślij'),
         icon: Icon(Icons.arrow_forward),
       ),
     );
   }
-
+  Future<List<double>> getCurrentCoordinates() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<double> coordinates;
+    coordinates.add(position.latitude);
+    coordinates.add(position.longitude);
+    return coordinates;
+  }
   Widget _buildRow(int index) {
     const InputDecoration textFormFieldStyle = InputDecoration(
       icon: Icon(

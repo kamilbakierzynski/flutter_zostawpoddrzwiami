@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -346,30 +345,8 @@ class HomeScreen extends StatelessWidget {
                 shape: CircularNotchedRectangle(),
               ),
               floatingActionButton: FloatingActionButton(
-                onPressed: () async {
-                  UserRequest test_request = UserRequest(
-                    name: 'Kamil',
-                    address: 'Sosnowa',
-                    price: '13',
-                    request: [
-                      Item('Mleko', 1, '', ''),
-                      Item('Jajka', 1, '', ''),
-                      Item('Pomidory', 1, '', ''),
-                      Item('Pieczarki', 1, '', ''),
-                      Item('Kuskus', 1, '', ''),
-                      Item('Papier toaletowy', 1, '', ''),
-                      Item('Jagody', 1, '', ''),
-                      Item('Truskawki', 1, '', ''),
-                      Item('epet lq', 1, '', '')
-                    ],
-                    status: false,
-                    latitude: 23.3248,
-                    longitude: 28.6768,
-                  );
-                  await DatabaseService(uid: user.uid)
-                      .createNewRequest(test_request);
-                  Navigator.pushNamed(context, '/request');
-                },
+                onPressed: () =>
+                  Navigator.pushNamed(context, '/request'),
                 child: Icon(Icons.add),
               ),
               floatingActionButtonLocation:
