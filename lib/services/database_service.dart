@@ -150,7 +150,7 @@ class DatabaseService {
     });
     await requestDataCollection.document(request.requestId).setData({
       'name': request.name,
-      'customer': uid,
+      'customer': request.customer,
       'requestId': request.requestId,
       'order': output,
       'status': false,
