@@ -198,6 +198,7 @@ class _State extends State<RequestMakingScreen> {
               backgroundColor: Colors.amber,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
+                  _removeIfBlank();
                   List<double> coordinates = await getCurrentCoordinates();
                   UserRequest newRequest = UserRequest(
                     name: userData.name,
