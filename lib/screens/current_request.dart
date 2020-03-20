@@ -13,7 +13,7 @@ class CurrentRequest extends StatefulWidget {
   @override
   _CurrentRequestState createState() {
     _CurrentRequestState state = _CurrentRequestState();
-    for (var i = 0;i<100;i++ ) {
+    for (var i = 0; i < 100; i++) {
       state.checkbox_values.add(false);
     }
     return state;
@@ -21,7 +21,6 @@ class CurrentRequest extends StatefulWidget {
 }
 
 class _CurrentRequestState extends State<CurrentRequest> {
-
   bool isCarrier = true;
   String name = "Pani Janinka";
   String phoneNumber = "555 444 333";
@@ -33,12 +32,11 @@ class _CurrentRequestState extends State<CurrentRequest> {
   int rows = 10;
   List<bool> checkbox_values = [];
 
-
   @override
   Widget build(BuildContext context) {
     final User currentUser = Provider.of<User>(context);
-    final List<CurrentUserRequest> allRequests = Provider.of<
-        List<CurrentUserRequest>>(context);
+    final List<CurrentUserRequest> allRequests =
+        Provider.of<List<CurrentUserRequest>>(context);
 
     if (allRequests != null) {
       print("requests are not null");
@@ -48,9 +46,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
           print("assigned request");
         }
       });
-    }
-    else {
+    } else {
       return Scaffold(
+        backgroundColor: Colors.grey,
         appBar: AppBar(
           title: Text(
             'Twoja obecna lista',
@@ -60,19 +58,28 @@ class _CurrentRequestState extends State<CurrentRequest> {
           backgroundColor: Colors.white,
         ),
         body: Center(
-            child: Text(
-              "Nie masz obecnych zamowien :(",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 50,
-              ),
-            )
+          child: Padding(
+            padding: const EdgeInsets.only(top: 300),
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.insert_emoticon, size: 50,),
+                Text(
+                  "Nie masz obecnych zamowien",
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
-    if (currentRequest == null){
+    if (currentRequest == null) {
       print("current request null");
       return Scaffold(
+        backgroundColor: Colors.grey,
         appBar: AppBar(
           title: Text(
             'Twoja obecna lista',
@@ -82,13 +89,21 @@ class _CurrentRequestState extends State<CurrentRequest> {
           backgroundColor: Colors.white,
         ),
         body: Center(
-            child: Text(
-              "Nie masz obecnych zamowien :(",
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 50,
-              ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 300),
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.insert_emoticon, size: 50,),
+                Text(
+                  "Nie masz obecnych zamowien",
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 20,
+                  ),
+                ),
+              ],
             ),
+          ),
         ),
       );
     }
@@ -185,7 +200,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               title: Column(
                                 children: <Widget>[
                                   Text(currentRequest.request[index].name),
-                                  Text(currentRequest.request[index].quantity.toString() + currentRequest.request[index].unit),
+                                  Text(currentRequest.request[index].quantity
+                                          .toString() +
+                                      currentRequest.request[index].unit),
                                 ],
                                 crossAxisAlignment: CrossAxisAlignment.start,
                               ),
@@ -212,7 +229,10 @@ class _CurrentRequestState extends State<CurrentRequest> {
                           print("pressed decline");
                           _showResignDialog(currentUser);
                         },
-                        child: const Icon(Icons.cancel, color: Colors.white,),
+                        child: const Icon(
+                          Icons.cancel,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Container(
@@ -224,7 +244,10 @@ class _CurrentRequestState extends State<CurrentRequest> {
                           print("pressed finnished");
                           _showRequestFinishedDialog();
                         },
-                        child: const Icon(Icons.check_circle, color: Colors.white,),
+                        child: const Icon(
+                          Icons.check_circle,
+                          color: Colors.white,
+                        ),
                       ),
                     )
                   ],
@@ -233,8 +256,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
           ));
-    }
-    else {
+    } else {
       return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -297,7 +319,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               title: Column(
                                 children: <Widget>[
                                   Text(currentRequest.request[index].name),
-                                  Text(currentRequest.request[index].quantity.toString() + currentRequest.request[index].unit),
+                                  Text(currentRequest.request[index].quantity
+                                          .toString() +
+                                      currentRequest.request[index].unit),
                                 ],
                                 crossAxisAlignment: CrossAxisAlignment.start,
                               ),
@@ -344,7 +368,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Uwaga!"),
-          content: new Text("Czy na pewno chcesz zrezygnowac z obecnego zamowienia?"),
+          content: new Text(
+              "Czy na pewno chcesz zrezygnowac z obecnego zamowienia?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -365,6 +390,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
       },
     );
   }
+
   void _showRequestFinishedDialog() {
     showDialog(
       context: context,
@@ -372,7 +398,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Uwaga!"),
-          content: new Text("Czy na pewno chcesz oznaczyc zamowienie jako wykonane?"),
+          content: new Text(
+              "Czy na pewno chcesz oznaczyc zamowienie jako wykonane?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
