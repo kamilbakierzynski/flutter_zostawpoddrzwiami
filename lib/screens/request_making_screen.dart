@@ -183,7 +183,7 @@ class _State extends State<RequestMakingScreen> {
                             });
                           },
                           child: _buildRow(index),
-                          key: Key(requestedCart[index].toString()),
+                          key: Key(index.toString()),
                         );
                       }),
                   height: MediaQuery.of(context).size.height,

@@ -115,7 +115,9 @@ class _PreferencesState extends State<Preferences> {
                         future: AuthService().getEmail(),
                         initialData: '',
                         builder: (context, snapshot) {
+                          _controllerEmail.text = snapshot.data;
                           return TextFormField(
+                            enabled: false,
                             controller: _controllerEmail,
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.email),
