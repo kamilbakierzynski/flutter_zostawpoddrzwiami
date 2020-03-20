@@ -108,8 +108,7 @@ class DatabaseService {
       return null;
     }
   }
-
-  Future createNewRequest(UserRequest request) async {
+  Future<bool> createNewRequest(UserRequest request) async {
     final id = shortid.generate();
     List<String> output = [];
     request.request.forEach((item) {
@@ -143,7 +142,8 @@ class DatabaseService {
     });
     return true;
   }
-  Future returnRequest(CurrentUserRequest request) async {
+
+  Future<bool> returnRequest(CurrentUserRequest request) async {
     List<String> output = [];
     request.request.forEach((item) {
       output.add("${item.name}#@?${item.quantity.toString()}#@?${item.unit}#@?${item.description}");
