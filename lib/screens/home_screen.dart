@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/screens/details_screen.dart';
+import 'package:zostawpoddrzwiami/screens/preferences_screen.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
@@ -18,12 +20,12 @@ import '../models/current_user_request_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
-
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
-    final List<CurrentUserRequest> currentUserRequestList = Provider.of<List<CurrentUserRequest>>(context);
+    final List<CurrentUserRequest> currentUserRequestList =
+        Provider.of<List<CurrentUserRequest>>(context);
     if (userRequests != null) {
       return FutureBuilder(
         future: _getDistanceAndSort(userRequests),
@@ -44,7 +46,17 @@ class HomeScreen extends StatelessWidget {
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(Icons.settings),
-                        onPressed: () => Navigator.pushNamed(context, '/preferences_screen'),
+                        onPressed: () {
+                          final UserData userData =
+                              Provider.of<UserData>(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Preferences(
+                                        originalName: userData.name,
+                                        originalSurname: userData.surname,
+                                      )));
+                        },
                         color: Colors.black,
                       ),
                     ],
@@ -211,15 +223,19 @@ class HomeScreen extends StatelessWidget {
                                       children: <Widget>[
                                         Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(
-                                              request.name,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30.0),
+                                            SizedBox(
+                                              width: 100,
+                                              child: AutoSizeText(
+                                                request.name,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 30.0),
+                                              ),
                                             ),
                                             Row(
                                               children: <Widget>[
@@ -242,8 +258,7 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                         ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(
-                                              30.0),
+                                              BorderRadius.circular(30.0),
                                           child: Material(
                                             color: Color(0xFFEDEDED),
                                             child: InkWell(
@@ -251,7 +266,8 @@ class HomeScreen extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DetailsScreen(request))),
+                                                          DetailsScreen(
+                                                              request))),
                                               child: Container(
                                                 width: 130,
                                                 height: 40,
@@ -262,13 +278,15 @@ class HomeScreen extends StatelessWidget {
                                                     Text(
                                                       'Pomagam',
                                                       style: TextStyle(
-                                                          color: Color(0xFF707070)),
+                                                          color: Color(
+                                                              0xFF707070)),
                                                     ),
                                                     SizedBox(
                                                       width: 5.0,
                                                     ),
                                                     Icon(Icons.arrow_forward,
-                                                        color: Color(0xFF707070))
+                                                        color:
+                                                            Color(0xFF707070))
                                                   ],
                                                 ),
                                               ),
@@ -349,8 +367,7 @@ class HomeScreen extends StatelessWidget {
                 shape: CircularNotchedRectangle(),
               ),
               floatingActionButton: FloatingActionButton(
-                onPressed: () =>
-                  Navigator.pushNamed(context, '/request'),
+                onPressed: () => Navigator.pushNamed(context, '/request'),
                 child: Icon(Icons.add),
               ),
               floatingActionButtonLocation:

@@ -5,7 +5,6 @@ import 'package:toast/toast.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:zostawpoddrzwiami/widgets/fab_fix.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 
 class LoginScreen extends StatefulWidget {
