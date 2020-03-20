@@ -88,7 +88,7 @@ class _State extends State<RequestMakingScreen> {
                     children: <Widget>[
                       TextFormField(
                         validator: (val)  {
-                          if(val.split(',').length != 3){return 'Wpisz adres poprawnie';}
+                          if(val.split(',').length != 4){return 'Wpisz adres poprawnie';}
                           else {return val.isEmpty ? 'Wpisz adres' : null;}
                         },
                         decoration: InputDecoration(
