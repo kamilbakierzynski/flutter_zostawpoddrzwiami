@@ -5,6 +5,7 @@ import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:shortid/shortid.dart';
 import '../models/current_user_request_model.dart';
+import '../models/current_user_request_model.dart';
 import '../models/request_model.dart';
 import '../models/user_model.dart';
 
@@ -252,4 +253,9 @@ class DatabaseService {
       return requestTime.split(' ')[0];
     }
   }
+  Future<bool> deleteOwnRequest(CurrentUserRequest request) async {
+    await userDataCollection.document(uid).collection('requests').document(request.requestId).delete();
+    await requestDataCollection.document(request.requestId).delete();
+    return true;
+    }
 }
