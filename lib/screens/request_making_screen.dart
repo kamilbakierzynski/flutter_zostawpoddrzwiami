@@ -35,6 +35,8 @@ class _State extends State<RequestMakingScreen> {
 //  int itemCount = 0;
 //  bool isListClicked = false;
 
+  bool firstFilled = false;
+
   ScrollController _controller = ScrollController();
 
   _addItem() {
@@ -191,27 +193,29 @@ class _State extends State<RequestMakingScreen> {
             ],
           ),
           padding: EdgeInsets.only(top: 30.0)),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.amber,
-        onPressed: () async {
-          _removeIfBlank();
-          if (_formKey.currentState.validate()) {
-            List<double> coordinates = await getCurrentCoordinates();
-            UserRequest newRequest = UserRequest(
-              name: userData.name,
-              price: '13',
-              address: address,
-              request: requestedCart,
-              status: false,
-              latitude: coordinates[0],
-              longitude: coordinates[1],
-            );
-            await DatabaseService(uid: user.uid).createNewRequest(newRequest);
-          }
-        },
-        label: Text('Wyślij'),
-        icon: Icon(Icons.arrow_forward),
-      ),
+      floatingActionButton: firstFilled
+          ? FloatingActionButton.extended(
+              backgroundColor: Colors.amber,
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  List<double> coordinates = await getCurrentCoordinates();
+                  UserRequest newRequest = UserRequest(
+                    name: userData.name,
+                    price: '13',
+                    address: address,
+                    request: requestedCart,
+                    status: false,
+                    latitude: coordinates[0],
+                    longitude: coordinates[1],
+                  );
+                  await DatabaseService(uid: user.uid)
+                      .createNewRequest(newRequest);
+                }
+              },
+              label: Text('Wyślij'),
+              icon: Icon(Icons.arrow_forward),
+            )
+          : null,
     );
   }
 
@@ -263,6 +267,11 @@ class _State extends State<RequestMakingScreen> {
               labelText: 'Produkt',
             ),
             onChanged: (String text) {
+              if (requestedCart[0].name != 'Blank') {
+                setState(() {
+                  firstFilled = true;
+                });
+              }
               this.requestedCart[index].name = text;
             },
           ),
