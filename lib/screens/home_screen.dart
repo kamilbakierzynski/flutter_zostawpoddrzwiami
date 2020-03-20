@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(Icons.settings),
-                        onPressed: () => Navigator.pushNamed(context, '/preferences_screen'),
+                        onPressed: () => AuthService().signOut(),
                         color: Colors.black,
                       ),
                     ],
