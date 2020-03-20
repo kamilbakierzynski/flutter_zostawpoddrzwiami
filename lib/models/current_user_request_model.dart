@@ -11,6 +11,8 @@ class CurrentUserRequest
   final double latitude;
   final String time;
   final String customer;
+  final String phoneNumber;
+  final String description;
 
-  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.time, this.longitude, this.latitude, this.customer});
+  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.time, this.longitude, this.latitude, this.customer, this.phoneNumber, this.description});
 }

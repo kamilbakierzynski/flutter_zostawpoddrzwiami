@@ -215,6 +215,8 @@ class _State extends State<RequestMakingScreen> {
                     status: false,
                     latitude: coordinates[0],
                     longitude: coordinates[1],
+                    description: optionalInfo,
+                    phoneNumber: phoneNumber,
                   );
                   bool result = await DatabaseService(uid: user.uid)
                       .createNewRequest(newRequest);

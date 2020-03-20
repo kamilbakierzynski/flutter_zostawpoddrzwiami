@@ -78,6 +78,8 @@ class DatabaseService {
               : '',
           longitude: doc.data["longitude"] ?? 0.0,
           latitude: doc.data["latitude"] ?? 0.0,
+          description: doc.data['customer'] ?? '',
+          phoneNumber: doc.data['customer'] ?? '',
         );
       } else {
         return null;
@@ -108,6 +110,8 @@ class DatabaseService {
           price: doc.data["price"] ?? '',
           status: doc.data["status"] ?? false,
           customer: doc.data['customer'] ?? '',
+          description: doc.data['description'] ?? '',
+          phoneNumber: doc.data['phoneNumber'] ?? '',
         );
       } else {
         return null;
@@ -143,6 +147,8 @@ class DatabaseService {
       'address': request.address,
       'latitude': request.latitude,
       'longitude': request.longitude,
+      'description': request.description,
+      'phoneNumber': request.phoneNumber,
       'time': Timestamp.now()
     });
     await userDataCollection
@@ -157,6 +163,8 @@ class DatabaseService {
       'status': request.status,
       'price': request.price,
       'address': request.address,
+      'description': request.description,
+      'phoneNumber': request.phoneNumber,
       'time': Timestamp.now()
     });
     return true;
@@ -179,6 +187,8 @@ class DatabaseService {
       'address': request.address,
       'latitude': request.latitude,
       'longitude': request.longitude,
+      'description': request.description,
+      'phoneNumber': request.phoneNumber,
       'time': request.time,
     });
     return true;
@@ -206,12 +216,14 @@ class DatabaseService {
         'customer': request.creatorId,
         'time': request.time,
         'requestId': request.requestId,
+        'description': request.description,
+        'phoneNumber': request.phoneNumber,
       });
       await userDataCollection
           .document(request.creatorId)
           .collection('requests')
           .document(request.requestId)
-          .setData({
+          .updateData({
         // here should be updateData - check later
         'name': request.name,
         'price': request.price,
@@ -223,6 +235,8 @@ class DatabaseService {
         'customer': request.creatorId,
         'time': request.time,
         'requestId': request.requestId,
+        'description': request.description,
+        'phoneNumber': request.phoneNumber,
       });
       await requestDataCollection.document(request.requestId).delete();
     }
