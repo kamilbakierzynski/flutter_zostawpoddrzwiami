@@ -29,11 +29,9 @@ class DatabaseService {
       Firestore.instance.collection('app-data');
 
   Future createUserData(String name, String surname) async {
-    return await userDataCollection.document(uid).setData({
-      'name': name,
-      'surname': surname,
-      'uid': uid
-    });
+    return await userDataCollection
+        .document(uid)
+        .setData({'name': name, 'surname': surname, 'uid': uid});
   }
 
   Stream<UserData> get userData {
@@ -117,7 +115,10 @@ class DatabaseService {
 
   UserData _userFromSnapshot(DocumentSnapshot snapshot) {
     if (snapshot.data != null) {
-      return UserData(uid: uid, name: snapshot.data['name'] ?? 'Janina');
+      return UserData(
+          uid: uid,
+          name: snapshot.data['name'] ?? 'Janina',
+          surname: snapshot.data['surname']);
     } else {
       return null;
     }
@@ -158,6 +159,7 @@ class DatabaseService {
     });
     return true;
   }
+
 // request operations
   Future<bool> returnRequest(CurrentUserRequest request) async {
     List<String> output = [];
@@ -179,30 +181,36 @@ class DatabaseService {
     });
     return true;
   }
-  Future <bool> acceptRequest(UserRequest request) async {
+
+  Future<bool> acceptRequest(UserRequest request) async {
     if (request.status == false) {
       List<String> output = [];
       request.request.forEach((item) {
         output.add(
             "${item.name}#@?${item.quantity.toString()}#@?${item.unit}#@?${item.description}");
       });
-      await userDataCollection.document(uid).collection('requests').document(
-          request.requestId).setData(
-          {
-            'name': request.name,
-            'price': request.price,
-            'address': request.address,
-            'order': output,
-            'status': true,
-            'latitude': request.latitude,
-            'longitude': request.longitude,
-            'customer': request.creatorId,
-            'time': request.time,
-            'requestId': request.requestId,
-          }
-      );
-      await userDataCollection.document(request.creatorId).collection('requests').document(
-          request.requestId).setData({ // here should be updateData - check later
+      await userDataCollection
+          .document(uid)
+          .collection('requests')
+          .document(request.requestId)
+          .setData({
+        'name': request.name,
+        'price': request.price,
+        'address': request.address,
+        'order': output,
+        'status': true,
+        'latitude': request.latitude,
+        'longitude': request.longitude,
+        'customer': request.creatorId,
+        'time': request.time,
+        'requestId': request.requestId,
+      });
+      await userDataCollection
+          .document(request.creatorId)
+          .collection('requests')
+          .document(request.requestId)
+          .setData({
+        // here should be updateData - check later
         'name': request.name,
         'price': request.price,
         'address': request.address,

@@ -75,7 +75,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500)),
                           Text(
-                              'Opis: Witam, potrzebuje pomocy z zakupami. Jestem osobą starszą i boje się chodzić do sklepu.',
+                              'Opis: ${widget.request.creatorId}',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500))
