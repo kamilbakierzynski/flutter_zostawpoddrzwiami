@@ -295,10 +295,6 @@ class _State extends State<RequestMakingScreen> {
               hintText: 'Wpisz jednostke',
               labelText: 'jednostka',
             ),
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              WhitelistingTextInputFormatter.digitsOnly
-            ],
             onChanged: (String text) {
               this.requestedCart[index].unit = text;
             },
