@@ -207,23 +207,23 @@ class DatabaseService {
         'time': request.time,
         'requestId': request.requestId,
       });
-//      await userDataCollection
-//          .document(request.creatorId)
-//          .collection('requests')
-//          .document(request.requestId)
-//          .setData({
-//        // here should be updateData - check later
-//        'name': request.name,
-//        'price': request.price,
-//        'address': request.address,
-//        'order': output,
-//        'status': true,
-//        'latitude': request.latitude,
-//        'longitude': request.longitude,
-//        'customer': request.creatorId,
-//        'time': request.time,
-//        'requestId': request.requestId,
-//      });
+      await userDataCollection
+          .document(request.creatorId)
+          .collection('requests')
+          .document(request.requestId)
+          .setData({
+        // here should be updateData - check later
+        'name': request.name,
+        'price': request.price,
+        'address': request.address,
+        'order': output,
+        'status': true,
+        'latitude': request.latitude,
+        'longitude': request.longitude,
+        'customer': request.creatorId,
+        'time': request.time,
+        'requestId': request.requestId,
+      });
       await requestDataCollection.document(request.requestId).delete();
     }
     return true;
