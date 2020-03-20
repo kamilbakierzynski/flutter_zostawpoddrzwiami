@@ -166,7 +166,24 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   if(currentUserRequestList.length >=1)
                   {
-                  print('DIALOG ALERT');
+                    showDialog(context: context, barrierDismissible: false, builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Tylko jedna akcja możliwa.'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              Text('Nie możesz dodać prośby. Aktualnie możliwe jest tylko dodanie jednej prośby. Nie możesz też dodać prośby jeśli aktualnie komuś pomagasz.')
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('OK'),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                        ],
+                      );
+                    });
                   }
                   else Navigator.pushNamed(context, '/request');},
                 child: Icon(Icons.add),
