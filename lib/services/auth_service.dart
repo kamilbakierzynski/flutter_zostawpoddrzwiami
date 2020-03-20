@@ -17,6 +17,15 @@ class AuthService {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
+  Future<void> changePassword(String password) async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    user.updatePassword(password).then((_) {
+      print('Success');
+    }).catchError((error) {
+      print('Error');
+    });
+  }
+
   Future signInAnon() async {
     try {
       AuthResult result = await _firebaseAuth.signInAnonymously();

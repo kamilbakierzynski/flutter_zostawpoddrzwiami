@@ -25,7 +25,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             pinned: true,
             centerTitle: true,
             title: Text(
-              widget.request.name + ' #' + widget.request.requestId,
+              'Prośba numer ' + widget.request.requestId,
               style: TextStyle(color: Colors.black),
             ),
             expandedHeight: 300,
