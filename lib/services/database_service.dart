@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
@@ -10,6 +11,8 @@ import 'package:intl/intl.dart';
 import '../models/current_user_request_model.dart';
 import '../models/request_model.dart';
 import '../models/request_model.dart';
+import '../models/request_model.dart';
+import '../models/user_model.dart';
 
 class DatabaseService {
   final String uid;
@@ -174,6 +177,45 @@ class DatabaseService {
       'longitude': request.longitude,
       'time': request.time,
     });
+    return true;
+  }
+  Future <bool> acceptRequest(UserRequest request) async {
+    if (request.status == false) {
+      List<String> output = [];
+      request.request.forEach((item) {
+        output.add(
+            "${item.name}#@?${item.quantity.toString()}#@?${item.unit}#@?${item.description}");
+      });
+      await userDataCollection.document(uid).collection('requests').document(
+          request.requestId).setData(
+          {
+            'name': request.name,
+            'price': request.price,
+            'address': request.address,
+            'order': output,
+            'status': true,
+            'latitude': request.latitude,
+            'longitude': request.longitude,
+            'customer': request.creatorId,
+            'time': request.time,
+            'requestId': request.requestId,
+          }
+      );
+      await userDataCollection.document(request.creatorId).collection('requests').document(
+          request.requestId).setData({ // here should be updateData - check later
+        'name': request.name,
+        'price': request.price,
+        'address': request.address,
+        'order': output,
+        'status': true,
+        'latitude': request.latitude,
+        'longitude': request.longitude,
+        'customer': request.creatorId,
+        'time': request.time,
+        'requestId': request.requestId,
+      });
+      await requestDataCollection.document(request.requestId).delete();
+    }
     return true;
   }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
+import 'package:provider/provider.dart';
+import '../models/user_model.dart';
+import '../services/database_service.dart';
 
 class DetailsScreen extends StatefulWidget {
   final UserRequest request;
@@ -14,6 +17,8 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    // providers
+    User user = Provider.of<User>(context);
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
@@ -124,7 +129,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () async {
+         await DatabaseService(uid: user.uid).acceptRequest(widget.request);
+         Navigator.of(context).pop();
+        },
         icon: Icon(Icons.thumb_up),
         label: Text('Pomagam!'),
       ),
