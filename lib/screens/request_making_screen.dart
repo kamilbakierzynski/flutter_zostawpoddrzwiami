@@ -366,19 +366,19 @@ class _State extends State<RequestMakingScreen> {
               this.requestedCart[index].unit = text;
             },
           ),
-          TextFormField(
-            style: TextStyle(color: Colors.white70),
-            decoration: const InputDecoration(
-              icon: Icon(Icons.warning,color: Colors.white70),
-              hintText: 'Wpisz uwagi',
-              labelText: 'Uwagi',
-              labelStyle: TextStyle(color: Colors.white70),
-              hintStyle: TextStyle(color: Colors.white70),
-            ),
-            onChanged: (String text) {
-              this.requestedCart[index].description = text;
-            },
-          ),
+//          TextFormField(
+//            style: TextStyle(color: Colors.white70),
+//            decoration: const InputDecoration(
+//              icon: Icon(Icons.warning,color: Colors.white70),
+//              hintText: 'Wpisz uwagi',
+//              labelText: 'Uwagi',
+//              labelStyle: TextStyle(color: Colors.white70), //EEEEEEEEE TO TU
+//              hintStyle: TextStyle(color: Colors.white70),
+//            ),
+//            onChanged: (String text) {
+//              this.requestedCart[index].description = text;
+//            },
+//          ),
         ],
       ),
     );
