@@ -22,6 +22,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<CurrentUserRequest> currentUserRequest =
+    Provider.of<List<CurrentUserRequest>>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
     User user = Provider.of<User>(context);
@@ -135,8 +137,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final List<CurrentUserRequest> currentUserRequest =
-              Provider.of<List<CurrentUserRequest>>(context);
           setState(() {
             awaitResponse = true;
           });
