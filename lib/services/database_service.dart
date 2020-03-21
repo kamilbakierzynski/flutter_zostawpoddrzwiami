@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zostawpoddrzwiami/models/confirm_request.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
@@ -9,10 +10,12 @@ import '../models/current_user_request_model.dart';
 import '../models/request_model.dart';
 import '../models/user_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 class DatabaseService {
   final String uid;
+  final String orderId;
 
-  DatabaseService({this.uid});
+  DatabaseService({this.uid, this.orderId});
 
   final CollectionReference userDataCollection =
       Firestore.instance.collection('users');
@@ -22,6 +25,8 @@ class DatabaseService {
       Firestore.instance.collection('requests');
   final CollectionReference appDataCollection =
       Firestore.instance.collection('app-data');
+  final CollectionReference confirmDeliveryCollection =
+      Firestore.instance.collection('confirmRequests');
 
   Future createUserData(String name, String surname) async {
     return await userDataCollection
@@ -45,6 +50,39 @@ class DatabaseService {
     return currentUserRequestCollection
         .snapshots()
         .map(_currentUserRequestFromSnapshot);
+  }
+
+  Stream<ConfirmRequest> get confirmRequestData {
+    return confirmDeliveryCollection
+        .document(orderId)
+        .snapshots()
+        .map(_confirmRequestFromSnapshot);
+  }
+
+  ConfirmRequest _confirmRequestFromSnapshot(DocumentSnapshot snapshot) {
+    if (snapshot.data != null) {
+      return ConfirmRequest(
+          makerUid: snapshot.data['makerUid'],
+          orderId: snapshot.data['orderId'],
+          received: snapshot.data['received'],
+          takerUid: snapshot.data['takerUid']);
+    }
+    return null;
+  }
+
+  Future<bool> createNewConfirmRequst(ConfirmRequest confirmRequest) async {
+    await confirmDeliveryCollection.document(confirmRequest.orderId).setData({
+      'makerUid': confirmRequest.makerUid,
+      'orderId': confirmRequest.orderId,
+      'received': confirmRequest.received,
+      'takerUid': confirmRequest.takerUid
+    });
+  }
+
+  Future confirmGettingOrder(String orderId) async {
+    await confirmDeliveryCollection
+        .document(orderId)
+        .updateData({'received': true});
   }
 
   List<UserRequest> _requestFromSnapshot(QuerySnapshot snapshot) {
@@ -188,10 +226,18 @@ class DatabaseService {
       'phoneNumber': request.phoneNumber,
       'time': request.time,
     });
-    await userDataCollection.document(request.customer).collection('requests').document(request.requestId).updateData({
+    await userDataCollection
+        .document(request.customer)
+        .collection('requests')
+        .document(request.requestId)
+        .updateData({
       'status': false,
     });
-    await userDataCollection.document(uid).collection('requests').document(request.requestId).delete();
+    await userDataCollection
+        .document(uid)
+        .collection('requests')
+        .document(request.requestId)
+        .delete();
     return true;
   }
 
@@ -253,21 +299,29 @@ class DatabaseService {
       return requestTime.split(' ')[0];
     }
   }
+
   Future<bool> deleteOwnRequest(CurrentUserRequest request) async {
-    await userDataCollection.document(uid).collection('requests').document(request.requestId).delete();
+    await userDataCollection
+        .document(uid)
+        .collection('requests')
+        .document(request.requestId)
+        .delete();
     await requestDataCollection.document(request.requestId).delete();
     return true;
-    }
+  }
 
-    Future<bool> saveDeviceToken(FirebaseMessaging _fcm) async{
+  Future<bool> saveDeviceToken(FirebaseMessaging _fcm) async {
     String fcmToken = await _fcm.getToken();
-    if (fcmToken != null){
-      var tokenRef = userDataCollection.document(uid).collection('tokens').document(fcmToken);
+    if (fcmToken != null) {
+      var tokenRef = userDataCollection
+          .document(uid)
+          .collection('tokens')
+          .document(fcmToken);
       await tokenRef.setData({
         'token': fcmToken,
         'createdAt': FieldValue.serverTimestamp(),
       });
     }
     return true;
-    }
+  }
 }

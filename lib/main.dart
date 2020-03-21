@@ -81,7 +81,6 @@ class MaterialAppLoggedUser extends StatelessWidget {
               '/request': (context) => RequestMakingScreen(),
               '/current_request': (context) => CurrentRequest(),
               '/preferences_screen': (context) => Preferences(),
-              '/request_complete': (context) => CompleteRequest(),
             }),
       );
     }

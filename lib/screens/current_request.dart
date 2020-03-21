@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zostawpoddrzwiami/models/confirm_request.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import "package:zostawpoddrzwiami/models/request_model.dart";
+import 'package:zostawpoddrzwiami/screens/request_completing_screen.dart';
 import "package:zostawpoddrzwiami/services/database_service.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -163,14 +165,15 @@ class _CurrentRequestState extends State<CurrentRequest> {
             iconTheme: IconThemeData(color: Colors.black),
             backgroundColor: Colors.white,
           ),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              _showRequestFinishedDialog();
+              _showRequestFinishedDialogTaker(currentUser, currentRequest);
             },
-            child: Icon(
+            icon: Icon(
               Icons.check,
               color: Colors.white,
             ),
+            label: Text('Potwierdź odebranie'),
             backgroundColor: Colors.green,
           ),
           floatingActionButtonLocation:
@@ -411,15 +414,13 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Center(
-                    child: FloatingActionButton(
+                    child: FloatingActionButton.extended(
                       onPressed: () {
-                        _showCancelDialog(currentUser);
+                        _showRequestFinishedDialogMaker(currentRequest.requestId);
                       },
-                      child: Icon(
-                        Icons.clear,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.red,
+                      icon: Icon(Icons.check, color: Colors.white,),
+                      label: Text('Potwierdź odebranie'),
+                      backgroundColor: Colors.green[600],
                     ),
                   ),
                 )
@@ -535,7 +536,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
   }
 
-  void _showRequestFinishedDialog() {
+  void _showRequestFinishedDialogTaker(User user, CurrentUserRequest userRequest) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -554,8 +555,45 @@ class _CurrentRequestState extends State<CurrentRequest> {
             ),
             new FlatButton(
               child: new Text("Tak"),
+              onPressed: () async {
+                ConfirmRequest confirmRequest = ConfirmRequest(
+                    orderId: userRequest.requestId,
+                    makerUid: userRequest.customer,
+                    takerUid: user.uid,
+                    received: false);
+                await DatabaseService(uid: user.uid)
+                    .createNewConfirmRequst(confirmRequest);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteRequest(userRequest.requestId)));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showRequestFinishedDialogMaker(String orderId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Uwaga!"),
+          content: new Text(
+              "Czy na pewno chcesz oznaczyć zamowienie jako wykonane?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Nie"),
               onPressed: () {
-                Navigator.pushNamed(context, '/request_complete');
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Tak"),
+              onPressed: () async {
+                await DatabaseService().confirmGettingOrder(orderId);
+                Navigator.popUntil(context, ModalRoute.withName('/'));
               },
             ),
           ],
