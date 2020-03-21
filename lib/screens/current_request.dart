@@ -501,7 +501,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             new FlatButton(
               child: new Text("Tak"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/request_complete');
               },
             ),
           ],
