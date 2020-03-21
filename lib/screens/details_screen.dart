@@ -61,7 +61,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         widget.request.name,
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                            color: Colors.black,
+                            color: Color(0xFF583CDF),
                             fontSize: 50,
                             fontWeight: FontWeight.bold),
                       ),
