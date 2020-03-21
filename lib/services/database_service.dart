@@ -156,6 +156,7 @@ class DatabaseService {
           carierName: doc.data['carierName'] ?? '',
           carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
           pending: doc.data['pending'] ?? false,
+          time: formatTime(doc.data['time'].toString()) ?? ''
         );
       } else {
         return null;
@@ -239,7 +240,7 @@ class DatabaseService {
       'longitude': request.longitude,
       'description': request.description,
       'phoneNumber': request.phoneNumber,
-      'time': request.time,
+      'time': Timestamp.now(),
       'carierName': '',
       'carierPhoneNumber': '',
       'pending': false,
@@ -279,7 +280,7 @@ class DatabaseService {
         'latitude': request.latitude,
         'longitude': request.longitude,
         'customer': request.creatorId,
-        'time': request.time,
+        'time': Timestamp.now(),
         'requestId': request.requestId,
         'description': request.description,
         'phoneNumber': request.phoneNumber,
@@ -307,7 +308,7 @@ class DatabaseService {
         'phoneNumber': request.phoneNumber,
         'carierName': name,
         'carierPhoneNumber': '',
-      });
+      }).catchError((error) => print(error));
       await requestDataCollection.document(request.requestId).delete();
     }
     return true;
