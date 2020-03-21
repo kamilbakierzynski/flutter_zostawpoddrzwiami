@@ -61,7 +61,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
   Widget build(BuildContext context) {
     final User currentUser = Provider.of<User>(context);
     final List<CurrentUserRequest> allRequests =
-    Provider.of<List<CurrentUserRequest>>(context);
+        Provider.of<List<CurrentUserRequest>>(context);
 
     if (allRequests != null) {
       allRequests.forEach((CurrentUserRequest req) {
@@ -170,14 +170,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
               _showRequestFinishedDialogTaker(currentUser, currentRequest);
             },
             icon: Icon(
-              Icons.check,
+              Icons.arrow_forward,
               color: Colors.white,
             ),
-            label: Text('Potwierdź odebranie'),
+            label: Text('Potwierdź dostarczenie'),
             backgroundColor: Colors.green,
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
           body: Container(
             child: Column(
               children: <Widget>[
@@ -274,7 +274,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         return Container(
                           padding: index == (currentRequest.request.length - 1)
                               ? const EdgeInsets.only(
-                              bottom: 60.0, left: 10.0, right: 10.0)
+                                  bottom: 60.0, left: 10.0, right: 10.0)
                               : const EdgeInsets.symmetric(horizontal: 10.0),
                           child: AnimatedContainer(
                             duration: Duration(milliseconds: 400),
@@ -301,7 +301,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               ),
                               subtitle: Text(
                                 currentRequest.request[index].quantity
-                                    .toString() +
+                                        .toString() +
                                     " " +
                                     currentRequest.request[index].unit,
                                 style: TextStyle(
@@ -336,6 +336,36 @@ class _CurrentRequestState extends State<CurrentRequest> {
             iconTheme: IconThemeData(color: Colors.black),
             backgroundColor: Colors.white,
           ),
+          floatingActionButton: currentRequest.status
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+//                        _showRequestFinishedDialogMaker(currentRequest.requestId);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CompleteRequest(currentRequest.requestId)),
+                        ModalRoute.withName('/'));
+                  },
+                  icon: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                  label: Text('Potwierdź odebranie'),
+                  backgroundColor: Colors.green[600],
+                )
+              : FloatingActionButton.extended(
+                  onPressed: () {
+                    _showCancelDialog(currentUser);
+                  },
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                  ),
+                  label: Text('Anuluj'),
+                  backgroundColor: Colors.red[600],
+                ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: Container(
             child: Column(
               children: <Widget>[
@@ -348,7 +378,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                           Text(
                             currentRequest.name,
                             style: TextStyle(
-                              color: Colors.grey[500],
+                              color: Colors.black,
                               fontSize: 30,
                             ),
                           ),
@@ -376,6 +406,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                   ),
                 ),
+                SizedBox(
+                  height: 10.0,
+                ),
                 Expanded(
                   child: ListView.builder(
                       itemCount: currentRequest.request.length,
@@ -395,12 +428,12 @@ class _CurrentRequestState extends State<CurrentRequest> {
                                         Text(
                                             currentRequest.request[index].name),
                                         Text(currentRequest
-                                            .request[index].quantity
-                                            .toString() +
+                                                .request[index].quantity
+                                                .toString() +
                                             currentRequest.request[index].unit),
                                       ],
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                     ),
                                   ),
                                 ],
@@ -411,39 +444,6 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         );
                       }),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Center(
-                    child: currentRequest.status
-                        ? FloatingActionButton.extended(
-                      onPressed: () {
-//                        _showRequestFinishedDialogMaker(currentRequest.requestId);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CompleteRequest(
-                                    currentRequest.requestId)));
-                      },
-                      icon: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      ),
-                      label: Text('Potwierdź odebranie'),
-                      backgroundColor: Colors.green[600],
-                    )
-                        : FloatingActionButton.extended(
-                      onPressed: () {
-                        _showCancelDialog(currentUser);
-                      },
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.white,
-                      ),
-                      label: Text('Anuluj'),
-                      backgroundColor: Colors.red[600],
-                    ),
-                  ),
-                )
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
@@ -510,7 +510,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
           return AlertDialog(
             title: new Text("Uwaga!"),
             content:
-            new Text("Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
+                new Text("Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
@@ -540,7 +540,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
           return AlertDialog(
             title: new Text("Uwaga!"),
             content:
-            new Text("Nie możesz zrezygnować z prośby którą ktoś zmienia"),
+                new Text("Nie możesz zrezygnować z prośby którą ktoś zmienia"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
@@ -584,11 +584,12 @@ class _CurrentRequestState extends State<CurrentRequest> {
                     received: false);
                 await DatabaseService(uid: user.uid)
                     .createNewConfirmRequst(confirmRequest);
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            CompleteRequest(userRequest.requestId)));
+                            CompleteRequest(userRequest.requestId)),
+                    ModalRoute.withName('/'));
               },
             ),
           ],
