@@ -16,8 +16,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 class DatabaseService {
   final String uid;
   final String orderId;
+  final String name;
+  final String phone;
 
-  DatabaseService({this.uid, this.orderId});
+  DatabaseService({this.uid, this.orderId, this.name, this.phone});
 
   final CollectionReference userDataCollection =
       Firestore.instance.collection('users');
@@ -117,7 +119,7 @@ class DatabaseService {
           phoneNumber: doc.data['phoneNumber'] ?? '',
           carierName: doc.data['carierName'] ?? '',
           carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
-          pending: doc.data['pending'] ?? '',
+          pending: doc.data['pending'] ?? true,
         );
       } else {
         return null;
@@ -195,7 +197,7 @@ class DatabaseService {
       'time': Timestamp.now(),
       'carierName': request.carierName,
       'carierPhoneNumber': request.carierPhoneNumber,
-      'pending': request.pending,
+      'pending': true,
     });
     await userDataCollection
         .document(uid)
@@ -214,7 +216,7 @@ class DatabaseService {
       'time': Timestamp.now(),
       'carierName': request.carierName,
       'carierPhoneNumber': request.carierPhoneNumber,
-      'pending': request.pending,
+      'pending': true,
     });
     return true;
   }
@@ -239,9 +241,9 @@ class DatabaseService {
       'description': request.description,
       'phoneNumber': request.phoneNumber,
       'time': request.time,
-      'carierName': request.carierName,
-      'carierPhoneNumber': request.carierPhoneNumber,
-      'pending': request.pending,
+      'carierName': '',
+      'carierPhoneNumber': '',
+      'pending': true,
     });
     await userDataCollection
         .document(request.customer)
@@ -282,8 +284,8 @@ class DatabaseService {
         'requestId': request.requestId,
         'description': request.description,
         'phoneNumber': request.phoneNumber,
-        'carierName': request.carierName,
-        'carierPhoneNumber': request.carierPhoneNumber,
+        'carierName': name,
+        'carierPhoneNumber': phone,
         'pending': request.pending,
       });
       await userDataCollection
@@ -304,8 +306,8 @@ class DatabaseService {
         'requestId': request.requestId,
         'description': request.description,
         'phoneNumber': request.phoneNumber,
-        'carierName': request.carierName,
-        'carierPhoneNumber': request.carierPhoneNumber,
+        'carierName': name,
+        'carierPhoneNumber': phone,
       });
       await requestDataCollection.document(request.requestId).delete();
     }
