@@ -17,9 +17,8 @@ class DatabaseService {
   final String uid;
   final String orderId;
   final String name;
-  final String phone;
 
-  DatabaseService({this.uid, this.orderId, this.name, this.phone});
+  DatabaseService({this.uid, this.orderId, this.name});
 
   final CollectionReference userDataCollection =
       Firestore.instance.collection('users');
@@ -196,7 +195,7 @@ class DatabaseService {
       'phoneNumber': request.phoneNumber,
       'time': Timestamp.now(),
       'carierName': request.carierName,
-      'carierPhoneNumber': request.carierPhoneNumber,
+      'carierPhoneNumber': '',
       'pending': true,
     });
     await userDataCollection
@@ -215,7 +214,7 @@ class DatabaseService {
       'phoneNumber': request.phoneNumber,
       'time': Timestamp.now(),
       'carierName': request.carierName,
-      'carierPhoneNumber': request.carierPhoneNumber,
+      'carierPhoneNumber': '',
       'pending': true,
     });
     return true;
@@ -285,7 +284,7 @@ class DatabaseService {
         'description': request.description,
         'phoneNumber': request.phoneNumber,
         'carierName': name,
-        'carierPhoneNumber': phone,
+        'carierPhoneNumber': '',
         'pending': request.pending,
       });
       await userDataCollection
@@ -307,7 +306,7 @@ class DatabaseService {
         'description': request.description,
         'phoneNumber': request.phoneNumber,
         'carierName': name,
-        'carierPhoneNumber': phone,
+        'carierPhoneNumber': '',
       });
       await requestDataCollection.document(request.requestId).delete();
     }

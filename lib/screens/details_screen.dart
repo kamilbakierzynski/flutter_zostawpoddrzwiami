@@ -24,7 +24,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final UserData userData = Provider.of<UserData>(context)
+    final UserData userData = Provider.of<UserData>(context);
     final List<CurrentUserRequest> currentUserRequest =
     Provider.of<List<CurrentUserRequest>>(context);
     final List<UserRequest> userRequests =
@@ -175,7 +175,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 });
           } else {
             if (_checkIfStillAvaliable(userRequests, widget.request.requestId)) {
-              await DatabaseService(uid: user.uid, name: userData.name, phone: userData.phone)
+              await DatabaseService(uid: user.uid, name: userData.name)
                   .acceptRequest(widget.request);
               Navigator.of(context).pop();
               awaitResponse = false;
