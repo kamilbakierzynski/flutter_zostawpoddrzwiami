@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/number_symbols_data.dart';
@@ -11,12 +12,11 @@ import "package:shared_preferences/shared_preferences.dart";
 
 import '../models/request_model.dart';
 
-
 class CurrentRequest extends StatefulWidget {
   @override
   _CurrentRequestState createState() {
     _CurrentRequestState state = _CurrentRequestState();
-    for (var i = 0; i <= 500; i++){
+    for (var i = 0; i <= 500; i++) {
       state.checkbox_values.add(false);
     }
     return state;
@@ -41,7 +41,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i <=500; i++){
+    for (var i = 0; i <= 500; i++) {
       checkbox_values.add(false);
     }
     _loadCachedData();
@@ -50,21 +50,20 @@ class _CurrentRequestState extends State<CurrentRequest> {
   _loadCachedData() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
-       cachedID = (prefs.getString('cachedID') ?? "");
-       checkBoxString = (prefs.getString('checkBoxString') ?? "");
+      cachedID = (prefs.getString('cachedID') ?? "");
+      checkBoxString = (prefs.getString('checkBoxString') ?? "");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     final User currentUser = Provider.of<User>(context);
     final List<CurrentUserRequest> allRequests =
         Provider.of<List<CurrentUserRequest>>(context);
 
     if (allRequests != null) {
       allRequests.forEach((CurrentUserRequest req) {
-          currentRequest = req;
+        currentRequest = req;
       });
     } else {
       return Scaffold(
@@ -82,7 +81,10 @@ class _CurrentRequestState extends State<CurrentRequest> {
             padding: const EdgeInsets.only(top: 300),
             child: Column(
               children: <Widget>[
-                Icon(Icons.insert_emoticon, size: 50,),
+                Icon(
+                  Icons.insert_emoticon,
+                  size: 50,
+                ),
                 Text(
                   "Nie masz obecnych zamowien",
                   style: TextStyle(
@@ -113,7 +115,10 @@ class _CurrentRequestState extends State<CurrentRequest> {
             padding: const EdgeInsets.only(top: 300),
             child: Column(
               children: <Widget>[
-                Icon(Icons.insert_emoticon, size: 50,),
+                Icon(
+                  Icons.insert_emoticon,
+                  size: 50,
+                ),
                 Text(
                   "Nie masz obecnych zamowien",
                   style: TextStyle(
@@ -127,12 +132,11 @@ class _CurrentRequestState extends State<CurrentRequest> {
         ),
       );
     }
-    if (cachedID == currentRequest.requestId){
-      for (var i = 0; i < checkBoxString.length;i++){
-        if (checkBoxString[i] == "1"){
+    if (cachedID == currentRequest.requestId) {
+      for (var i = 0; i < checkBoxString.length; i++) {
+        if (checkBoxString[i] == "1") {
           checkbox_values[i] = true;
-        }
-        else{
+        } else {
           checkbox_values[i] = false;
         }
       }
@@ -142,141 +146,184 @@ class _CurrentRequestState extends State<CurrentRequest> {
 
       street = currentRequest.address;
       print(street);
-        return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                'Twoja obecna lista',
-                style: TextStyle(color: Colors.black),
-              ),
-              actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      _showResignDialog(currentUser);
-                    }
-                )
-              ],
-              iconTheme: IconThemeData(color: Colors.black),
-              backgroundColor: Colors.white,
+      return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: Text(
+              'Twoja obecna lista',
+              style: TextStyle(color: Colors.black),
             ),
-            body: Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 30, top: 20, right: 30),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              currentRequest.name,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 30,
-                              ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  currentRequest.phoneNumber,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                  FlatButton(
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                                    onPressed: () {
-                                      launch("tel://$phoneNumber");
-                                    },
-                                    child: Icon(Icons.phone, color: Colors.green[600],),
-                                  ),
-
-
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                                    onPressed: () {
-                                      _launchMapsUrl();
-                                    },
-                                    child: Icon(Icons.location_on, color: Colors.red[700],
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                        ),
-                        Container(
-                          child: Column(children: <Widget>[
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    _showResignDialog(currentUser);
+                  })
+            ],
+            iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              _showRequestFinishedDialog();
+            },
+            child: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.green,
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 30, top: 20, right: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
                               Text(
-                                street,
+                                currentRequest.name,
                                 style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
+                                    color: Colors.black,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                currentRequest.requestId,
+                                style: TextStyle(color: Colors.grey[400]),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(
+                                  Icons.phone,
+                                  color: Colors.green[600],
+                                ),
+                                onPressed: () => launch("tel://$phoneNumber"),
+                              ),
+                              Text(
+                                currentRequest.phoneNumber,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 18,
                                 ),
                               ),
-                            Container(
-                              padding: EdgeInsets.only(top: 10),
-                                child: Text(
-                                  currentRequest.description,
-                                  style: TextStyle(fontSize: 20),
-                                )
-                            ),
-                          ], crossAxisAlignment: CrossAxisAlignment.start),
-                        ),
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: currentRequest.request.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 0, bottom: 0),
-                            child: Card(
-                              child: CheckboxListTile(
-                                value: checkbox_values[index],
-                                title: Column(
-                                  children: <Widget>[
-                                    Text(currentRequest.request[index].name),
-                                    Text(currentRequest.request[index].quantity
-                                        .toString() +
-                                        currentRequest.request[index].unit),
-                                  ],
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(
+                                  Icons.location_on,
+                                  color: Colors.red[700],
                                 ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    checkbox_values[index] = value;
-                                    syncWithCache();
-                                  });
-                                },
-                                secondary: const Icon(Icons.shopping_basket),
-                                //trailing: Icon(Icons.more_vert),
+                                onPressed: () => _launchMapsUrl(),
                               ),
-                            ),
-                          );
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Center(
-                      child: FloatingActionButton(onPressed: () {
-                        _showRequestFinishedDialog();
-                      },
-                        child: Icon(Icons.check, color: Colors.white,),
-                        backgroundColor: Colors.green,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: AutoSizeText(
+                                  street,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.info),
+                                onPressed: null,
+                              ),
+                              Text(
+                                currentRequest.description,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.grey[600]),
+                              ),
+                            ],
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
                       ),
-                    ),
-                  )
-                ],
-                crossAxisAlignment: CrossAxisAlignment.start,
-              ),
-            ));
-      }
-     else {
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: currentRequest.request.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: index == (currentRequest.request.length - 1)
+                              ? const EdgeInsets.only(
+                                  bottom: 60.0, left: 10.0, right: 10.0)
+                              : const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4.0),
+                                color: checkbox_values[index]
+                                    ? Colors.grey[100]
+                                    : Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 4,
+                                      spreadRadius: 1,
+                                      offset: Offset(3, 4))
+                                ]),
+                            child: CheckboxListTile(
+                              value: checkbox_values[index],
+                              activeColor: Colors.green[600],
+                              title: Text(
+                                currentRequest.request[index].name,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                currentRequest.request[index].quantity
+                                        .toString() +
+                                    " " +
+                                    currentRequest.request[index].unit,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  checkbox_values[index] = value;
+                                  syncWithCache();
+                                });
+                              },
+                              dense: true,
+                              secondary: const Icon(Icons.shopping_basket),
+                              //trailing: Icon(Icons.more_vert),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ));
+    } else {
       return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -342,12 +389,15 @@ class _CurrentRequestState extends State<CurrentRequest> {
                                     padding: EdgeInsets.only(left: 10),
                                     child: Column(
                                       children: <Widget>[
-                                        Text(currentRequest.request[index].name),
-                                        Text(currentRequest.request[index].quantity
+                                        Text(
+                                            currentRequest.request[index].name),
+                                        Text(currentRequest
+                                                .request[index].quantity
                                                 .toString() +
                                             currentRequest.request[index].unit),
                                       ],
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                     ),
                                   ),
                                 ],
@@ -361,10 +411,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Center(
-                    child: FloatingActionButton(onPressed: () {
-                      _showCancelDialog(currentUser);
-                    },
-                      child: Icon(Icons.remove, color: Colors.white,),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        _showCancelDialog(currentUser);
+                      },
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                      ),
                       backgroundColor: Colors.red,
                     ),
                   ),
@@ -425,6 +479,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
       },
     );
   }
+
   void _showCancelDialog(User user) {
     if (currentRequest.status != true) {
       showDialog(
@@ -433,8 +488,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
           // return object of type Dialog
           return AlertDialog(
             title: new Text("Uwaga!"),
-            content: new Text(
-                "Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
+            content:
+                new Text("Czy na pewno chcesz zrezygnowac ze złożonej prośby?"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
@@ -446,8 +501,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
               new FlatButton(
                 child: new Text("Tak"),
                 onPressed: () {
-                  DatabaseService(uid: user.uid).deleteOwnRequest(
-                      currentRequest);
+                  DatabaseService(uid: user.uid)
+                      .deleteOwnRequest(currentRequest);
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
@@ -456,16 +511,15 @@ class _CurrentRequestState extends State<CurrentRequest> {
           );
         },
       );
-    }
-    else{
+    } else {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
             title: new Text("Uwaga!"),
-            content: new Text(
-                "Nie możesz zrezygnować z prośby którą ktoś zmienia"),
+            content:
+                new Text("Nie możesz zrezygnować z prośby którą ktoś zmienia"),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
@@ -509,14 +563,14 @@ class _CurrentRequestState extends State<CurrentRequest> {
       },
     );
   }
+
   void syncWithCache() async {
     prefs = await SharedPreferences.getInstance();
     String newCheckboxString = "";
-    for(var i = 0; i < currentRequest.request.length; i++){
-      if (checkbox_values[i] == false){
+    for (var i = 0; i < currentRequest.request.length; i++) {
+      if (checkbox_values[i] == false) {
         newCheckboxString += "0";
-      }
-      else{
+      } else {
         newCheckboxString += "1";
       }
     }

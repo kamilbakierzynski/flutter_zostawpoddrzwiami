@@ -79,11 +79,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500)),
                           Text(
-                              'Adres: ${widget.request.address.replaceAll(RegExp('[A-Z|a-z|0-9]'), '*')}',
+                              'Adres: Ukryty',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500)),
-                          Text('Opis: ${widget.request.creatorId}',
+                          Text('Opis: ${widget.request.description}',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500))
@@ -196,8 +196,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         FlatButton(
                           child: Text('OK'),
                           onPressed: () {
-                            Navigator.popUntil(
-                                context, ModalRoute.withName('/'));
+                            Navigator.pushReplacementNamed(context, '/current_request');
                           },
                         ),
                       ],
