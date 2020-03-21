@@ -7,6 +7,8 @@ import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:shortid/shortid.dart';
 import '../models/current_user_request_model.dart';
 import '../models/current_user_request_model.dart';
+import '../models/current_user_request_model.dart';
+import '../models/current_user_request_model.dart';
 import '../models/request_model.dart';
 import '../models/user_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -307,6 +309,12 @@ class DatabaseService {
         .document(request.requestId)
         .delete();
     await requestDataCollection.document(request.requestId).delete();
+    return true;
+  }
+  Future<bool> requestCompleted(ConfirmRequest request) async {
+    await userDataCollection
+        .document(request.makerUid).collection('requests').document(request.orderId).delete();
+    await userDataCollection.document(request.takerUid).collection('requests').document(request.orderId).delete();
     return true;
   }
 
