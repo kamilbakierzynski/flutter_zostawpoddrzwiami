@@ -173,7 +173,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
               Icons.check,
               color: Colors.white,
             ),
-            label: Text('Potwierdź wykonanie'),
+            label: Text('Potwierdź odebranie'),
             backgroundColor: Colors.green,
           ),
           floatingActionButtonLocation:
@@ -327,227 +327,107 @@ class _CurrentRequestState extends State<CurrentRequest> {
             ),
           ));
     } else {
-      if (currentRequest.status == true) {
-        return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                'Twoja obecna prośba',
-                style: TextStyle(color: Colors.black),
-              ),
-              iconTheme: IconThemeData(color: Colors.black),
-              backgroundColor: Colors.white,
+      return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Twoja obecna prośba',
+              style: TextStyle(color: Colors.black),
             ),
-            body: Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 30, top: 20, right: 30),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              currentRequest.carierName,
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 30,
-                              ),
+            iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+          ),
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 30, top: 20, right: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            currentRequest.name,
+                            style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 30,
                             ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                currentRequest.carierPhoneNumber,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20
-                                ),
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  var num = currentRequest.carierPhoneNumber;
-                                  launch("tel://$num");
-                                },
-                                child: Icon(Icons.phone, color: Colors.green[600],),
-                              )
-                            ],
                           ),
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                        ),
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: currentRequest.request.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 0, bottom: 0),
-                            child: Card(
-                              child: ListTile(
-                                title: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.shopping_basket),
-                                    Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(currentRequest
-                                              .request[index].name),
-                                          Text(currentRequest
-                                                  .request[index].quantity
-                                                  .toString() +
-                                              currentRequest
-                                                  .request[index].unit),
-                                        ],
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //trailing: Icon(Icons.more_vert),
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-//                  Padding(
-//                    padding: const EdgeInsets.all(15.0),
-//                    child: Center(
-//                      child: FloatingActionButton.extended(
-//                        onPressed: () {
-//                          _showRequestFinishedDialogMaker(
-//                              currentRequest.requestId);
-//                        },
-//                        icon: Icon(
-//                          Icons.check,
-//                          color: Colors.white,
-//                        ),
-//                        label: Text('Potwierdź odebranie'),
-//                        backgroundColor: Colors.green[600],
-//                      ),
-//                    ),
-//                  )
-                ],
-                crossAxisAlignment: CrossAxisAlignment.start,
-              ),
-            ));
-      } else {
-        return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                'Twoja obecna prośba (oczekuje)',
-                style: TextStyle(color: Colors.black),
-              ),
-              iconTheme: IconThemeData(color: Colors.black),
-              backgroundColor: Colors.white,
-            ),
-            body: Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 30, top: 20, right: 30),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              currentRequest.name,
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 30,
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: AutoSizeText(
-                                currentRequest.address,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 7, bottom: 7),
-                              child: Text(
-                                phoneNumber,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text(currentRequest.description),
-                            ),
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                        ),
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: currentRequest.request.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 0, bottom: 0),
-                            child: Card(
-                              child: ListTile(
-                                title: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.shopping_basket),
-                                    Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(currentRequest
-                                              .request[index].name),
-                                          Text(currentRequest
-                                                  .request[index].quantity
-                                                  .toString() +
-                                              currentRequest
-                                                  .request[index].unit),
-                                        ],
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //trailing: Icon(Icons.more_vert),
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Center(
-                      child: FloatingActionButton(
-                        onPressed: () {
-                          _showCancelDialog(currentUser);
-                        },
-                        child: Icon(
-                          Icons.cancel,
-                          color: Colors.white,
-                        ),
-
-                        backgroundColor: Colors.red[600],
+//                          Row(
+//                            children: <Widget>[
+//                              Text(
+//                                phoneNumber,
+//                                style: TextStyle(
+//                                  color: Colors.black,
+//                                  fontSize: 20
+//                                ),
+//                              ),
+//                              FlatButton(
+//                                onPressed: () {
+//                                  launch("tel://$phoneNumber");
+//                                },
+//                                child: Icon(Icons.phone, color: Colors.green[600],),
+//                              )
+//                            ],
+//                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
                       ),
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: currentRequest.request.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 0, bottom: 0),
+                          child: Card(
+                            child: ListTile(
+                              title: Row(
+                                children: <Widget>[
+                                  Icon(Icons.shopping_basket),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                            currentRequest.request[index].name),
+                                        Text(currentRequest
+                                                .request[index].quantity
+                                                .toString() +
+                                            currentRequest.request[index].unit),
+                                      ],
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //trailing: Icon(Icons.more_vert),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        _showRequestFinishedDialogMaker(currentRequest.requestId);
+                      },
+                      icon: Icon(Icons.check, color: Colors.white,),
+                      label: Text('Potwierdź odebranie'),
+                      backgroundColor: Colors.green[600],
                     ),
-                  )
-                ],
-                crossAxisAlignment: CrossAxisAlignment.start,
-              ),
-            ));
-      }
+                  ),
+                )
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ));
     }
   }
 
@@ -656,8 +536,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
   }
 
-  void _showRequestFinishedDialogTaker(
-      User user, CurrentUserRequest userRequest) {
+  void _showRequestFinishedDialogTaker(User user, CurrentUserRequest userRequest) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -684,11 +563,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                     received: false);
                 await DatabaseService(uid: user.uid)
                     .createNewConfirmRequst(confirmRequest);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CompleteRequest(userRequest.requestId)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteRequest(userRequest.requestId)));
               },
             ),
           ],
