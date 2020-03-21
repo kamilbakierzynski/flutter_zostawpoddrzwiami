@@ -117,6 +117,7 @@ class DatabaseService {
           phoneNumber: doc.data['phoneNumber'] ?? '',
           carierName: doc.data['carierName'] ?? '',
           carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
+          pending: doc.data['pending'] ?? '',
         );
       } else {
         return null;
@@ -153,6 +154,7 @@ class DatabaseService {
           phoneNumber: doc.data['phoneNumber'] ?? '',
           carierName: doc.data['carierName'] ?? '',
           carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
+          pending: doc.data['pending'] ?? true,
         );
       } else {
         return null;
@@ -193,6 +195,7 @@ class DatabaseService {
       'time': Timestamp.now(),
       'carierName': request.carierName,
       'carierPhoneNumber': request.carierPhoneNumber,
+      'pending': request.pending,
     });
     await userDataCollection
         .document(uid)
@@ -211,6 +214,7 @@ class DatabaseService {
       'time': Timestamp.now(),
       'carierName': request.carierName,
       'carierPhoneNumber': request.carierPhoneNumber,
+      'pending': request.pending,
     });
     return true;
   }
@@ -237,6 +241,7 @@ class DatabaseService {
       'time': request.time,
       'carierName': request.carierName,
       'carierPhoneNumber': request.carierPhoneNumber,
+      'pending': request.pending,
     });
     await userDataCollection
         .document(request.customer)
@@ -279,6 +284,7 @@ class DatabaseService {
         'phoneNumber': request.phoneNumber,
         'carierName': request.carierName,
         'carierPhoneNumber': request.carierPhoneNumber,
+        'pending': request.pending,
       });
       await userDataCollection
           .document(request.creatorId)

@@ -17,7 +17,8 @@ class UserRequest{
   final String description;
   final String carierName;
   final String carierPhoneNumber;
+  final bool pending;
   double distance;
 
-  UserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude, this.time, this.creatorId, this.description, this.phoneNumber, this.carierName, this.carierPhoneNumber});
+  UserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude, this.time, this.creatorId, this.description, this.phoneNumber, this.carierName, this.carierPhoneNumber, this.pending});
 }
