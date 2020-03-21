@@ -23,8 +23,12 @@ class _CompleteRequestState extends State<CompleteRequest> {
   String flareState = 'Waiting';
 
   bool status = false;
-  int _counter = 0;
   bool showAnim = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +52,16 @@ class _CompleteRequestState extends State<CompleteRequest> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          width: 200,
-                          height: 200,
-                          child: FlareActor(
-                            'assets/flare/Button.flr',
-                            alignment: Alignment.center,
-                            animation: "Waiting",
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        confirmRequest.received == false
+                            ? SpinKitRing(
+                                color: Color(0xFF583CDF),
+                                size: 80,
+                              )
+                            : Icon(
+                                Icons.check_circle,
+                                color: Colors.green[600],
+                                size: 80,
+                              ),
                         SizedBox(
                           height: 40,
                         ),

@@ -167,7 +167,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           setState(() {
                             awaitResponse = false;
                           });
-                          Navigator.of(context).pop();
+                          Navigator.pop(context);
                         },
                       ),
                     ],
