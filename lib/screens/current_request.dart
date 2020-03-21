@@ -414,14 +414,34 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Center(
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        _showRequestFinishedDialogMaker(currentRequest.requestId);
-                      },
-                      icon: Icon(Icons.check, color: Colors.white,),
-                      label: Text('Potwierdź odebranie'),
-                      backgroundColor: Colors.green[600],
-                    ),
+                    child: currentRequest.status
+                        ? FloatingActionButton.extended(
+                            onPressed: () {
+//                        _showRequestFinishedDialogMaker(currentRequest.requestId);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CompleteRequest(
+                                          currentRequest.requestId)));
+                            },
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                            ),
+                            label: Text('Potwierdź odebranie'),
+                            backgroundColor: Colors.green[600],
+                          )
+                        : FloatingActionButton.extended(
+                            onPressed: () {
+                              _showCancelDialog(currentUser);
+                            },
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                            ),
+                            label: Text('Anuluj'),
+                            backgroundColor: Colors.red[600],
+                          ),
                   ),
                 )
               ],
@@ -536,7 +556,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
   }
 
-  void _showRequestFinishedDialogTaker(User user, CurrentUserRequest userRequest) {
+  void _showRequestFinishedDialogTaker(
+      User user, CurrentUserRequest userRequest) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -563,7 +584,11 @@ class _CurrentRequestState extends State<CurrentRequest> {
                     received: false);
                 await DatabaseService(uid: user.uid)
                     .createNewConfirmRequst(confirmRequest);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteRequest(userRequest.requestId)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CompleteRequest(userRequest.requestId)));
               },
             ),
           ],
