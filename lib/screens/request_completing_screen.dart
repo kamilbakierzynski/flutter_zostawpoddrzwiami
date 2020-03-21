@@ -101,12 +101,10 @@ class _CompleteRequestState extends State<CompleteRequest> {
                         Container(
                           width: 200,
                           height: 200,
-                          child: FlareActor(
-                            'assets/flare/Button.flr',
-                            alignment: Alignment.center,
-                            animation: flareState,
-                            fit: BoxFit.fill,
-                          ),
+                          child: SpinKitRing(
+                            color: Color(0xFF583CDF),
+                            size: 80,
+                          )
                         ),
                         SizedBox(
                           height: 40,
@@ -135,12 +133,10 @@ class _CompleteRequestState extends State<CompleteRequest> {
                     Container(
                       width: 200,
                       height: 200,
-                      child: FlareActor(
-                        'assets/flare/Button.flr',
-                        alignment: Alignment.center,
-                        animation: flareState,
-                        fit: BoxFit.fill,
-                      ),
+                      child: SpinKitRing(
+                        color: Color(0xFF583CDF),
+                        size: 80,
+                      )
                     )
                   ],
                 ),
