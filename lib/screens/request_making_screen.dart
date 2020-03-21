@@ -13,6 +13,9 @@ import 'package:provider/provider.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:geolocator/geolocator.dart';
 import '../models/request_model.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 class RequestMakingScreen extends StatefulWidget {
   @override
@@ -41,6 +44,7 @@ class _State extends State<RequestMakingScreen> {
   bool firstFilled = false;
 
   ScrollController _controller = ScrollController();
+  final TextEditingController _controllerAddress = TextEditingController();
 
   _addItem() {
     setState(() {
@@ -87,10 +91,7 @@ class _State extends State<RequestMakingScreen> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (val)  {
-                          if(val.split(',').length != 4){return 'Wpisz adres poprawnie';}
-                          else {return val.isEmpty ? 'Wpisz adres' : null;}
-                        },
+                        controller: _controllerAddress,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.location_city),
                           hintText: "Ulica, Numer Domu, Numer Mieszkania, Miasto",
@@ -98,8 +99,31 @@ class _State extends State<RequestMakingScreen> {
                         ),
                         maxLines: 2,
                         minLines: 1,
-                        onChanged: (String text) {
-                          this.address = text;
+//                        },
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PlacePicker(
+                                  apiKey: 'AIzaSyC5Sp8b9wZSO82x1iwWB69vCMkl_2tvFiM',
+                                  initialPosition: LatLng(-33.8567844, 151.213108),
+                                  useCurrentLocation: true,
+                                  //usePlaceDetailSearch: true,
+                                  onPlacePicked: (result) {
+                                    print(result.formattedAddress);
+                                    print(result.addressComponents);
+                                    Navigator.of(context).pop();
+                                    setState(() {
+                                      _controllerAddress.text = result.formattedAddress;
+                                      this.address = result.formattedAddress;
+                                    });
+                                  },
+                                  autocompleteLanguage: "pl",
+                                );
+                              },
+                            ),
+                          );
                         },
                       ),
                       TextFormField(
@@ -138,7 +162,7 @@ class _State extends State<RequestMakingScreen> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.description),
                           hintText: "Opcjonalnie",
-                          labelText: "Uwagi do zamowienia",
+                          labelText: "Uwagi do zamowienia (Numer mieszkania)",
                         ),
                         onChanged: (String text) {
                           this.optionalInfo = text;
