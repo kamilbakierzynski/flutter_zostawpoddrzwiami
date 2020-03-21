@@ -29,17 +29,10 @@ class _State extends State<RequestMakingScreen> {
   List<Item> requestedCart = [Item("Blank", 0.0, "Blank", "Blank")];
   final _formKey = GlobalKey<FormState>();
 
-//  String tempProduct = '';
   String address = '';
   String phoneNumber = '';
   String optionalInfo = '';
   String price = '';
-
-//  String name = '';
-//  String surname = '';
-//  String description = '';
-//  int itemCount = 0;
-//  bool isListClicked = false;
 
   bool firstFilled = false;
 
@@ -243,7 +236,7 @@ class _State extends State<RequestMakingScreen> {
           padding: EdgeInsets.only(top: 5.0)),
       floatingActionButton: firstFilled
           ? FloatingActionButton.extended(
-              backgroundColor: Colors.amber,
+              backgroundColor: Colors.green,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _removeIfBlank();
@@ -326,13 +319,13 @@ class _State extends State<RequestMakingScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            initialValue: requestedCart[index].name != 'Blank'
-                ? requestedCart[index].name
-                : null,
+            style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
-              icon: Icon(Icons.add_shopping_cart),
+              icon: Icon(Icons.add_shopping_cart,color: Colors.white70),
               hintText: 'Wpisz Produkt',
               labelText: 'Produkt',
+              labelStyle: TextStyle(color: Colors.white70),
+              hintStyle: TextStyle(color: Colors.white70),
             ),
             onChanged: (String text) {
               if (requestedCart[0].name != 'Blank') {
@@ -344,13 +337,13 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
-            initialValue: requestedCart[index].quantity != 0.0
-                ? requestedCart[index].quantity.toString()
-                : null,
+            style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
-              icon: Icon(Icons.confirmation_number),
+              icon: Icon(Icons.confirmation_number,color: Colors.white70),
               hintText: 'Wpisz ilosc',
               labelText: 'ilosc',
+              labelStyle: TextStyle(color: Colors.white70),
+              hintStyle: TextStyle(color: Colors.white70),
             ),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
@@ -361,26 +354,26 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
-            initialValue: requestedCart[index].unit != 'Blank'
-                ? requestedCart[index].unit
-                : null,
+            style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
-              icon: Icon(Icons.info),
+              icon: Icon(Icons.info,color: Colors.white70),
               hintText: 'Wpisz jednostke',
               labelText: 'jednostka',
+              labelStyle: TextStyle(color: Colors.white70),
+              hintStyle: TextStyle(color: Colors.white70),
             ),
             onChanged: (String text) {
               this.requestedCart[index].unit = text;
             },
           ),
           TextFormField(
-            initialValue: requestedCart[index].description != 'Blank'
-                ? requestedCart[index].description
-                : null,
+            style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
-              icon: Icon(Icons.warning),
+              icon: Icon(Icons.warning,color: Colors.white70),
               hintText: 'Wpisz uwagi',
               labelText: 'Uwagi',
+              labelStyle: TextStyle(color: Colors.white70),
+              hintStyle: TextStyle(color: Colors.white70),
             ),
             onChanged: (String text) {
               this.requestedCart[index].description = text;
