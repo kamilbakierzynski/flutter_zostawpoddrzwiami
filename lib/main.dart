@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
 class MaterialAppLoggedUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<User>(context);
     if (user == null) {
       print('Not logged in');
       return MaterialApp(
@@ -58,7 +59,6 @@ class MaterialAppLoggedUser extends StatelessWidget {
             '/register': (context) => RegisterScreen()
           });
     } else {
-      final User user = Provider.of<User>(context);
       final FirebaseMessaging _fcm = FirebaseMessaging();
       DatabaseService(uid: user.uid).saveDeviceToken(_fcm);
       print('Logged in');
