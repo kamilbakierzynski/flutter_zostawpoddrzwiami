@@ -74,12 +74,12 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<List<CurrentUserRequest>>(context);
     final UserData userData = Provider.of<UserData>(context);
     final List<UserRequest> awaitFuture = [];
-    if (userRequests != null) {
+    if (userRequests != null && currentUserRequestList != null) {
       return FutureBuilder(
         future: _getDistanceAndSort(userRequests),
         initialData: awaitFuture,
         builder: (context, snapshot) {
-          if (snapshot.data != null) {
+          if (snapshot.hasData) {
             final List<UserRequest> sorted_userRequests = snapshot.data;
             return Scaffold(
               extendBody: true,

@@ -128,40 +128,44 @@ class DatabaseService {
 
   List<CurrentUserRequest> _currentUserRequestFromSnapshot(
       QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
-      if (doc != null) {
-        List<Item> itemsFormated = [];
-        if (doc.data['order'] != null) {
-          List<dynamic> items = doc.data['order'];
-          items.forEach((item) {
-            itemsFormated.add(Item(
-                item.toString().split('#@?')[0],
-                double.parse(item.toString().split('#@?')[1]),
-                item.toString().split('#@?')[2],
-                item.toString().split('#@?')[3]));
-          });
+    if (snapshot != null) {
+      return snapshot.documents.map((doc) {
+        if (doc != null) {
+          List<Item> itemsFormated = [];
+          if (doc.data['order'] != null) {
+            List<dynamic> items = doc.data['order'];
+            items.forEach((item) {
+              itemsFormated.add(Item(
+                  item.toString().split('#@?')[0],
+                  double.parse(item.toString().split('#@?')[1]),
+                  item.toString().split('#@?')[2],
+                  item.toString().split('#@?')[3]));
+            });
+          }
+          return CurrentUserRequest(
+              name: doc.data["name"] ?? '',
+              address: doc.data["address"] ?? '',
+              request: itemsFormated ?? [Item('', 0, '', '')],
+              requestId: doc.data["requestId"] ?? '',
+              price: doc.data["price"] ?? '',
+              status: doc.data["status"] ?? false,
+              customer: doc.data['customer'] ?? '',
+              longitude: doc.data["longitude"] ?? 0.0,
+              latitude: doc.data["latitude"] ?? 0.0,
+              description: doc.data['description'] ?? '',
+              phoneNumber: doc.data['phoneNumber'] ?? '',
+              carierName: doc.data['carierName'] ?? '',
+              carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
+              pending: doc.data['pending'] ?? false,
+              time: doc.data["time"] != null
+                  ? formatTime(doc.data['time'].toDate().toString())
+                  : '');
+        } else {
+          return null;
         }
-        return CurrentUserRequest(
-          name: doc.data["name"] ?? '',
-          address: doc.data["address"] ?? '',
-          request: itemsFormated ?? [Item('', 0, '', '')],
-          requestId: doc.data["requestId"] ?? '',
-          price: doc.data["price"] ?? '',
-          status: doc.data["status"] ?? false,
-          customer: doc.data['customer'] ?? '',
-          longitude: doc.data["longitude"] ?? 0.0,
-          latitude: doc.data["latitude"] ?? 0.0,
-          description: doc.data['description'] ?? '',
-          phoneNumber: doc.data['phoneNumber'] ?? '',
-          carierName: doc.data['carierName'] ?? '',
-          carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
-          pending: doc.data['pending'] ?? false,
-          time: formatTime(doc.data['time'].toString()) ?? ''
-        );
-      } else {
-        return null;
-      }
-    }).toList();
+      }).toList();
+    }
+    return null;
   }
 
   UserData _userFromSnapshot(DocumentSnapshot snapshot) {
@@ -333,10 +337,18 @@ class DatabaseService {
     await requestDataCollection.document(request.requestId).delete();
     return true;
   }
+
   Future<bool> requestCompleted(ConfirmRequest request) async {
     await userDataCollection
-        .document(request.makerUid).collection('requests').document(request.orderId).delete();
-    await userDataCollection.document(request.takerUid).collection('requests').document(request.orderId).delete();
+        .document(request.makerUid)
+        .collection('requests')
+        .document(request.orderId)
+        .delete();
+    await userDataCollection
+        .document(request.takerUid)
+        .collection('requests')
+        .document(request.orderId)
+        .delete();
     return true;
   }
 

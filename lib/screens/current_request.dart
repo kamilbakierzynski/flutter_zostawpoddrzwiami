@@ -90,7 +90,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                 Text(
                   "Nie masz obecnych zamowien",
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 20,
                   ),
                 ),
@@ -103,7 +103,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
     if (currentRequest == null) {
       print("current request null");
       return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             'Twoja obecna lista',

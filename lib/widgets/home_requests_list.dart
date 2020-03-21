@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/screens/details_screen.dart';
@@ -223,10 +224,24 @@ class HomeRequestsList extends StatelessWidget {
     } else {
       return SliverToBoxAdapter(
           child: Center(
-        child: Text(
-          'Uff... \n aktualnie nikt nie potrzebuje pomocy.',
-          style: TextStyle(color: Colors.grey[600], fontSize: 17),
-          textAlign: TextAlign.center,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 200,
+              width: 200,
+              child: FlareActor(
+                'assets/flare/Button_1.flr',
+                animation: 'Waiting',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            SizedBox(height: 40.0,),
+            Text(
+              'Uff... \n aktualnie nikt nie potrzebuje pomocy.',
+              style: TextStyle(color: Colors.grey[600], fontSize: 17),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ));
     }
