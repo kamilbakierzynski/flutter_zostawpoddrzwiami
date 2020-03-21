@@ -250,7 +250,7 @@ class DatabaseService {
         .document(request.requestId)
         .updateData({
       'status': false,
-    });
+    }).catchError((error) => print(error));
     await userDataCollection
         .document(uid)
         .collection('requests')
