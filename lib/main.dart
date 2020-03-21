@@ -10,6 +10,7 @@ import 'package:zostawpoddrzwiami/screens/home_screen.dart';
 import 'package:zostawpoddrzwiami/screens/login_screen.dart';
 import 'package:zostawpoddrzwiami/screens/preferences_screen.dart';
 import 'package:zostawpoddrzwiami/screens/register_screen.dart';
+import 'package:zostawpoddrzwiami/screens/request_completing_screen.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/wrappers/auth_wrapper.dart';
@@ -79,7 +80,8 @@ class MaterialAppLoggedUser extends StatelessWidget {
               '/': (context) => HomeScreen(),
               '/request': (context) => RequestMakingScreen(),
               '/current_request': (context) => CurrentRequest(),
-              '/preferences_screen': (context) => Preferences()
+              '/preferences_screen': (context) => Preferences(),
+              '/request_complete': (context) => CompleteRequest(),
             }),
       );
     }
