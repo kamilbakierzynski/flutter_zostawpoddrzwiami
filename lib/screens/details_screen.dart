@@ -6,6 +6,8 @@ import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:provider/provider.dart';
 import '../models/user_model.dart';
+import '../models/user_model.dart';
+import '../models/user_model.dart';
 import '../services/database_service.dart';
 
 class DetailsScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserData userData = Provider.of<UserData>(context)
     final List<CurrentUserRequest> currentUserRequest =
     Provider.of<List<CurrentUserRequest>>(context);
     final List<UserRequest> userRequests =
@@ -172,7 +175,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 });
           } else {
             if (_checkIfStillAvaliable(userRequests, widget.request.requestId)) {
-              await DatabaseService(uid: user.uid)
+              await DatabaseService(uid: user.uid, name: userData.name, phone: userData.phone)
                   .acceptRequest(widget.request);
               Navigator.of(context).pop();
               awaitResponse = false;
