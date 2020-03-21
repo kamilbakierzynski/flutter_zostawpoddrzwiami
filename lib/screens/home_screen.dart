@@ -21,7 +21,51 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/current_user_request_model.dart';
 import '../models/current_user_request_model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    final FirebaseMessaging _fcm = FirebaseMessaging();
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                content: ListTile(
+                  title: Text(message['notification']['title']),
+                  subtitle: Text(message['notification']['body']),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Ok'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        Navigator.pushNamed(context, '/current_request');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        Navigator.pushNamed(context, '/current_request');
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<UserRequest> userRequests =
