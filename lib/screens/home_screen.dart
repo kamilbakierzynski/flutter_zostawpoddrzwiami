@@ -27,10 +27,12 @@ class HomeScreen extends StatelessWidget {
         Provider.of<List<UserRequest>>(context);
     final List<CurrentUserRequest> currentUserRequestList =
         Provider.of<List<CurrentUserRequest>>(context);
+    final UserData userData = Provider.of<UserData>(context);
+    final List<UserRequest> awaitFuture = [];
     if (userRequests != null) {
       return FutureBuilder(
         future: _getDistanceAndSort(userRequests),
-        initialData: null,
+        initialData: awaitFuture,
         builder: (context, snapshot) {
           if (snapshot.data != null) {
             final List<UserRequest> sorted_userRequests = snapshot.data;
@@ -48,14 +50,12 @@ class HomeScreen extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.settings),
                         onPressed: () {
-                          final UserData userData =
-                              Provider.of<UserData>(context);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Preferences(
-                                        originalName: userData.name,
-                                        originalSurname: userData.surname,
+                                        originalName: userData.name ?? '',
+                                        originalSurname: userData.surname ?? '',
                                       )));
                         },
                         color: Colors.black,
@@ -164,28 +164,32 @@ class HomeScreen extends StatelessWidget {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
-                  if(currentUserRequestList.length >=1)
-                  {
-                    showDialog(context: context, barrierDismissible: false, builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Tylko jedna akcja możliwa.'),
-                        content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              Text('Nie możesz dodać prośby. Aktualnie możliwe jest tylko dodanie jednej prośby. Nie możesz też dodać prośby jeśli aktualnie komuś pomagasz.')
+                  if (currentUserRequestList.length >= 1) {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Tylko jedna akcja możliwa.'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text(
+                                      'Nie możesz dodać prośby. Aktualnie możliwe jest tylko dodanie jednej prośby. Nie możesz też dodać prośby jeśli aktualnie komuś pomagasz.')
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('OK'),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
                             ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('OK'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                        ],
-                      );
-                    });
-                  }
-                  else Navigator.pushNamed(context, '/request');},
+                          );
+                        });
+                  } else
+                    Navigator.pushNamed(context, '/request');
+                },
                 child: Icon(Icons.add),
               ),
               floatingActionButtonLocation:

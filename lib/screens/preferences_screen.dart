@@ -36,7 +36,7 @@ class _PreferencesState extends State<Preferences> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userData = UserData(name: 'Kamil', surname: 'Bakierzyński');
+    final UserData userData = UserData(name: 'Kamil', surname: 'Bakierzyński');
     return Scaffold(
       floatingActionButton: showButton
           ? FloatingActionButton.extended(

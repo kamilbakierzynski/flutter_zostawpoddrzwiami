@@ -26,7 +26,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     Provider.of<List<CurrentUserRequest>>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
-    User user = Provider.of<User>(context);
+    final User user = Provider.of<User>(context);
+
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
