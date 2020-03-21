@@ -26,7 +26,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final UserData userData = Provider.of<UserData>(context);
     final List<CurrentUserRequest> currentUserRequest =
-    Provider.of<List<CurrentUserRequest>>(context);
+        Provider.of<List<CurrentUserRequest>>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
     final User user = Provider.of<User>(context);
@@ -81,8 +81,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500)),
-                          Text(
-                              'Adres: Ukryty',
+                          Text('Adres: Ukryty',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w500)),
@@ -125,7 +124,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   padding: EdgeInsets.all(10.0),
                   child: ListTile(
                     title: Text(current_item.name),
-                    subtitle: (current_item.description != null)
+                    subtitle: (current_item.description != null &&
+                            current_item.description != 'Blank')
                         ? Text(current_item.description)
                         : null,
                     trailing:
@@ -174,7 +174,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   );
                 });
           } else {
-            if (_checkIfStillAvaliable(userRequests, widget.request.requestId)) {
+            if (_checkIfStillAvaliable(
+                userRequests, widget.request.requestId)) {
               await DatabaseService(uid: user.uid, name: userData.name)
                   .acceptRequest(widget.request);
               Navigator.of(context).pop();
@@ -199,7 +200,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         FlatButton(
                           child: Text('OK'),
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/current_request');
+                            Navigator.pushReplacementNamed(
+                                context, '/current_request');
                           },
                         ),
                       ],
@@ -227,8 +229,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
     return false;
   }
-
-
 }
 
 class Delegate extends SliverPersistentHeaderDelegate {
