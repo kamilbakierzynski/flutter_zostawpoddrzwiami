@@ -11,7 +11,6 @@ import "package:shared_preferences/shared_preferences.dart";
 
 import '../models/request_model.dart';
 
-// to do: better details for when receiver
 
 class CurrentRequest extends StatefulWidget {
   @override
@@ -140,24 +139,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
     }
     if (currentUser.uid != currentRequest.customer) {
       print("in is carrier");
-      List<String> addressList = currentRequest.address.split(",");
-      if (addressList.length == 4){
-        street = addressList[0];
-        strNumber = addressList[1];
-        flat = addressList[2];
-        city = addressList[3];
-      }
-      else if (addressList.length == 3){
-        street = addressList[0];
-        strNumber = addressList[1];
-        flat = "";
-        city = addressList[3];
-      }
-      else{
-        print("dlugosc listy ");
-        print(addressList.length);
-        print(currentRequest.address);
-      }
+
+      street = currentRequest.address;
+      print(street);
         return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -187,25 +171,36 @@ class _CurrentRequestState extends State<CurrentRequest> {
                             Text(
                               currentRequest.name,
                               style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 40,
+                                color: Colors.grey,
+                                fontSize: 30,
                               ),
                             ),
                             Row(
                               children: <Widget>[
                                 Text(
-                                  phoneNumber,
+                                  currentRequest.phoneNumber,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
                                   ),
                                 ),
+                                  FlatButton(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                    onPressed: () {
+                                      launch("tel://$phoneNumber");
+                                    },
+                                    child: Icon(Icons.phone, color: Colors.green[600],),
+                                  ),
+
+
                                 FlatButton(
-                                  onPressed: () {
-                                    launch("tel://$phoneNumber");
-                                  },
-                                  child: Icon(Icons.phone, color: Colors.green[600],),
-                                )
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                    onPressed: () {
+                                      _launchMapsUrl();
+                                    },
+                                    child: Icon(Icons.location_on, color: Colors.red[700],
+                                    ),
+                                  ),
                               ],
                             ),
                           ],
@@ -213,30 +208,19 @@ class _CurrentRequestState extends State<CurrentRequest> {
                         ),
                         Container(
                           child: Column(children: <Widget>[
-                            FittedBox(
-                              child: Text(
+                              Text(
                                 street,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "$strNumber/$flat",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 25),
-                                ),
-                                FlatButton(
-                                  onPressed: () {
-                                    _launchMapsUrl();
-                                  },
-                                  child: Icon(Icons.location_on, color: Colors.red[700],
-                                  ),
-                                ),
-                              ],
+                            Container(
+                              padding: EdgeInsets.only(top: 10),
+                                child: Text(
+                                  currentRequest.description,
+                                  style: TextStyle(fontSize: 20),
+                                )
                             ),
                           ], crossAxisAlignment: CrossAxisAlignment.start),
                         ),
@@ -306,7 +290,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(left: 30, top: 40, right: 30),
+                  padding: EdgeInsets.only(left: 30, top: 20, right: 30),
                   child: Column(
                     children: <Widget>[
                       Column(
@@ -315,26 +299,26 @@ class _CurrentRequestState extends State<CurrentRequest> {
                             currentRequest.name,
                             style: TextStyle(
                               color: Colors.grey[500],
-                              fontSize: 40,
+                              fontSize: 30,
                             ),
                           ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                phoneNumber,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  launch("tel://$phoneNumber");
-                                },
-                                child: Icon(Icons.phone, color: Colors.green[600],),
-                              )
-                            ],
-                          ),
+//                          Row(
+//                            children: <Widget>[
+//                              Text(
+//                                phoneNumber,
+//                                style: TextStyle(
+//                                  color: Colors.black,
+//                                  fontSize: 20
+//                                ),
+//                              ),
+//                              FlatButton(
+//                                onPressed: () {
+//                                  launch("tel://$phoneNumber");
+//                                },
+//                                child: Icon(Icons.phone, color: Colors.green[600],),
+//                              )
+//                            ],
+//                          ),
                         ],
                         crossAxisAlignment: CrossAxisAlignment.start,
                       ),
@@ -351,14 +335,22 @@ class _CurrentRequestState extends State<CurrentRequest> {
                               left: 10, right: 10, top: 0, bottom: 0),
                           child: Card(
                             child: ListTile(
-                              title: Column(
+                              title: Row(
                                 children: <Widget>[
-                                  Text(currentRequest.request[index].name, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                                  Text(currentRequest.request[index].quantity
-                                          .toString() +
-                                      currentRequest.request[index].unit),
+                                  Icon(Icons.shopping_basket),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(currentRequest.request[index].name),
+                                        Text(currentRequest.request[index].quantity
+                                                .toString() +
+                                            currentRequest.request[index].unit),
+                                      ],
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    ),
+                                  ),
                                 ],
-                                crossAxisAlignment: CrossAxisAlignment.start,
                               ),
                               //trailing: Icon(Icons.more_vert),
                             ),
