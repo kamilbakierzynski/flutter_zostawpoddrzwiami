@@ -24,15 +24,12 @@ import '../models/current_user_request_model.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final FirebaseMessaging _fcm = FirebaseMessaging();
-    final User user = Provider.of<User>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
     final List<CurrentUserRequest> currentUserRequestList =
         Provider.of<List<CurrentUserRequest>>(context);
     final UserData userData = Provider.of<UserData>(context);
     final List<UserRequest> awaitFuture = [];
-    DatabaseService(uid: user.uid).saveDeviceToken(_fcm);
     if (userRequests != null) {
       return FutureBuilder(
         future: _getDistanceAndSort(userRequests),

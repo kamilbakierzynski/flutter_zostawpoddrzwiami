@@ -15,6 +15,7 @@ import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/wrappers/auth_wrapper.dart';
 import 'package:zostawpoddrzwiami/screens/request_making_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 void main() => runApp(MyApp());
@@ -42,7 +43,6 @@ class MyApp extends StatelessWidget {
 class MaterialAppLoggedUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<User>(context);
     if (user == null) {
       print('Not logged in');
       return MaterialApp(
@@ -58,6 +58,9 @@ class MaterialAppLoggedUser extends StatelessWidget {
             '/register': (context) => RegisterScreen()
           });
     } else {
+      final User user = Provider.of<User>(context);
+      final FirebaseMessaging _fcm = FirebaseMessaging();
+      DatabaseService(uid: user.uid).saveDeviceToken(_fcm);
       print('Logged in');
       return MultiProvider(
         providers: [
