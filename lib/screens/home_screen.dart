@@ -15,6 +15,8 @@ import 'package:zostawpoddrzwiami/widgets/home_requests_list.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/current_user_request_model.dart';
 import '../models/current_user_request_model.dart';
@@ -22,6 +24,7 @@ import '../models/current_user_request_model.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final FirebaseMessaging _fcm = FirebaseMessaging();
     final User user = Provider.of<User>(context);
     final List<UserRequest> userRequests =
         Provider.of<List<UserRequest>>(context);
@@ -29,6 +32,7 @@ class HomeScreen extends StatelessWidget {
         Provider.of<List<CurrentUserRequest>>(context);
     final UserData userData = Provider.of<UserData>(context);
     final List<UserRequest> awaitFuture = [];
+    DatabaseService(uid: user.uid).saveDeviceToken(_fcm);
     if (userRequests != null) {
       return FutureBuilder(
         future: _getDistanceAndSort(userRequests),

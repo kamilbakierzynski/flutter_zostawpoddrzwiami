@@ -13,6 +13,9 @@ class CurrentUserRequest
   final String customer;
   final String phoneNumber;
   final String description;
+  final bool pending;
+  final String carierName;
+  final String carierPhoneNumber;
 
-  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.time, this.longitude, this.latitude, this.customer, this.phoneNumber, this.description});
+  CurrentUserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.time, this.longitude, this.latitude, this.customer, this.phoneNumber, this.description, this.pending, this.carierPhoneNumber, this.carierName});
 }

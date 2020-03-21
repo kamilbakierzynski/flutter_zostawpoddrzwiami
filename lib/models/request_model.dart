@@ -15,7 +15,9 @@ class UserRequest{
   final String creatorId;
   final String phoneNumber;
   final String description;
+  final String carierName;
+  final String carierPhoneNumber;
   double distance;
 
-  UserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude, this.time, this.creatorId, this.description, this.phoneNumber});
+  UserRequest({this.name, this.price, this.requestId, this.request, this.address, this.status, this.longitude, this.latitude, this.time, this.creatorId, this.description, this.phoneNumber, this.carierName, this.carierPhoneNumber});
 }

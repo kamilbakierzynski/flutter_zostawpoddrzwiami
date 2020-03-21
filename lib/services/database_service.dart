@@ -115,6 +115,8 @@ class DatabaseService {
           latitude: doc.data["latitude"] ?? 0.0,
           description: doc.data['description'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '',
+          carierName: doc.data['carierName'] ?? '',
+          carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
         );
       } else {
         return null;
@@ -149,6 +151,8 @@ class DatabaseService {
           latitude: doc.data["latitude"] ?? 0.0,
           description: doc.data['description'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '',
+          carierName: doc.data['carierName'] ?? '',
+          carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
         );
       } else {
         return null;
@@ -186,7 +190,9 @@ class DatabaseService {
       'longitude': request.longitude,
       'description': request.description,
       'phoneNumber': request.phoneNumber,
-      'time': Timestamp.now()
+      'time': Timestamp.now(),
+      'carierName': request.carierName,
+      'carierPhoneNumber': request.carierPhoneNumber,
     });
     await userDataCollection
         .document(uid)
@@ -202,7 +208,9 @@ class DatabaseService {
       'address': request.address,
       'description': request.description,
       'phoneNumber': request.phoneNumber,
-      'time': Timestamp.now()
+      'time': Timestamp.now(),
+      'carierName': request.carierName,
+      'carierPhoneNumber': request.carierPhoneNumber,
     });
     return true;
   }
@@ -227,6 +235,8 @@ class DatabaseService {
       'description': request.description,
       'phoneNumber': request.phoneNumber,
       'time': request.time,
+      'carierName': request.carierName,
+      'carierPhoneNumber': request.carierPhoneNumber,
     });
     await userDataCollection
         .document(request.customer)
@@ -267,6 +277,8 @@ class DatabaseService {
         'requestId': request.requestId,
         'description': request.description,
         'phoneNumber': request.phoneNumber,
+        'carierName': request.carierName,
+        'carierPhoneNumber': request.carierPhoneNumber,
       });
       await userDataCollection
           .document(request.creatorId)
@@ -286,6 +298,8 @@ class DatabaseService {
         'requestId': request.requestId,
         'description': request.description,
         'phoneNumber': request.phoneNumber,
+        'carierName': request.carierName,
+        'carierPhoneNumber': request.carierPhoneNumber,
       });
       await requestDataCollection.document(request.requestId).delete();
     }
