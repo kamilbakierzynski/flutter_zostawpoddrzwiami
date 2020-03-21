@@ -326,6 +326,9 @@ class _State extends State<RequestMakingScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
+            initialValue: requestedCart[index].name != 'Blank'
+                ? requestedCart[index].name
+                : null,
             decoration: const InputDecoration(
               icon: Icon(Icons.add_shopping_cart),
               hintText: 'Wpisz Produkt',
@@ -341,6 +344,9 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
+            initialValue: requestedCart[index].quantity != 0.0
+                ? requestedCart[index].quantity.toString()
+                : null,
             decoration: const InputDecoration(
               icon: Icon(Icons.confirmation_number),
               hintText: 'Wpisz ilosc',
@@ -355,6 +361,9 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
+            initialValue: requestedCart[index].unit != 'Blank'
+                ? requestedCart[index].unit
+                : null,
             decoration: const InputDecoration(
               icon: Icon(Icons.info),
               hintText: 'Wpisz jednostke',
@@ -365,6 +374,9 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
+            initialValue: requestedCart[index].description != 'Blank'
+                ? requestedCart[index].description
+                : null,
             decoration: const InputDecoration(
               icon: Icon(Icons.warning),
               hintText: 'Wpisz uwagi',
