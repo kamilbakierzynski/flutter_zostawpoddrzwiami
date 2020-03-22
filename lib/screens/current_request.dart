@@ -80,7 +80,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             child: Column(
               children: <Widget>[
                 Icon(
-                  Icons.insert_emoticon,
+                  Icons.mood_bad,
                   size: 50,
                 ),
                 Text(
@@ -114,8 +114,9 @@ class _CurrentRequestState extends State<CurrentRequest> {
             child: Column(
               children: <Widget>[
                 Icon(
-                  Icons.insert_emoticon,
+                  Icons.mood_bad,
                   size: 50,
+                  color: Colors.grey[700],
                 ),
                 Text(
                   "Nie masz obecnie zamowień",
@@ -362,7 +363,8 @@ class _CurrentRequestState extends State<CurrentRequest> {
                   label: Text('Anuluj'),
                   backgroundColor: Colors.red[600],
                 ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           body: Container(
             child: Column(
               children: <Widget>[

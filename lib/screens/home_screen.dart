@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SliverAppBar(
                     floating: false,
                     pinned: true,
-                    expandedHeight: 200,
+                    expandedHeight: 150,
                     backgroundColor: Colors.white,
                     actions: <Widget>[
                       IconButton(
