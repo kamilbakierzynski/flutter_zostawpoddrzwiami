@@ -124,7 +124,7 @@ class _State extends State<RequestMakingScreen> {
                             val.isEmpty ? 'Wpisz numer telefonu' : null,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.phone_android),
-                          hintText: "Wpisz swoj numer telefonu",
+                          hintText: "Wpisz swój numer telefonu",
                           labelText: "Numer telefonu",
                         ),
                         onChanged: (String text) {
@@ -137,11 +137,11 @@ class _State extends State<RequestMakingScreen> {
                       ),
                       TextFormField(
                         validator: (val) =>
-                        val.isEmpty ? 'Wpisz przewidywana cene zakupow' : null,
+                        val.isEmpty ? 'Wpisz przewidywaną cenę zakupów' : null,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.attach_money),
-                          hintText: "Wpisz przyblizona cene zakupow",
-                          labelText: "Przyblizona cena zakupow",
+                          hintText: "Wpisz przybliżoną cenę zakupów",
+                          labelText: "Przybliżona cena zakupów",
                         ),
                         onChanged: (String text) {
                           this.price = text;
@@ -155,7 +155,7 @@ class _State extends State<RequestMakingScreen> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.description),
                           hintText: "Opcjonalnie",
-                          labelText: "Uwagi do zamowienia (Numer mieszkania)",
+                          labelText: "Uwagi do zamówienia (Numer mieszkania)",
                         ),
                         onChanged: (String text) {
                           this.optionalInfo = text;
@@ -319,6 +319,7 @@ class _State extends State<RequestMakingScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
+            initialValue: requestedCart[index].name.toString(),
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               icon: Icon(Icons.add_shopping_cart,color: Colors.white70),
@@ -337,11 +338,12 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
+            initialValue: requestedCart[index].quantity.toString(),
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               icon: Icon(Icons.confirmation_number,color: Colors.white70),
-              hintText: 'Wpisz ilosc',
-              labelText: 'ilosc',
+              hintText: 'Wpisz ilość',
+              labelText: 'ilość',
               labelStyle: TextStyle(color: Colors.white70),
               hintStyle: TextStyle(color: Colors.white70),
             ),
@@ -354,11 +356,12 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
+            initialValue: requestedCart[index].unit.toString(),
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               icon: Icon(Icons.info,color: Colors.white70),
-              hintText: 'Wpisz jednostke',
-              labelText: 'jednostka',
+              hintText: 'Wpisz jednostkę',
+              labelText: 'Jednostka',
               labelStyle: TextStyle(color: Colors.white70),
               hintStyle: TextStyle(color: Colors.white70),
             ),
@@ -366,179 +369,10 @@ class _State extends State<RequestMakingScreen> {
               this.requestedCart[index].unit = text;
             },
           ),
-//          TextFormField(
-//            style: TextStyle(color: Colors.white70),
-//            decoration: const InputDecoration(
-//              icon: Icon(Icons.warning,color: Colors.white70),
-//              hintText: 'Wpisz uwagi',
-//              labelText: 'Uwagi',
-//              labelStyle: TextStyle(color: Colors.white70), //EEEEEEEEE TO TU
-//              hintStyle: TextStyle(color: Colors.white70),
-//            ),
-//            onChanged: (String text) {
-//              this.requestedCart[index].description = text;
-//            },
-//          ),
         ],
       ),
     );
   }
 
-//  Widget build(BuildContext context){
-//    return Scaffold(
-//      body: AnimatedContainer(
-//        color: Colors.white,
-//        duration: Duration(seconds: 2),
-//        padding: EdgeInsets.all(20),
-//        child: Column(
-//              mainAxisSize: MainAxisSize.max,
-//              children: <Widget>[
-//                createFieldName(context),
-//                createFieldSurname(context),
-//                createFieldAddress(context),
-//                createFieldDescription(context),
-//                AnimatedContainer(
-//                  width: isListClicked ? 10 : 200,
-//                  height: isListClicked ? 10 : 300,
-//                  color: Colors.lightBlue,
-//                  duration: Duration(seconds: 1),
-//
-//                  child: ListView.builder(
-//                      itemCount: 2,
-//                      itemBuilder: (context,index){
-//                        return Card(
-//                          child: ListTile(
-//                            title: Text(requestedCart[index].name ?? "doopa"),
-//                            subtitle: Text(requestedCart[index].name ?? "doopsko"),
-//                            onTap: (){
-//                              setState(() {
-//                                Item temp = requestedCart[index];
-//                                requestedCart.removeAt(index);
-//                                requestedCart.insert(0, temp);
-//                              });
-//
-//                            },
-//                          ),
-//                        );
-//                      }
-//                  ),
-//                ),
-//
-//
-//              ],
-//        ),
-//      ),
-//    );
-//
-//  }
-//
-//  TextFormField createFieldCart(BuildContext context){
-//    return TextFormField(
-//       decoration: const InputDecoration(
-//         icon: Icon(Icons.add_shopping_cart),
-//         hintText: 'Wypisz przedmioty ktorych potrzebujesz',
-//         labelText: 'Koszyk',
-//       ),
-//      onFieldSubmitted: (String text){
-//         _addToCart(text);
-//      }
-//    );
-//  }
-//
-//  TextFormField createFieldName(BuildContext context){
-//    return TextFormField(
-//        decoration: const InputDecoration(
-//          icon: Icon(Icons.person_add),
-//          hintText: 'Wpisz swoje imie',
-//          labelText: 'Imie',
-//        ),
-//        onFieldSubmitted: (String text){
-//          _addName(text);
-//        }
-//    );
-//  }
-//
-//  TextFormField createFieldSurname(BuildContext context){
-//    return TextFormField(
-//        decoration: const InputDecoration(
-//          icon: Icon(Icons.person_add),
-//          hintText: 'Wpisz swoje nazwisko',
-//          labelText: 'Nazwisko',
-//        ),
-//        onFieldSubmitted: (String text){
-//          _addSurname(text);
-//        }
-//    );
-//  }
-//
-//  TextFormField createFieldAddress(BuildContext context){
-//    return TextFormField(
-//        decoration: const InputDecoration(
-//          icon: Icon(Icons.location_city),
-//          hintText: 'Wpisz swoj adres',
-//          labelText: 'Adres',
-//        ),
-//        onFieldSubmitted: (String text){
-//          _addAddress(text);
-//        }
-//    );
-//  }
-//
-//  TextFormField createFieldDescription(BuildContext context){
-//    return TextFormField(
-//        decoration: const InputDecoration(
-//          icon: Icon(Icons.note_add),
-//          hintText: 'Krotki opis',
-//          labelText: 'opis',
-//        ),
-//        onFieldSubmitted: (String text){
-//          _addDescritption(text);
-//        }
-//    );
-//  }
-
-//  Widget listwidget(BuildContext context)
-//  {
-//    return Scaffold(
-//      body: ListView.builder(
-//        itemCount: requestedCart.length + 1,
-//        itemBuilder: (context,index){
-//          return Card(
-//            child: ListTile(
-//              title:TextField(
-//
-//              ),
-//              subtitle: TextField(
-//
-//              ),
-//
-//            ),
-//          );
-//        }
-//      ),
-//    );
-//  }
-
-//
-//  _addToCart(String text ){
-//
-//    print(text);
-//  }
-//
-//  _addName(String text){
-//    name = text;
-//  }
-//
-//  _addSurname(String text){
-//    surname = text;
-//  }
-//
-//  _addAddress(String text){
-//    address = text;
-//  }
-//
-//  _addDescritption(String text){
-//    description = text;
-//  }
 
 }
