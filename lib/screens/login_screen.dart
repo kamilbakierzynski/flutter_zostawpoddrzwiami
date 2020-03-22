@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
@@ -24,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
     focusedErrorBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
     ),
+    filled: true,
+    fillColor: Colors.white54
   );
 
   bool _loadingInProgress;
@@ -50,14 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: true,
-        appBar: AppBar(
-          title: Text(
-            'Zostaw Pod Drzwiami',
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-        ),
+        extendBody: true,
         bottomNavigationBar: BottomAppBar(
           child: Padding(
             padding:
@@ -115,16 +111,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 ? FloatingActionButtonLocation.centerFloat
                 : FloatingActionButtonLocation.centerDocked,
         backgroundColor: Colors.white,
-        body: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _pageViewController,
-          children: <Widget>[_loginScreen(), _registerScreen()],
+        body: Stack(
+          children: <Widget>[
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: FlareActor(
+                'assets/flare/Background_1.flr',
+                animation: 'Background Loop',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _pageViewController,
+              children: <Widget>[_loginScreen(), _registerScreen()],
+            ),
+          ],
         ));
   }
 
   Widget _fABRegister() {
     return FloatingActionButton.extended(
-        elevation: 10,
+        elevation: 15,
         onPressed: () async {
           FocusScope.of(context).unfocus();
           setState(() {
@@ -165,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Container(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    padding: const EdgeInsets.only(top: 80.0, bottom: 20.0),
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -252,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _fABLogin() {
     return FloatingActionButton.extended(
-        elevation: 10,
+        elevation: 15,
         onPressed: () async {
           FocusScope.of(context).unfocus();
           setState(() {
@@ -300,22 +309,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 0.0),
+                              horizontal: 30.0, vertical: 150.0),
                           child: Form(
                             key: _formLoginKey,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
-                                Container(
-                                    height: 180,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Image(
-                                        image: AssetImage(
-                                            'assets/images/login-app.png'), fit: BoxFit.fitHeight,)),
                                 TextFormField(
                                     validator: (val) =>
                                         val.isEmpty || !val.contains('@')
-                                            ? 'Wpisz email'
+                                            ? 'Wpisz Email'
                                             : null,
                                     onChanged: (val) {
                                       setState(() {
@@ -323,13 +326,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       });
                                     },
                                     decoration: textInputDecoration.copyWith(
-                                        labelText: 'email')),
+                                        labelText: 'Email')),
                                 SizedBox(
                                   height: 20.0,
                                 ),
                                 TextFormField(
                                     validator: (val) =>
-                                        val.isEmpty ? 'Wpisz hasło' : null,
+                                        val.isEmpty ? 'Wpisz Hasło' : null,
                                     onChanged: (val) {
                                       setState(() {
                                         password = val;
@@ -337,7 +340,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                     obscureText: true,
                                     decoration: textInputDecoration.copyWith(
-                                        labelText: 'hasło')),
+                                        labelText: 'Hasło')),
                               ],
                             ),
                           ),
@@ -356,7 +359,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Zapomniałeś hasła?',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: Colors.white70),
                   ),
                 ),
               ),
