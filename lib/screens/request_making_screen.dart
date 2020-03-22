@@ -319,7 +319,7 @@ class _State extends State<RequestMakingScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            initialValue: requestedCart[index].name != 'Blank'
+            initialValue: requestedCart[index].name != "Blank"
                 ? requestedCart[index].name
                 : null,
             style: TextStyle(color: Colors.white70),
