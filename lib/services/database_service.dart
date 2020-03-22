@@ -157,9 +157,8 @@ class DatabaseService {
               carierName: doc.data['carierName'] ?? '',
               carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
               pending: doc.data['pending'] ?? false,
-              time: doc.data["time"] != null
-                  ? formatTime(doc.data['time'].toDate().toString())
-                  : '');
+              time: doc.data['time'] ?? false
+                  );
         } else {
           return null;
         }
@@ -284,7 +283,7 @@ class DatabaseService {
         'latitude': request.latitude,
         'longitude': request.longitude,
         'customer': request.creatorId,
-        'time': Timestamp.now(),
+        'time': request.time,
         'requestId': request.requestId,
         'description': request.description,
         'phoneNumber': request.phoneNumber,

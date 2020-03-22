@@ -327,6 +327,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
             ),
           ));
     } else {
+      print(currentRequest.status);
       return Scaffold(
           appBar: AppBar(
             title: Text(

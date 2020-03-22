@@ -230,7 +230,7 @@ class HomeRequestsList extends StatelessWidget {
               height: 200,
               width: 200,
               child: FlareActor(
-                'assets/flare/Button_1.flr',
+                'assets/flare/Button.flr',
                 animation: 'Waiting',
                 fit: BoxFit.fitWidth,
               ),
