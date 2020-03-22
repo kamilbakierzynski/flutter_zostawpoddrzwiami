@@ -154,8 +154,9 @@ class DatabaseService {
               carierName: doc.data['carierName'] ?? '',
               carierPhoneNumber: doc.data['carierPhoneNumber'] ?? '',
               pending: doc.data['pending'] ?? false,
-              time: doc.data['time'] ?? false
-                  );
+              time: doc.data['time'] != null
+                  ? formatTime(doc.data['time'].toDate().toString())
+                  : '' ?? false);
         } else {
           return null;
         }
