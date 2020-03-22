@@ -4,7 +4,7 @@
 It is a mobile application developed by team of 4 computer science students in March 2020 during COVID - 19 pandemia. 
 
 # Idea
-The main goal is to help people who cannot or should not leave their houses and perform their every-day activities in time of pandemia. Our app was created to reduce spreading of the virus, help those who are staying on quarantine to survive and possibly save those who are dangered the most because of the disease.
+The main goal is to help people who cannot or should not leave their houses and perform their every-day activities in time of pandemic. Our app was created to reduce spreading of the virus, help those who are staying on quarantine to survive and possibly save those who are endangered the most because of the disease.
 
 ## How does it work?
 
