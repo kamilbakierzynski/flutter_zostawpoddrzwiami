@@ -126,7 +126,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ? Text(current_item.description)
                         : null,
                     trailing:
-                        Text(current_item.quantity.toStringAsFixed(0) + 'x'),
+                        Text(current_item.quantity.toStringAsFixed(0) + current_item.unit),
                   ));
             }, childCount: widget.request.request.length),
           ),
