@@ -41,7 +41,7 @@ class _State extends State<RequestMakingScreen> {
 
   _addItem() {
     setState(() {
-      requestedCart.add(Item("Blank", 0.0, "x", "Blank"));
+      requestedCart.add(Item("Blank", 0.0, "Blank", "Blank"));
     });
   }
 
@@ -320,7 +320,7 @@ class _State extends State<RequestMakingScreen> {
         children: <Widget>[
           TextFormField(
             initialValue: requestedCart[index].name != 'Blank'
-                ? requestedCart[index].name.toString()
+                ? requestedCart[index].name
                 : null,
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
@@ -361,7 +361,7 @@ class _State extends State<RequestMakingScreen> {
           ),
           TextFormField(
           initialValue: requestedCart[index].unit != 'Blank'
-          ? requestedCart[index].unit.toString()
+          ? requestedCart[index].unit
               : null,
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
