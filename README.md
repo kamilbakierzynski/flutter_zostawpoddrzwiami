@@ -1,7 +1,7 @@
 # Zostaw Pod Drzwiami*
 **eng. Leave It Under the Door*
 ## What is it?
-It is a mobile application developed by team of 4 computer science students in March 2020 during COVID - 19 pandemia. 
+It is a mobile application developed by team of 4 computer science students in March 2020 during COVID - 19 pandemic. 
 
 # Idea
 The main goal is to help people who cannot or should not leave their houses and perform their every-day activities in time of the pandemic. Our app was created to reduce the spreading of the virus, help those who are staying on quarantine to survive and possibly save those who are endangered the most because of the disease.
