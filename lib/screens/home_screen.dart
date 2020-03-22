@@ -1,24 +1,14 @@
-import 'dart:ffi';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zostawpoddrzwiami/models/item_model.dart';
-import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
-import 'package:zostawpoddrzwiami/screens/details_screen.dart';
 import 'package:zostawpoddrzwiami/screens/preferences_screen.dart';
-import 'package:zostawpoddrzwiami/services/auth_service.dart';
-import 'package:zostawpoddrzwiami/services/database_service.dart';
 import 'package:zostawpoddrzwiami/widgets/home_requests_list.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:zostawpoddrzwiami/models/locatioan_data_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../models/current_user_request_model.dart';
 import '../models/current_user_request_model.dart';
 
 class HomeScreen extends StatefulWidget {

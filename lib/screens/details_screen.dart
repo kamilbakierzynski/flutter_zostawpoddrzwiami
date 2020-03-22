@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:toast/toast.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
 import 'package:zostawpoddrzwiami/models/item_model.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:provider/provider.dart';
-import '../models/user_model.dart';
-import '../models/user_model.dart';
 import '../models/user_model.dart';
 import '../services/database_service.dart';
 

@@ -1,18 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/number_symbols_data.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zostawpoddrzwiami/models/confirm_request.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/models/current_user_request_model.dart';
-import "package:zostawpoddrzwiami/models/request_model.dart";
 import 'package:zostawpoddrzwiami/screens/request_completing_screen.dart';
 import "package:zostawpoddrzwiami/services/database_service.dart";
 import "package:shared_preferences/shared_preferences.dart";
-
-import '../models/request_model.dart';
 
 class CurrentRequest extends StatefulWidget {
   @override
@@ -33,7 +29,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
   String strNumber = "16";
   String city = "Mrągowo";
   String flat = "15";
-  CurrentUserRequest currentRequest = null;
+  CurrentUserRequest currentRequest;
   int rows = 10;
   List<bool> checkbox_values = [];
   String checkBoxString = "";
@@ -88,7 +84,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                   size: 50,
                 ),
                 Text(
-                  "Nie masz obecnych zamowien",
+                  "Nie masz obecnie zamowień",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -122,7 +118,7 @@ class _CurrentRequestState extends State<CurrentRequest> {
                   size: 50,
                 ),
                 Text(
-                  "Nie masz obecnych zamowien",
+                  "Nie masz obecnie zamowień",
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 20,

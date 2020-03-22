@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
-import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/auth_service.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -135,11 +133,10 @@ class _LoginScreenState extends State<LoginScreen> {
           if (_formRegisterKey.currentState.validate()) {
             print(name);
             print(surname);
-            FirebaseUser result =
-                await AuthService().registerWithEmailAndPassword(email, password, name, surname);
+            FirebaseUser result = await AuthService()
+                .registerWithEmailAndPassword(email, password, name, surname);
             if (result == null) {
-              Toast.show(
-                  'Wystąpił błąd.', context);
+              Toast.show('Wystąpił błąd.', context);
               setState(() {
                 _loadingInProgress = false;
               });
@@ -177,8 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Form(
                             key: _formRegisterKey,
                             child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 TextFormField(
                                     validator: (val) =>
@@ -186,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ? 'Wpisz email'
                                             : null,
                                     onChanged: (val) {
-                                        email = val;
+                                      email = val;
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: 'Email')),
@@ -197,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     validator: (val) =>
                                         val.isEmpty ? 'Wpisz hasło' : null,
                                     onChanged: (val) {
-                                        password = val;
+                                      password = val;
                                     },
                                     obscureText: true,
                                     decoration: textInputDecoration.copyWith(
@@ -210,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ? 'Hasła nie są takie same'
                                         : null,
                                     onChanged: (val) {
-                                        confirmPassword = val;
+                                      confirmPassword = val;
                                     },
                                     obscureText: true,
                                     decoration: textInputDecoration.copyWith(
@@ -222,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     validator: (val) =>
                                         val.isEmpty ? 'Wpisz imię' : null,
                                     onChanged: (val) {
-                                        name = val;
+                                      name = val;
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: 'Imię')),
@@ -233,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     validator: (val) =>
                                         val.isEmpty ? 'Wpisz nazwisko' : null,
                                     onChanged: (val) {
-                                        surname = val;
+                                      surname = val;
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: 'Nazwisko')),
@@ -304,12 +300,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 40.0),
+                              horizontal: 30.0, vertical: 0.0),
                           child: Form(
                             key: _formLoginKey,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
+                                Container(
+                                    height: 180,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Image(
+                                        image: AssetImage(
+                                            'assets/images/login-app.png'), fit: BoxFit.fitHeight,)),
                                 TextFormField(
                                     validator: (val) =>
                                         val.isEmpty || !val.contains('@')

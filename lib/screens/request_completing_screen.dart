@@ -1,14 +1,9 @@
-import 'dart:async';
-
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zostawpoddrzwiami/models/confirm_request.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/services/database_service.dart';
-import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 
 class CompleteRequest extends StatefulWidget {
   final String orderId;
@@ -58,16 +53,55 @@ class _CompleteRequestState extends State<CompleteRequest> {
                                 size: 80,
                               )
                             : Icon(
-                                Icons.check_circle,
+                                Icons.check,
                                 color: Colors.green[600],
-                                size: 80,
+                                size: 150,
                               ),
                         SizedBox(
                           height: 40,
                         ),
                         confirmRequest.received == false
-                            ? Text('Oczekuję odpowiedzi z drugiej strony')
-                            : Text('Potwierdzono'),
+                            ? Text('Oczekuję odpowiedzi z drugiej strony',
+                                style: TextStyle(color: Colors.grey[500]))
+                            : Text(''),
+                        confirmRequest.received == true
+                            ? Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    RaisedButton(
+                                      color: Colors.grey[100],
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.credit_card,
+                                            color: Colors.grey[400],
+                                          ),
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Container(
+                                              width: 100,
+                                              height: 60,
+                                              child: Image.asset(
+                                                'assets/images/paypal.png',
+                                              )),
+                                        ],
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Text(
+                                      'Kliknij, żeby otrzymać zapłatę za zakupy.',
+                                      style: TextStyle(color: Colors.grey[500]),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : SizedBox.shrink(),
                       ],
                     ),
                   ));
@@ -99,19 +133,22 @@ class _CompleteRequestState extends State<CompleteRequest> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: 200,
-                          height: 200,
-                          child: SpinKitRing(
-                            color: Color(0xFF583CDF),
-                            size: 80,
-                          )
-                        ),
+                            width: 200,
+                            height: 200,
+                            child: SpinKitRing(
+                              color: Color(0xFF583CDF),
+                              size: 80,
+                            )),
                         SizedBox(
                           height: 40,
                         ),
                         confirmRequest.received == false
-                            ? Text('Oczekuję na twoje potwierdzenie')
+                            ? Text('Oczekuję na twoje potwierdzenie',
+                                style: TextStyle(color: Colors.grey[500]))
                             : Text('Potwierdzono'),
+                        SizedBox(
+                          height: 100,
+                        ),
                       ],
                     ),
                   ));
@@ -131,13 +168,12 @@ class _CompleteRequestState extends State<CompleteRequest> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: 200,
-                      height: 200,
-                      child: SpinKitRing(
-                        color: Color(0xFF583CDF),
-                        size: 80,
-                      )
-                    )
+                        width: 200,
+                        height: 200,
+                        child: SpinKitRing(
+                          color: Color(0xFF583CDF),
+                          size: 80,
+                        ))
                   ],
                 ),
               ),
