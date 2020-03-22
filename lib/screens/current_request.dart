@@ -23,12 +23,12 @@ class CurrentRequest extends StatefulWidget {
 
 class _CurrentRequestState extends State<CurrentRequest> {
   bool isCarrier = true;
-  String name = "Pani Janinka";
+  String name = "Janina Kowalska";
   String phoneNumber = "555 444 333";
   String street = "Osiedle Mazurskie";
-  String strNumber = "16";
+  String strNumber = "30";
   String city = "Mrągowo";
-  String flat = "15";
+  String flat = "20";
   CurrentUserRequest currentRequest;
   int rows = 10;
   List<bool> checkbox_values = [];
