@@ -108,7 +108,7 @@ class HomeRequestsList extends StatelessWidget {
                                                 Text(request
                                                     .request[index].name),
                                                 Text(
-                                                    '${request.request[index].quantity.toStringAsFixed(0)} x'),
+                                                    '${request.request[index].quantity.toStringAsFixed(0)} ${request.request[index].unit}'),
                                               ],
                                             ),
                                             Container(
