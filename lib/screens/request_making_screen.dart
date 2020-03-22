@@ -319,7 +319,9 @@ class _State extends State<RequestMakingScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            initialValue: requestedCart[index].name.toString(),
+            initialValue: requestedCart[index].quantity != 0.0
+                ? requestedCart[index].quantity.toString()
+                : null,
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               icon: Icon(Icons.add_shopping_cart,color: Colors.white70),
@@ -338,7 +340,9 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
-            initialValue: requestedCart[index].quantity.toString(),
+            initialValue: requestedCart[index].quantity != 0.0
+                ? requestedCart[index].quantity.toString()
+                : null,
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               icon: Icon(Icons.confirmation_number,color: Colors.white70),
@@ -356,7 +360,9 @@ class _State extends State<RequestMakingScreen> {
             },
           ),
           TextFormField(
-            initialValue: requestedCart[index].unit.toString(),
+          initialValue: requestedCart[index].quantity != 0.0
+          ? requestedCart[index].quantity.toString()
+              : null,
             style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               icon: Icon(Icons.info,color: Colors.white70),
