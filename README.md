@@ -9,10 +9,14 @@ The main goal is to help people who cannot or should not leave their houses and 
 ## How does it work?
 
 Our app connects people who want to help others with those who are in need. We limited ourselves to shopping requests for now, because of the deadline. Whenever you need something from your local grocery (or any kind of shop) you simply place a request in the app by adding your shopping list and a few more details. Other users see these requests with their locations and decide whether they can help you.
+
 You can place/accept only one request at the time to avoid abuses. Here's also a possibility to delete the previously placed request if it is not yet picked by a volunteer. On the other hand, volunteers can resign from fulfilling a request if they feel they cannot provide help. In that scenario, requests go back to the global list.
 The app makes helping easier by providing a shopping list with checkboxes, so the volunteer can easily process your "order".
 We made the interface super intuitional and user friendly, so even those, who often struggle with new technologies will be able to use it.
+
 We encountered one serious obstacle. After all, the effort put into placing and completing the shopping list, the danger of becoming infected or infecting the other party remained. It is known that it is recommended to keep at least two meters distance between each other. So how to get your cash back?
+
+
 Here we come up with a solution. You simply leave the bag under the door, click a button in your app, the other person opens the door, checks the receipt, clicks the button and you get redirected to PayPal page where you can send a payment request. Such a way payment may be processed without physical contact.
 
 ## Some tech stuff
