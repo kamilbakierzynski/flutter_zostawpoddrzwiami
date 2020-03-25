@@ -1,10 +1,13 @@
+import 'package:animations/animations.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zostawpoddrzwiami/anims/routes.dart';
 import 'package:zostawpoddrzwiami/models/request_model.dart';
 import 'package:zostawpoddrzwiami/models/user_model.dart';
 import 'package:zostawpoddrzwiami/screens/preferences_screen.dart';
+import 'package:zostawpoddrzwiami/screens/request_making_screen.dart';
 import 'package:zostawpoddrzwiami/widgets/home_requests_list.dart';
 import 'package:zostawpoddrzwiami/widgets/loading_widget.dart';
 import 'package:geolocator/geolocator.dart';
@@ -84,13 +87,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(
                         icon: Icon(Icons.settings),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Preferences(
-                                        originalName: userData.name ?? '',
-                                        originalSurname: userData.surname ?? '',
-                                      )));
+//                          Navigator.push(
+//                              context,
+//                              MaterialPageRoute(
+//                                  builder: (context) =>
+//                                      Preferences(
+//                                        originalName: userData.name ?? '',
+//                                        originalSurname: userData.surname ?? '',
+//                                      )));
+                          final route = SharedAxisPageRoute(
+                              page: Preferences(
+                                originalName: userData.name ?? '',
+                                originalSurname: userData.surname ?? '',
+                              ),
+                              transitionType:
+                                  SharedAxisTransitionType.horizontal);
+                          Navigator.of(context).push(route);
                         },
                         color: Colors.black,
                       ),
@@ -196,35 +208,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 shape: CircularNotchedRectangle(),
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  if (currentUserRequestList.length >= 1) {
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Tylko jedna akcja możliwa.'),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: <Widget>[
-                                  Text(
-                                      'Nie możesz dodać prośby. Aktualnie możliwe jest tylko dodanie jednej prośby. Nie możesz też dodać prośby jeśli aktualnie komuś pomagasz.')
-                                ],
+              floatingActionButton: OpenContainer(
+                transitionDuration: Duration(milliseconds: 600),
+                closedElevation: 6.0,
+                openColor: Colors.white,
+                closedColor: Colors.white,
+                closedShape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(56.0 / 2))),
+                closedBuilder: (BuildContext context, VoidCallback action) =>
+                    FloatingActionButton(
+                  onPressed: () {
+                    if (currentUserRequestList.length >= 1) {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Tylko jedna akcja możliwa.'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text(
+                                        'Nie możesz dodać prośby. Aktualnie możliwe jest tylko dodanie jednej prośby. Nie możesz też dodać prośby jeśli aktualnie komuś pomagasz.')
+                                  ],
+                                ),
                               ),
-                            ),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('OK'),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        });
-                  } else
-                    Navigator.pushNamed(context, '/request');
-                },
-                child: Icon(Icons.add),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('OK'),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                              ],
+                            );
+                          });
+                    } else
+//                      Navigator.pushNamed(context, '/request');
+                      action();
+                  },
+                  child: Icon(Icons.add),
+                ),
+                openBuilder: (BuildContext context, VoidCallback action) =>
+                    RequestMakingScreen(),
+                tappable: false,
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,

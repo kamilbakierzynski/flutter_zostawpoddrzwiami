@@ -28,11 +28,11 @@ dependencies:
   shortid: ^0.1.1
   flutter_spinkit: "^4.1.1"
   url_launcher: ^3.0.0
-  intl: ^0.16.0
   shared_preferences: ^0.5.6
   auto_size_text: ^2.1.0
   google_maps_place_picker: ^0.9.0
   flare_flutter: ^2.0.1
+  animations: ^1.0.0+5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

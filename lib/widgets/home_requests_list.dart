@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -55,166 +56,180 @@ class HomeRequestsList extends StatelessWidget {
                 SizedBox(
                   height: 5.0,
                 ),
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Color(0xFFECECEC), Colors.white],
-                              stops: [0.3, 0.9]),
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 4,
-                                spreadRadius: 1,
-                                offset: Offset(0, 10))
-                          ]),
-                      width: double.infinity,
-                      height: 300,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0)),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              height: 300.0 - 80,
-                              child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: request.request.length,
-                                  itemBuilder: (builder, index) {
-                                    if (index == 6) {
-                                      return Center(
-                                          child: Text(
-                                        '...',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w900),
-                                      ));
-                                    } else if (index < 6) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5.0, horizontal: 20.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Text(request
-                                                    .request[index].name),
-                                                Text(
-                                                    '${request.request[index].quantity.toStringAsFixed(0)} ${request.request[index].unit}'),
-                                              ],
-                                            ),
-                                            Container(
-                                              height: 1.0,
-                                              width: double.infinity,
-                                              color: Colors.grey[300],
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    } else {
-                                      return SizedBox.shrink();
-                                    }
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
+                OpenContainer(
+                  transitionDuration: Duration(milliseconds: 600),
+                  openBuilder: (BuildContext context, VoidCallback action) =>
+                      DetailsScreen(request),
+                  closedShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  closedElevation: 9.0,
+                  closedBuilder: (BuildContext context, VoidCallback action) =>
+                      Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0xFFECECEC), Colors.white],
+                                stops: [0.3, 0.9]),
+                            borderRadius: BorderRadius.circular(20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4,
+                                  spreadRadius: 1,
+                                  offset: Offset(0, 10))
+                            ]),
+                        width: double.infinity,
+                        height: 300,
+                        child: ClipRRect(
                           borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0))),
-                      width: double.infinity,
-                      height: 80,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 100,
-                                  child: AutoSizeText(
-                                    request.name,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30.0),
-                                  ),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.shopping_cart,
-                                      color: Color(0xFFB1B1B1),
-                                    ),
-                                    SizedBox(
-                                      width: 5.0,
-                                    ),
-                                    Text(
-                                      '~' + request.price + 'zł',
-                                      style: TextStyle(
-                                          fontSize: 21.0,
-                                          color: Color(0xFFB1B1B1)),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(30.0),
-                              child: Material(
-                                color: Color(0xFFEDEDED),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailsScreen(request)));
-                                  },
-                                  child: Container(
-                                    width: 130,
-                                    height: 40,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          'Pomagam',
+                              topRight: Radius.circular(20.0),
+                              topLeft: Radius.circular(20.0)),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: 300.0 - 80,
+                                child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: request.request.length,
+                                    itemBuilder: (builder, index) {
+                                      if (index == 6) {
+                                        return Center(
+                                            child: Text(
+                                          '...',
                                           style: TextStyle(
-                                              color: Color(0xFF707070)),
-                                        ),
-                                        SizedBox(
-                                          width: 5.0,
-                                        ),
-                                        Icon(Icons.arrow_forward,
-                                            color: Color(0xFF707070))
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                              fontWeight: FontWeight.w900),
+                                        ));
+                                      } else if (index < 6) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0, horizontal: 20.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Text(request
+                                                      .request[index].name),
+                                                  Text(
+                                                      '${request.request[index].quantity.toStringAsFixed(0)} ${request.request[index].unit}'),
+                                                ],
+                                              ),
+                                              Container(
+                                                height: 1.0,
+                                                width: double.infinity,
+                                                color: Colors.grey[300],
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        return SizedBox.shrink();
+                                      }
+                                    }),
                               ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0))),
+                        width: double.infinity,
+                        height: 80,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 100,
+                                    child: AutoSizeText(
+                                      request.name,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30.0),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.shopping_cart,
+                                        color: Color(0xFFB1B1B1),
+                                      ),
+                                      SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      SizedBox(
+                                        width: 100,
+                                        child: AutoSizeText(
+                                          '~' + request.price + 'zł',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontSize: 21.0,
+                                              color: Color(0xFFB1B1B1)),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(30.0),
+                                child: Material(
+                                  color: Color(0xFFEDEDED),
+                                  child: InkWell(
+                                    onTap: () {
+//                                      Navigator.push(
+//                                          context,
+//                                          MaterialPageRoute(
+//                                              builder: (context) =>
+//                                                  DetailsScreen(request)));
+                                      action();
+                                    },
+                                    child: Container(
+                                      width: 130,
+                                      height: 40,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            'Pomagam',
+                                            style: TextStyle(
+                                                color: Color(0xFF707070)),
+                                          ),
+                                          SizedBox(
+                                            width: 5.0,
+                                          ),
+                                          Icon(Icons.arrow_forward,
+                                              color: Color(0xFF707070))
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -235,7 +250,9 @@ class HomeRequestsList extends StatelessWidget {
                 fit: BoxFit.fitWidth,
               ),
             ),
-            SizedBox(height: 40.0,),
+            SizedBox(
+              height: 40.0,
+            ),
             Text(
               'Uff... \n aktualnie nikt nie potrzebuje pomocy.',
               style: TextStyle(color: Colors.grey[600], fontSize: 17),
