@@ -1,3 +1,5 @@
+During the development I was responsible for few screens and I was helping my friends learn Flutter.
+
 # Zostaw Pod Drzwiami*
 **eng. Leave It Under the Door*
 ## What is it?
